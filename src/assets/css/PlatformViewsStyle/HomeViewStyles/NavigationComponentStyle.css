@@ -1,0 +1,115 @@
+nav{
+    position: relative;
+}
+
+nav ul{
+    padding: 20px;
+    margin-right: auto;
+    width: 360px;
+}
+
+.logo{
+    position:absolute;
+    left: 7%;
+    top: 20%;
+    height: 70px;
+    width: 50px;
+}
+
+nav a{
+    line-height: 50px;
+    height: 50px;
+}
+
+nav li a{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+nav li:last-child a{
+    border-right: 0;
+}
+
+nav a#pull{
+    display: none;
+}
+
+ul{
+    /*list-style-type: none;*/
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    text-align: center;
+}
+li{
+    /*position: relative;*/
+    display: inline-block;
+}
+li a{
+    color: #FFFFFF;
+    text-align: center;
+    padding: 14.5px 16px;
+    text-decoration: none;
+}
+li a:hover{
+    /*color: #597812;*/
+    color: #007bff;
+    font-weight:normal;
+    transition: all 0.3s ease;
+}
+.menu {
+    width: 5000px;
+    height: 50px;
+    text-align: center;
+    max-width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-color: transparent;
+    color: white;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    font-size: 14pt;
+    /* font-family: 'PT Sans', Arial, Sans-serif; */
+}
+
+.auth-box{
+    display: inline-block;
+    width: 200px;
+    margin-left: auto;
+    position: relative;
+    padding: 10px;
+    text-align: center;
+}
+
+/* .auth-box a{
+    padding: 14.5px 16px;
+    color: #FFFFFF;
+    text-decoration: none;
+    line-height: 50px;
+    height: 50px;
+    margin-left: 10px;
+} */
+
+#login-button{
+    border: none;
+    background-color: transparent;
+    line-height: 60px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFFFFF;
+    cursor: pointer;
+    
+}
+
+#login-button:hover{
+    color: #007bff;
+    transition: all 0.3s ease;
+}
+
+#login-button svg{
+    position: relative;
+    margin-right: 5px;
+    top: 5px;
+}
