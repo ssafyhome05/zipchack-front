@@ -4,6 +4,7 @@ import MapView from '@/views/PlatformViews/MapView.vue';
 import NavigationComponent from '@/components/HomeViewComponents/NavigationComponent.vue';
 import LoginModalComponent from '@/components/HomeViewComponents/NavigationComponents/LoginModalComponent.vue';
 import RegistModalComponent from '@/components/HomeViewComponents/NavigationComponents/RegistModalComponent.vue';
+import KakaoMap from '@/components/MapViewComponents/KakaoMap.vue';
 // common
 
 
@@ -14,4 +15,5 @@ export function addComponents(app) {
   app.component('NavigationComponent', NavigationComponent);
   app.component('LoginModalComponent', LoginModalComponent);
   app.component('RegistModalComponent', RegistModalComponent);
+  app.component('KakaoMap', KakaoMap);
 }

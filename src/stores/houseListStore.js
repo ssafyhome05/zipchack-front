@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import { SERVER_URL } from '@/assets/resources/config';
+import { SERVER_URL } from '@/assets/resources/configs/config';
 import axios from 'axios';
 
 
