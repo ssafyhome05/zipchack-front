@@ -32,6 +32,7 @@
 
 <script>
 import HomeViewScript from '@/assets/js/PlatformViewsScript/HomeViewScript.js';
+import NavigationComponentScript from '@/components/HomeViewComponents/Navigation.vue';
 export default HomeViewScript;
 </script>
 

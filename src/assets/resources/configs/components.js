@@ -1,9 +1,9 @@
 import PlatformView from '@/views/PlatformView.vue';
 import WelcomeView from '@/views/PlatformViews/WelcomeView.vue';
 import MapView from '@/views/PlatformViews/MapView.vue';
-import NavigationComponent from '@/components/HomeViewComponents/NavigationComponent.vue';
-import LoginModalComponent from '@/components/HomeViewComponents/NavigationComponents/LoginModalComponent.vue';
-import RegistModalComponent from '@/components/HomeViewComponents/NavigationComponents/RegistModalComponent.vue';
+import NavigationComponent from '@/components/HomeViewComponents/Navigation.vue';
+import LoginModalComponent from '@/components/HomeViewComponents/NavigationComponents/LoginModal.vue';
+import RegistModalComponent from '@/components/HomeViewComponents/NavigationComponents/RegistModal.vue';
 import KakaoMap from '@/components/MapViewComponents/KakaoMap.vue';
 // common
 
