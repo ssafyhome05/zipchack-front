@@ -1,0 +1,112 @@
+.side-list{
+    position:absolute;
+    margin: 0;
+    width: 500px;
+    height: 100%;
+    left: 0;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 3px 0px 10px rgba(115, 115, 115, 0.42);
+    transition: width 0.5s, right 0.5s;
+    display: flex;
+    flex-direction: row;
+    /* display: none; */
+}
+
+.side-list-menu{
+    position: relative;
+    width: 75px;
+    height: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    box-shadow: 0px 0px 3px rgba(115, 115, 115, 0.42);
+    /* border-right: 1px solid rgb(160, 160, 160); */
+}
+
+.side-list-menu-item-logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 80px;
+    cursor: pointer;
+}
+
+.side-list-menu-item-logo:hover{
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+.side-list-menu-item-logo-img{
+    display: flex;
+    width: 35%;
+    height: 35%;
+    margin: 0 auto;
+}
+
+.side-list-menu-item1, .side-list-menu-item2, .side-list-menu-item3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 95px;
+    color: rgb(160, 160, 160);
+    cursor: pointer;
+}
+
+.side-list-menu-item1:hover, .side-list-menu-item2:hover, .side-list-menu-item3:hover{
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+.side-list-menu-item1,
+.side-list-menu-item2,
+.side-list-menu-item3 {
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.side-list-menu-item1.active,
+.side-list-menu-item2.active,
+.side-list-menu-item3.active {
+    background-color: #007bff; /* 선택된 탭의 배경색 */
+    color: white; /* 선택된 탭의 텍스트 색상 */
+}
+
+/* 텍스트와 아이콘 색상 모두 변경 */
+.side-list-menu-item-tabtext,
+.side-list-menu-item-tabimg {
+    color: inherit;
+}
+
+
+.side-list-menu-item-tabimg{
+    display: flex;
+    /* width: 35%;
+    height: 35%; */
+    margin: 0 auto;
+    font-size: 1.7rem;
+}
+
+.side-list-menu-item-tabtext{
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.zipchak-img{
+    width: 70%;
+    height: 60%;
+}
+
+.side-list-content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 82%;
+}

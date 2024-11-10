@@ -5,6 +5,14 @@ import NavigationComponent from '@/components/HomeViewComponents/Navigation.vue'
 import LoginModalComponent from '@/components/HomeViewComponents/NavigationComponents/LoginModal.vue';
 import RegistModalComponent from '@/components/HomeViewComponents/NavigationComponents/RegistModal.vue';
 import KakaoMap from '@/components/MapViewComponents/KakaoMap.vue';
+import SideBar from '@/components/MapViewComponents/SideBar.vue';
+import MainList from '@/components/MapViewComponents/SideBarComponents/MainList.vue';
+import HouseInfoList from '@/components/MapViewComponents/SideBarComponents/HouseInfoList.vue';
+import BookmarkList from '@/components/MapViewComponents/SideBarComponents/BookmarkList.vue';
+import SidoModal from '@/components/common/SidoModal.vue';
+import GugunModal from '@/components/common/GugunModal.vue';
+import DongModal from '@/components/common/DongModal.vue';
+import HouseInfoListItem from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseInfoListItem.vue';
 // common
 
 
@@ -16,4 +24,12 @@ export function addComponents(app) {
   app.component('LoginModalComponent', LoginModalComponent);
   app.component('RegistModalComponent', RegistModalComponent);
   app.component('KakaoMap', KakaoMap);
+  app.component('SideBar', SideBar);
+  app.component('MainList', MainList);
+  app.component('HouseInfoList', HouseInfoList);
+  app.component('BookmarkList', BookmarkList);
+  app.component('SidoModal', SidoModal);
+  app.component('GugunModal', GugunModal);
+  app.component('DongModal', DongModal);
+  app.component('HouseInfoListItem', HouseInfoListItem);
 }
