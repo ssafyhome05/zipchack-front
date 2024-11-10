@@ -8,6 +8,10 @@ import router from './router';
 import VueCookies from 'vue-cookies';
 import VueSonner from 'vue-sonner';
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import "bootstrap"
+
 // components
 import { addComponents } from '@/assets/resources/configs/components';
 

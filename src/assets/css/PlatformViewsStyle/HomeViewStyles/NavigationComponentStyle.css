@@ -1,5 +1,6 @@
 nav{
     position: relative;
+    right: 9%;
 }
 
 nav ul{
@@ -9,8 +10,8 @@ nav ul{
 }
 
 .logo{
-    position:absolute;
-    left: 7%;
+    position:relative;
+    left: 10%;
     top: 20%;
     height: 70px;
     width: 50px;
@@ -75,6 +76,8 @@ li a:hover{
 }
 
 .auth-box{
+    position: relative;
+    right: 5%;
     display: inline-block;
     width: 200px;
     margin-left: auto;
@@ -83,19 +86,10 @@ li a:hover{
     text-align: center;
 }
 
-/* .auth-box a{
-    padding: 14.5px 16px;
-    color: #FFFFFF;
-    text-decoration: none;
-    line-height: 50px;
-    height: 50px;
-    margin-left: 10px;
-} */
-
 #login-button{
     border: none;
     background-color: transparent;
-    line-height: 60px;
+    line-height: 70px;
     font-size: 18px;
     font-weight: bold;
     color: #FFFFFF;
@@ -111,5 +105,45 @@ li a:hover{
 #login-button svg{
     position: relative;
     margin-right: 5px;
-    top: 5px;
+    top: 0px;
+}
+
+.user-name i{
+    position: relative;
+    font-size: 25px;
+    top: 3px;
+    line-height: 10px;
+}
+
+.user-name{
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.logout-button{
+    border: none;
+    background-color: transparent;
+    line-height: 60px;
+    font-size: 18px;
+    color: white;
+}
+
+.logout-button:hover{
+    cursor: pointer;
+    color: #FFD400;
+}
+
+.bi-box-arrow-right{
+    font-size: 25px;
+    line-height: 10px;
+    position: relative;
+    top: 3px;
+}
+
+.logout-button:hover{
+    cursor: pointer;
+    color: #007bff;
+    transition: all 0.3s ease;
 }
