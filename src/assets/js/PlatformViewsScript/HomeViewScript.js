@@ -67,7 +67,7 @@ export default {
       bgVideo,
       page,
       scrollToTop,
-      updateScrollButtonVisibility
+      updateScrollButtonVisibility,
     };
   }
 };

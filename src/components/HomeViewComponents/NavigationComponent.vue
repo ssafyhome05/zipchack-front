@@ -13,7 +13,7 @@
         </nav>
 
         <div class="auth-box">
-            <!-- <div v-if="!user"> -->
+            <div v-if="!user">
                 <button
                 type="button"
                 class="btn btn-primary"
@@ -35,19 +35,21 @@
 
                 Login
                 </button>
-            <!-- </div> -->
+            </div>
              
-            <!-- <div v-else>
+            <div v-else>
                 <span class="user-name">
                 <i class="bi bi-person-fill"></i>
                 {{ user.userEmail }} 님 </span>
                 <button class="logout-button" @click="logout">
                 <i class="bi bi-box-arrow-right"></i>
                 </button>
-            </div> -->
+            </div>
         </div>
     </div>
-
+    
+    <LoginModalComponent />
+    <RegistModalComponent />
 </template>
 
 <script>

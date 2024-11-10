@@ -1,0 +1,208 @@
+.modal-title{
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 17px;
+}
+
+#login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5%;
+    /* margin: 0 auto; */
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"]{
+    padding-left: 15px;
+}
+
+#login-form input{
+    height: 40px;
+    font-size: 17px;
+    line-height: 10px;
+    margin: 2px;
+    padding-top: 7px;
+}
+
+#google-login {
+    position: relative;
+    width: 70.5%;
+    border: 1px solid rgba(0, 0, 0, 0.54);
+    height: 50px;
+    bottom: 35px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 14px;
+    /* padding: 0 10px; */
+}
+
+#google-login img {
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+    transform: scale(1.2);
+    transform-origin: top left;
+}
+
+#google-login span {
+    /* font-family: 'Roboto-Medium'; */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#naver-login{
+    position: relative;
+    width: 70.5%;
+    height: 50px;
+    bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    background-color: rgb(3, 199, 90);
+}
+
+#naver-login img{
+    position: absolute;
+    left: 0;
+    top: 0px;
+    /* bottom: 8px; */
+    transform: scale(0.25);
+    transform-origin: top left;
+}
+
+#naver-login span{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#kakao-login{
+    transform: scale(0.55);
+    transform-origin: top;
+    margin-top: 40px;
+}
+
+#google-login:hover,
+#kakao-login:hover,
+#naver-login:hover{
+    cursor: pointer;
+}
+
+
+.go-regist{
+    width: fit-content;
+    font-size: 20px;
+    margin: 0 auto;
+    border: none;
+    background-color: transparent;
+    line-height: 40px;
+    font-weight: bold;
+    display: block;
+}
+
+.go-regist:hover{
+    color: #007bff;
+    transition: 0.3s;
+}
+
+.login-input-box {
+    position: relative;
+    width: 90%;
+    margin-left: 50px;
+    margin-bottom: 30px;
+}
+
+.login-input{
+    font-size: 15px;
+    color: #222222;
+    width: 80%;
+    left: 3%;
+    border: none;
+    border-bottom: solid #aaaaaa 1px;
+    padding-bottom: 10px;
+    text-align: left;
+    padding-left: 1%;
+    position: relative;
+    background: none;
+    z-index: 5;
+}
+
+.login-input::placeholder { color: #aaaaaa;}
+.login-input:focus { outline: none; }
+
+.login-input-box span {
+    display: block;
+    position: absolute;
+    bottom: 1.5px;
+    left: 43.5%;  /* right로만 바꿔주면 오 - 왼 */
+    background-color: #666;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: 0.5s;
+}
+  
+.login-input-box label {
+  position: absolute;
+  color: #aaa;
+  left: 30%;
+  width: 50%;
+  text-align: left;
+  transform: translateX(-50%);
+  font-size: 16px;
+  bottom: 8px;
+  transition: all .2s;
+}
+
+.login-input:focus ~ label{
+    font-size: 16px;
+    bottom: 40px;
+    color: #666;
+    font-weight: bold;
+}
+
+.login-input:focus ~ span{
+    width: 80%;
+}
+
+.login {
+    position: relative;
+    width: 70.5%;
+    top: 35px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: white; 
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    border-bottom-color: rgba(0,0,0,0.34);
+    background: #007bff;
+    text-shadow:0 1px 0 rgba(0,0,0,0.15);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                0 2px 0 -1px rgba(0,0,0,0.13), 
+                0 3px 0 -1px rgba(0,0,0,0.08), 
+                0 3px 13px -1px rgba(0,0,0,0.21);
+}
+
+.login:active {
+    top: 37px;
+    border-color: rgba(0,0,0,0.34) rgba(0,0,0,0.21) rgba(0,0,0,0.21);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.89),0 1px rgba(0,0,0,0.05) inset;
+    position: relative;
+}
+
+.login-error{
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    line-height: 1px;
+}
