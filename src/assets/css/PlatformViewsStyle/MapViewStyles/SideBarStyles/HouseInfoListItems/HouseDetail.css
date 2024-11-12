@@ -3,7 +3,7 @@
     padding: 0;
     top: 5%;
     left: 450px;
-    z-index: 1000;
+    z-index: 999;
     width: 400px;
     min-height: 70%;
     max-height: 88%;
@@ -11,14 +11,24 @@
     border-radius: 15px;
     background-color: #fff;
     box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.1);
-    transition: all 0.4s ease-in-out;
+}
+
+.house-detail-container::-webkit-scrollbar{
+    width: 0.5vw;
+}
+ 
+.house-detail-container::-webkit-scrollbar-thumb{
+    background-color: #cacaca;
+    border-radius: 10px;
 }
 
 .load-view-container {
     position: relative;
     width: 100%;
-    height: 210px;
-    border-radius: 15px 15px 0 0;
+    height: 200px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px 1px rgba(138, 138, 138, 0.3);
+    /* border-radius: 15px 15px 0 0; */
     /* border: 1px solid #000; */
 }
 
@@ -49,22 +59,19 @@
     right: 0;
     color: #000;
     margin-left: auto;
+    cursor: pointer;
+}
+
+.house-detail-bookmark:hover {
+    transition: all 0.3s ease;
+    color: #007bff;
 }
 
 .house-detail-content {
     padding: 20px;
     /* border: 1px solid #000; */
-    overflow: auto;
 }
 
-.house-detail-content::-webkit-scrollbar{
-    width: 0.5vw;
-}
- 
-.house-detail-content::-webkit-scrollbar-thumb{
-    background-color: #cacaca;
-    border-radius: 10px;
-}
 .house-detail-graph-title {
     font-size: 18px;
     font-weight: bold;
@@ -79,8 +86,6 @@
 
 .house-detail-graph-year-select{
     position: relative;
-    /* display: block; */
-    /* right: 30px; */
     left: 5px;
     bottom: 1px;
     margin-left: auto;
@@ -91,6 +96,10 @@
     border: none;
 }
 
+.house-detail-graph-year-select:focus{
+    outline: none;
+}
+
 .house-detail-graph {
     width: 100%;
     height: 300px;
@@ -99,4 +108,32 @@
 #house-detail-year-graph {
     width: 100%;
     /* height: 400px; */
+}
+
+.house-detail-info {
+    /* border: 1px solid #000; */
+    position: relative;
+    margin: 0 auto;
+    margin-top: 60px;
+    width: 85%;
+    font-size: 14px;
+}
+
+.house-detail-info-deal-avg-title{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.house-detail-info-deal-cnt{
+    width: 100%;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.house-detail-distance {
+    margin-top: 30px;
+    border: 1px solid #000;
+    width: 100%;
+    height: 500px;
 }

@@ -1,6 +1,6 @@
 import { KAKAO_API_KEY } from '@/assets/resources/configs/config';
 import { useHouseListStore } from '@/stores/houseListStore';
-import { ref, onMounted, watch, toRaw } from 'vue';
+import { ref, onMounted, watch, toRaw, watchEffect } from 'vue';
 import axios from 'axios';
 import { SERVER_URL } from '@/assets/resources/configs/config';
 
@@ -19,13 +19,11 @@ export default{
             } else {
                 loadScript();
             }
-            
         });
-        
+
         watch(() => houseListStore.houseList, (newVal) => {
             houseInfoList.value = loadHouseInfo(newVal);
         }, { deep: true });
-
 
         const loadScript = () => {
             const script = document.createElement("script");
@@ -212,13 +210,13 @@ export default{
             };
         };
 
-        const addRoadview = () => {
+        const addRoadview = (latitude, longitude) => {
             const roadviewContainer = document.getElementById("load-view-container");
             const roadview = new window.kakao.maps.Roadview(roadviewContainer);
             const roadviewClient = new window.kakao.maps.RoadviewClient();
 
             // 로드뷰 위치 설정
-            const position = new window.kakao.maps.LatLng("37.57436026492034", "126.96884987829033");
+            const position = new window.kakao.maps.LatLng(latitude, longitude);
             roadviewClient.getNearestPanoId(position, 200, (panoId) => {
                 if (panoId) {
                     roadview.setPanoId(panoId, position);

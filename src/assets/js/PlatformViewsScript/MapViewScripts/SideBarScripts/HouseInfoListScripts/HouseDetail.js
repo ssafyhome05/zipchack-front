@@ -1,6 +1,6 @@
 import { KAKAO_API_KEY } from '@/assets/resources/configs/config.js';
 import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
-import { ref, onMounted, watch, onUpdated } from 'vue';
+import { ref, onMounted, watch, nextTick, onBeforeMount, watchEffect } from 'vue';
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -16,30 +16,66 @@ export default {
         const chartData = ref(null);
         const chartOptions = ref(null);
 
-        onMounted(() => {
+        onMounted(async () => {
+            loadScript();  
             houseDetail.value = houseDetailStore.getHouseDetail;
             address.value = houseDetailStore.getAddress;
+            nextTick(() => {
+                addRoadview(houseDetail.value.latitude, houseDetail.value.longitude);
+            });
         });
 
         watch(() => houseDetailStore.houseDetail, (newVal) => {
             houseDetail.value = newVal;
             address.value = houseDetailStore.getAddress;
+            nextTick(() => {
+                addRoadview(houseDetail.value.latitude, houseDetail.value.longitude);
+            });
         }, { deep: true});
 
+        const loadScript = () => {
+            const script = document.createElement("script");
+            script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false&libraries=services`; 
+            document.head.appendChild(script);
+        };
 
-        const addRoadviewToInfowindow = () => {
+        const addRoadview = (latitude, longitude) => {
             const roadviewContainer = document.getElementById("load-view-container");
             const roadview = new window.kakao.maps.Roadview(roadviewContainer);
             const roadviewClient = new window.kakao.maps.RoadviewClient();
-
+            if(latitude && longitude) {
             // 로드뷰 위치 설정
-            const position = new window.kakao.maps.LatLng(37.57436026492034, 126.96884987829033);
-            roadviewClient.getNearestPanoId(position, 50, (panoId) => {
-                if (panoId) {
-                    roadview.setPanoId(panoId, position);
+            const position = new window.kakao.maps.LatLng(latitude, longitude);
+                roadviewClient.getNearestPanoId(position, 200, (panoId) => {
+                    if (panoId) {
+                        roadview.setPanoId(panoId, position);
+                    }
+                });
+            }else{
+                addRoadviewToAddress(address.value, roadview, roadviewClient);
+            }
+        };
+
+        const addRoadviewToAddress = (address, roadview, roadviewClient) => {
+            var geocoder = new kakao.maps.services.Geocoder();
+
+            geocoder.addressSearch(address, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    const latitude = result[0].y;
+                    const longitude = result[0].x;
+                    roadviewClient.getNearestPanoId(new kakao.maps.LatLng(latitude, longitude), 200, (panoId) => {
+                        if (panoId) {
+                            roadview.setPanoId(panoId, new kakao.maps.LatLng(latitude, longitude));
+                        }
+                    });
                 }
             });
         };
+
+        const changeYear = (event) => {
+            console.log(event.target.value);
+        };
+
         chartData.value = {
             labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],  // 연도별 레이블
             datasets: [
@@ -90,24 +126,24 @@ export default {
                 }
             },
             scales: {
-                x: {
-                    type: 'category',  // X축을 카테고리로 설정
-                    title: {
-                        display: true,
-                        text: '단위: 만원',
-                        align: 'end',
-                        font: {
-                            size: 12,
-                            weight: 'bold',
-                            color: '#CCCCCC',
-                        }
-                    }
-                },
+                // x: {
+                //     type: 'category',
+                //     title: {
+                //         display: true,
+                //         text: '단위: 만원',
+                //         align: 'end',
+                //         font: {
+                //             size: 12,
+                //             weight: 'bold',
+                //             color: '#CCCCCC',
+                //         }
+                //     }
+                // },
                 y: {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: '금액 (만원)',
+                        text: '거래 횟수',
                         font: {
                             size: 12,
                             weight: 'bold',
@@ -122,6 +158,7 @@ export default {
             address,
             chartData,
             chartOptions,
+            changeYear,
         };
     },
 };

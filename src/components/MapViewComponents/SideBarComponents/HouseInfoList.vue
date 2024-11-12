@@ -36,7 +36,7 @@
                     :sidoName="sidoName"
                     :gugunName="gugunName"
                     :dongName="dongName"
-                    @click-house="openHouseModal"
+                    @click-house="openHouseDetail"
                 />
             </div>
         </div>

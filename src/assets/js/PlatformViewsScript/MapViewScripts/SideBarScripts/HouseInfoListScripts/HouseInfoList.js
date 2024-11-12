@@ -1,13 +1,14 @@
-import { onMounted, ref, reactive, toRaw } from 'vue';
+import { onMounted, ref, reactive, nextTick } from 'vue';
 import { Modal } from 'bootstrap';
 import axios from 'axios';
-import { SERVER_URL } from '@/assets/resources/configs/config.js';
+import { SERVER_URL, KAKAO_API_KEY } from '@/assets/resources/configs/config.js';
 import { useHouseListStore } from '@/stores/houseListStore.js';
-
+import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
 export default {
     setup() {
     // Store 초기화
     const houseListStore = useHouseListStore();
+    const houseDetailStore = useHouseDetailStore();
     
     // Refs와 reactive state 설정
     const sido = ref("");
@@ -28,11 +29,18 @@ export default {
 
     // Mounted 시점에 지도 및 초기 설정 로드
     onMounted(() => {
+        loadScript();
         sendRequest("sido", "*00000000");
         document.addEventListener('sido-selected', e => handleSidoSelection(e.detail, e.target.innerText));
         document.addEventListener('gugun-selected', e => handleGugunSelection(e.detail, e.target.innerText));
         document.addEventListener('dong-selected', e => handleDongSelection(e.detail, e.target.innerText));
     });
+
+    const loadScript = () => {
+        const script = document.createElement("script");
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false&libraries=services`; 
+        document.head.appendChild(script);
+    };
 
     function openSidoModal(){
         const modalElement = document.getElementById('sido-modal');
@@ -229,6 +237,8 @@ export default {
     };
 
     async function searchHouse(dongCode){
+        
+
         let inputKeyword = document.querySelector('.search-input').value;
         keyword.value = inputKeyword;
         if(keyword.value != ""){
@@ -248,12 +258,60 @@ export default {
 
         await houseListStore.setHouseList(dongCode, keyword.value);
         houseInfoList.value =  await houseListStore.getHouseList;
+
+        const detailContainer = document.querySelector('.house-detail-container');
+        if(detailContainer){
+            houseDetailStore.setHouseDetail(null);
+            houseDetailStore.setAddress(null);
+            detailContainer.style.display = "none";
+        }
     }
 
-    function openHouseModal() {
-        showModal.value = true; // 모달 열기
+    function openHouseDetail(house) {
+        showModal.value = true;
+        houseDetailStore.setHouseDetail(house);
+        houseDetailStore.setAddress(
+            sidoName.value + " " + gugunName.value + " " + dongName.value + " " + house.roadNm
+        );
+        // nextTick(() => {
+        //     addRoadview(house.latitude, house.longitude);
+        // });
     }
 
+    const addRoadview = (latitude, longitude) => {
+        const roadviewContainer = document.getElementById("load-view-container");
+        const roadview = new window.kakao.maps.Roadview(roadviewContainer);
+        const roadviewClient = new window.kakao.maps.RoadviewClient();
+        if(latitude && longitude) {
+        // 로드뷰 위치 설정
+        const position = new window.kakao.maps.LatLng(latitude, longitude);
+            roadviewClient.getNearestPanoId(position, 200, (panoId) => {
+                if (panoId) {
+                    roadview.setPanoId(panoId, position);
+                }
+            });
+        }else{
+            const address = houseDetailStore.getAddress;
+            addRoadviewToAddress(address, roadview, roadviewClient);
+        }
+    };
+
+    const addRoadviewToAddress = (address, roadview, roadviewClient) => {
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        geocoder.addressSearch(address, function(result, status) {
+            console.log(address);
+            if (status === kakao.maps.services.Status.OK) {
+                const latitude = result[0].y;
+                const longitude = result[0].x;
+                roadviewClient.getNearestPanoId(new kakao.maps.LatLng(latitude, longitude), 200, (panoId) => {
+                    if (panoId) {
+                        roadview.setPanoId(panoId, new kakao.maps.LatLng(latitude, longitude));
+                    }
+                });
+            }
+        });
+    };
 
     return {
         // datas
@@ -278,7 +336,7 @@ export default {
         openDongModal,
         closeDongModal,
         validateForm,
-        openHouseModal,
+        openHouseDetail,
     }
 }
 }
