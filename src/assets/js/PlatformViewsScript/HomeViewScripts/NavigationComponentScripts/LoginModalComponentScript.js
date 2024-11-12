@@ -3,12 +3,14 @@ import { ref, nextTick } from 'vue';
 import { SERVER_URL } from '@/assets/resources/configs/config';
 import { showWarningToast, showSuccessToast, showErrorToast } from '@/assets/js/PlatformViewsScript/CommonScripts/showToast';
 import axios from 'axios';
-
+import { useRoute, useRouter } from 'vue-router';
+import { useUserInfoStore } from '@/stores/userInfoStore';
 export default {
     setup() {
-
+        const serverUrl = ref(SERVER_URL);
+        const userInfoStore = useUserInfoStore();
         const isAuthorized = ref(true);
-
+        const route = useRoute();
         function closeLoginModal() {
             const modalElement = document.getElementById('login-modal');
             const modalInstance = Modal.getInstance(modalElement);
@@ -52,6 +54,7 @@ export default {
                 
                 if(response.status === 200){
                     showSuccessToast("로그인되었습니다.");
+                    userInfoStore.setUser();
                 }else{
                     showWarningToast("아이디 또는 비밀번호를 확인해주세요.");
                 }
@@ -69,6 +72,7 @@ export default {
 
         return {
             // data
+            serverUrl,
             isAuthorized,
 
             // methods

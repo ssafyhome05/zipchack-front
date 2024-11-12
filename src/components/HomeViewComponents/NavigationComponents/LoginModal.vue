@@ -45,12 +45,12 @@
               <!-- <button @click="login" class="login button">LOGIN</button> -->
 
               <!-- kakao login -->
-              <a id="kakao-login" class="button">
+              <a id="kakao-login" class="button" :href="`${serverUrl}/oauth2/authorization/kakao`">
                   <img src="@/assets/resources/images/kakaologin.png">
               </a>
 
               <!-- google login -->
-              <a id="google-login" class="button">
+              <a id="google-login" class="button" :href="`${serverUrl}/oauth2/authorization/google`">
                   <!-- <img :src="google"> -->
                   <!-- <img src="../assets/images/google_logo.svg"> -->
                   <img src="@/assets/resources/images/google_logo.svg">
@@ -58,7 +58,7 @@
               </a>
 
               <!-- naver login -->
-              <a id="naver-login" class="button">
+              <a id="naver-login" class="button" :href="`${serverUrl}/oauth2/authorization/naver`">
                   <img src="@/assets/resources/images/naver_logo.png">
                   <span>네이버 로그인</span>
               </a>

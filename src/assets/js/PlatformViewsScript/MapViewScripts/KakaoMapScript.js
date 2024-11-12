@@ -1,7 +1,6 @@
 import { KAKAO_API_KEY } from '@/assets/resources/configs/config';
-import { defineStore } from 'pinia';
 import { useHouseListStore } from '@/stores/houseListStore';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, toRaw } from 'vue';
 import axios from 'axios';
 import { SERVER_URL } from '@/assets/resources/configs/config';
 
@@ -20,11 +19,11 @@ export default{
             } else {
                 loadScript();
             }
+            
         });
         
         watch(() => houseListStore.houseList, (newVal) => {
-            houseInfoList.value = loadHouseInfo(newVal); // 새로운 houseList 값으로 갱신
-            console.log(houseInfoList.value);
+            houseInfoList.value = loadHouseInfo(newVal);
         }, { deep: true });
 
 
@@ -62,7 +61,7 @@ export default{
         // 매물 정보 불러오기 
         const loadHouseInfo = (houseList) => {
             clearMarkers();
-            
+
             var geocoder = new window.kakao.maps.services.Geocoder();
             const sidoName = houseListStore.getSidoName;
             const gugunName = houseListStore.getGugunName;
@@ -89,10 +88,11 @@ export default{
                     content: houseList[i].aptNm,
                 });
         
-                // 이벤트 리스너 등록
-                window.kakao.maps.event.addListener(marker, 'mouseover', makeInfoWindow(kakaoMap.value, marker, infowindow));
+                // 이벤트 리스너 등록 - 마커에 마우스를 올렸을 때 로드뷰 인포윈도우 표시
+                window.kakao.maps.event.addListener(marker, 'mouseover', 
+                    makeInfoWindowWithRoadview(toRaw(kakaoMap.value), marker, infowindow, houseList[i].latitude, houseList[i].longitude));
                 window.kakao.maps.event.addListener(marker, 'mouseout', removeInfoWindow(infowindow));
-                
+        
                 // 마커 배열에 저장
                 markers.value.push(marker);
             }
@@ -107,11 +107,10 @@ export default{
                 });
                 
                 if (response.data && Array.isArray(response.data)) {
-                    // Map the response to extract latitude and longitude
                     const coordinates = response.data.map((location) => {
                         return {
-                            lat: location.lat, // Extract latitude
-                            lng: location.lng  // Extract longitude
+                            lat: location.lat,
+                            lng: location.lng
                         };
                     });
                     return coordinates; // Return array of coordinates
@@ -126,6 +125,7 @@ export default{
         };
 
         const addNeighborhoodPolygon = async (dong) => {
+            // addRoadview();
             const coordinatesList = await findNeighborhoodCoordinates(dong);
 
             if (!Array.isArray(coordinatesList) || coordinatesList.length === 0) {
@@ -180,6 +180,50 @@ export default{
             return () => {
                 infowindow.close();
             };
+        };
+
+        // loadview test
+        // 로드뷰 설정
+        const addRoadviewToInfowindow = (latitude, longitude, infowindow) => {
+            const roadviewContainer = document.createElement("div");
+            roadviewContainer.style.width = "300px";
+            roadviewContainer.style.height = "200px";
+            
+            const roadview = new window.kakao.maps.Roadview(roadviewContainer);
+            const roadviewClient = new window.kakao.maps.RoadviewClient();
+
+            // 로드뷰 위치 설정
+            const position = new window.kakao.maps.LatLng(latitude, longitude);
+            roadviewClient.getNearestPanoId(position, 50, (panoId) => {
+                if (panoId) {
+                    roadview.setPanoId(panoId, position);
+                    infowindow.setContent(roadviewContainer);
+                } else {
+                    infowindow.setContent("<div>로드뷰가 없습니다.</div>");
+                }
+            });
+        };
+
+        /// 마커 infowindow 표시
+        const makeInfoWindowWithRoadview = (map, marker, infowindow, latitude, longitude) => {
+            return () => {
+                addRoadviewToInfowindow(latitude, longitude, infowindow);
+                infowindow.open(map, marker);
+            };
+        };
+
+        const addRoadview = () => {
+            const roadviewContainer = document.getElementById("load-view-container");
+            const roadview = new window.kakao.maps.Roadview(roadviewContainer);
+            const roadviewClient = new window.kakao.maps.RoadviewClient();
+
+            // 로드뷰 위치 설정
+            const position = new window.kakao.maps.LatLng("37.57436026492034", "126.96884987829033");
+            roadviewClient.getNearestPanoId(position, 200, (panoId) => {
+                if (panoId) {
+                    roadview.setPanoId(panoId, position);
+                }
+            });
         };
 
         return {

@@ -2,9 +2,9 @@
     position: relative;
     width: 424px;
     height: 100%;
+    overflow: hidden;
     /* background-color: #f0f0f0; */
 }
-
 
 .house-deal-form{
     width: 100%;
@@ -173,19 +173,20 @@
 }
 
 .house-deal-list{
+    position: relative;
     width: 100%;
-    height: 70%;
-    overflow: auto;    
+    height: 65%;
+    overflow: scroll;    
 }
 
 .house-deal-list::-webkit-scrollbar{
     width: 0.5vw;
- }
+}
  
- .house-deal-list::-webkit-scrollbar-thumb{
-     background-color: #cacaca;
-     border-radius: 10px;
- }
+.house-deal-list::-webkit-scrollbar-thumb{
+    background-color: #cacaca;
+    border-radius: 10px;
+}
 
 .house-deal-list-item{
     width: 100%;
@@ -248,16 +249,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    width: 90%;
+    width: 93%;
     height: 100%;
-    padding-left: 25px;
+    padding-left: 7%;
+    padding-top: 3%;
 }
 
 .house-deal-list-item-detail-aptname{
+    display: flex;
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 3px;
     color: #0D6BFF;
+    width: 100%;
 }
 
 .house-deal-list-item-detail-cnt-price{
@@ -342,3 +346,23 @@
   }
 }
 
+.house-deal-list-item-detail-bookmark{
+    color: black;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: auto;
+    z-index: 1;
+}
+
+.house-deal-list-item-detail-bookmark:hover{
+    color: #0D6BFF;
+    font-weight: bold;
+}
+
+.house-deal-list-item-detail-bookmark-fill{
+    color: #0D6BFF;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: auto;
+    z-index: 1;
+}

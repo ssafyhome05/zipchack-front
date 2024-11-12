@@ -1,6 +1,7 @@
 <template>
     <SideBar />
     <KakaoMap />
+    <!-- <HouseDetail /> -->
     <SidoModal />
     <GugunModal />
     <DongModal />

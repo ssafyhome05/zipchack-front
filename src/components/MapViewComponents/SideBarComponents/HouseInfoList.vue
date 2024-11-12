@@ -35,17 +35,24 @@
                     :house="house" 
                     :sidoName="sidoName"
                     :gugunName="gugunName"
-                    :dongName="dongName" 
+                    :dongName="dongName"
+                    @click-house="openHouseModal"
                 />
             </div>
         </div>
     </div>
+
+    <HouseDetail 
+        v-if="showModal"
+        :houseDetail="houseDetail"
+    />
     
 </template>
 
 <script>
 import HouseInfoList from '@/assets/js/PlatformViewsScript/MapViewScripts/SideBarScripts/HouseInfoListScripts/HouseInfoList.js';
 import HouseInfoListScript from '@/assets/js/PlatformViewsScript/MapViewScripts/SideBarScripts/HouseInfoListScripts/HouseInfoList.js';
+import HouseDetail from './HouseInfoListItems/HouseDetail.vue';
 export default HouseInfoListScript;
 </script>
 
