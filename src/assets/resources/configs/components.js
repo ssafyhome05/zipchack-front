@@ -13,6 +13,7 @@ import SidoModal from '@/components/common/SidoModal.vue';
 import GugunModal from '@/components/common/GugunModal.vue';
 import DongModal from '@/components/common/DongModal.vue';
 import HouseInfoListItem from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseInfoListItem.vue';
+import HouseDetail from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetail.vue';
 // common
 
 
@@ -32,4 +33,5 @@ export function addComponents(app) {
   app.component('GugunModal', GugunModal);
   app.component('DongModal', DongModal);
   app.component('HouseInfoListItem', HouseInfoListItem);
+  app.component('HouseDetail', HouseDetail);
 }

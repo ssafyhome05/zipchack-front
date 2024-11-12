@@ -24,7 +24,8 @@ export default {
     const houseInfoList = ref([]);
     const markers = reactive([]);
     let polygon = ref(null);
- 
+    const showModal = ref(false);
+
     // Mounted 시점에 지도 및 초기 설정 로드
     onMounted(() => {
         sendRequest("sido", "*00000000");
@@ -249,6 +250,10 @@ export default {
         houseInfoList.value =  await houseListStore.getHouseList;
     }
 
+    function openHouseModal() {
+        showModal.value = true; // 모달 열기
+    }
+
 
     return {
         // datas
@@ -263,6 +268,7 @@ export default {
         houseInfoList,
         markers,
         polygon,
+        showModal,
         
         // methods
         openSidoModal,
@@ -272,6 +278,7 @@ export default {
         openDongModal,
         closeDongModal,
         validateForm,
+        openHouseModal,
     }
 }
 }

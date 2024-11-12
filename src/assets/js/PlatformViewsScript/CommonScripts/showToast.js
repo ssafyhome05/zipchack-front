@@ -11,3 +11,7 @@ export function showSuccessToast(msg) {
 export function showErrorToast(msg) {
     toast.error(msg, {duration: 2000});
 }
+
+export function showInfoToast(msg) {
+    toast(msg, {duration: 1500});
+}

@@ -1,0 +1,102 @@
+.house-detail-container {
+    position: absolute;
+    padding: 0;
+    top: 5%;
+    left: 450px;
+    z-index: 1000;
+    width: 400px;
+    min-height: 70%;
+    max-height: 88%;
+    overflow: auto;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease-in-out;
+}
+
+.load-view-container {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    border-radius: 15px 15px 0 0;
+    /* border: 1px solid #000; */
+}
+
+.house-detail-header {
+    padding: 20px;
+    box-shadow: 0px 2px 5px 1px rgba(138, 138, 138, 0.1);
+    /* border: 1px solid #000; */
+}
+
+.house-detail-title {
+    position: relative;
+    color: #007bff;
+    font-size: 21px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.house-detail-address {
+    color: #666666;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+.house-detail-bookmark {
+    position: absolute;
+    right: 0;
+    color: #000;
+    margin-left: auto;
+}
+
+.house-detail-content {
+    padding: 20px;
+    /* border: 1px solid #000; */
+    overflow: auto;
+}
+
+.house-detail-content::-webkit-scrollbar{
+    width: 0.5vw;
+}
+ 
+.house-detail-content::-webkit-scrollbar-thumb{
+    background-color: #cacaca;
+    border-radius: 10px;
+}
+.house-detail-graph-title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-top: 15px;
+    width: 95%;
+}
+.bi-bar-chart-line-fill{
+    margin-right: 3px;
+    color: #007bff;
+}
+
+.house-detail-graph-year-select{
+    position: relative;
+    /* display: block; */
+    /* right: 30px; */
+    left: 5px;
+    bottom: 1px;
+    margin-left: auto;
+    font-size: 15px;
+    font-weight: normal;
+    width: 17%;
+    text-align: center;
+    border: none;
+}
+
+.house-detail-graph {
+    width: 100%;
+    height: 300px;
+}
+
+#house-detail-year-graph {
+    width: 100%;
+    /* height: 400px; */
+}
