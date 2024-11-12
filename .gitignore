@@ -29,4 +29,4 @@ coverage
 
 *.tsbuildinfo
 
-src/assets/resources/configs/config.js
+/src/assets/resources/configs/config.js

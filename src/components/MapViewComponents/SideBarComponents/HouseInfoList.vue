@@ -36,7 +36,7 @@
                     :sidoName="sidoName"
                     :gugunName="gugunName"
                     :dongName="dongName"
-                    @click-house="openHouseDetail"
+                    @click-house="openHouseDetail(house)"
                 />
             </div>
         </div>
