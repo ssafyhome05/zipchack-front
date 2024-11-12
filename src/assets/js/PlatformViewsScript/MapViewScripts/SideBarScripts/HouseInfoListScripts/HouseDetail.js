@@ -45,14 +45,16 @@ export default {
             const roadviewClient = new window.kakao.maps.RoadviewClient();
             if(latitude && longitude) {
             // 로드뷰 위치 설정
-            const position = new window.kakao.maps.LatLng(latitude, longitude);
-                roadviewClient.getNearestPanoId(position, 200, (panoId) => {
-                    if (panoId) {
-                        roadview.setPanoId(panoId, position);
-                    }
-                });
+                const position = new window.kakao.maps.LatLng(latitude, longitude);
+                    roadviewClient.getNearestPanoId(position, 200, (panoId) => {
+                        if (panoId) {
+                            roadview.setPanoId(panoId, position);
+                        }
+                    });
+                customOverlay(houseDetail.value.aptNm, address.value, latitude, longitude, roadview, roadviewClient);
             }else{
                 addRoadviewToAddress(address.value, roadview, roadviewClient);
+                customOverlay(houseDetail.value.aptNm, address.value, latitude, longitude, roadview, roadviewClient);
             }
         };
 
@@ -71,6 +73,56 @@ export default {
                 }
             });
         };
+
+        // 커스텀 오버레이
+        const customOverlay = (aptNm, address, latitude, longitude, roadview, roadviewClient) => {
+            // var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            // mapCenter = new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+            // mapOption = {
+            //     center: mapCenter, // 지도의 중심좌표
+            //     level: 3 // 지도의 확대 레벨
+            // };
+
+            // var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            var content = ' <div class="overlay_info">';
+            content += '        <a><i class="bi bi-house-fill"></i><strong>' + aptNm + '</strong></a>';
+            content += '        <div class="desc">';
+            content += '            <span class="address">' + address + '</span>';
+            content += '        </div>';
+            content += '    </div>';
+
+            var position = new window.kakao.maps.LatLng(latitude, longitude);
+            var overlay = new window.kakao.maps.CustomOverlay({
+                position: position,
+                content: content,
+                xAnchor: 0.5, // 커스텀 오버레이의 x축 위치입니다. 1에 가까울수록 왼쪽에 위치합니다. 기본값은 0.5 입니다
+                yAnchor: 1.1 // 커스텀 오버레이의 y축 위치입니다. 1에 가까울수록 위쪽에 위치합니다. 기본값은 0.5 입니다
+            });
+            // 커스텀 오버레이를 지도에 표시
+            // overlay.setMap(map);
+
+            window.kakao.maps.event.addListener(roadview, 'init', function() {
+
+                // 커스텀 오버레이를 생성합니다
+                var rvCustomOverlay = new window.kakao.maps.CustomOverlay({
+                    position: position,
+                    content: content,
+                    xAnchor: 0.5, // 커스텀 오버레이의 x축 위치입니다. 1에 가까울수록 왼쪽에 위치합니다. 기본값은 0.5 입니다
+                    yAnchor: 0.5 // 커스텀 오버레이의 y축 위치입니다. 1에 가까울수록 위쪽에 위치합니다. 기본값은 0.5 입니다
+                });
+            
+                //rvCustomOverlay.setAltitude(2); //커스텀 오버레이의 고도값을 설정합니다.(로드뷰 화면 중앙이 0입니다)
+                rvCustomOverlay.setMap(roadview);
+            
+                var projection = roadview.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체.
+                
+                // 커스텀오버레이의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
+                var viewpoint = projection.viewpointFromCoords(rvCustomOverlay.getPosition(), rvCustomOverlay.getAltitude());
+            
+                roadview.setViewpoint(viewpoint); //커스텀 오버레이를 로드뷰의 가운데에 오도록 로드뷰의 시점을 변화
+            });
+        }
 
         const changeYear = (event) => {
             console.log(event.target.value);

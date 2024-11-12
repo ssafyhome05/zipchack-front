@@ -1,139 +1,201 @@
 .house-detail-container {
-    position: absolute;
-    padding: 0;
-    top: 5%;
-    left: 450px;
-    z-index: 999;
-    width: 400px;
-    min-height: 70%;
-    max-height: 88%;
-    overflow: auto;
-    border-radius: 15px;
-    background-color: #fff;
-    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.1);
+  position: absolute;
+  padding: 0;
+  top: 5%;
+  left: 450px;
+  z-index: 999;
+  width: 400px;
+  min-height: 70%;
+  max-height: 88%;
+  overflow: auto;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.1);
 }
 
-.house-detail-container::-webkit-scrollbar{
-    width: 0.5vw;
+.house-detail-container::-webkit-scrollbar {
+  width: 0.5vw;
 }
- 
-.house-detail-container::-webkit-scrollbar-thumb{
-    background-color: #cacaca;
-    border-radius: 10px;
+
+.house-detail-container::-webkit-scrollbar-thumb {
+  background-color: #cacaca;
+  border-radius: 10px;
 }
 
 .load-view-container {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    border-radius: 15px;
-    box-shadow: 0px 5px 10px 1px rgba(138, 138, 138, 0.3);
-    /* border-radius: 15px 15px 0 0; */
-    /* border: 1px solid #000; */
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px 1px rgba(138, 138, 138, 0.3);
+  /* border-radius: 15px 15px 0 0; */
+  /* border: 1px solid #000; */
 }
 
 .house-detail-header {
-    padding: 20px;
-    box-shadow: 0px 2px 5px 1px rgba(138, 138, 138, 0.1);
-    /* border: 1px solid #000; */
+  padding: 20px;
+  box-shadow: 0px 2px 5px 1px rgba(138, 138, 138, 0.1);
+  /* border: 1px solid #000; */
 }
 
 .house-detail-title {
-    position: relative;
-    color: #007bff;
-    font-size: 21px;
-    font-weight: bold;
-    width: 100%;
+  position: relative;
+  color: #007bff;
+  font-size: 21px;
+  font-weight: bold;
+  width: 100%;
 }
 
 .house-detail-address {
-    color: #666666;
-    font-size: 15px;
-    margin-top: 5px;
-    margin-left: 3px;
-    font-weight: bold;
+  color: #666666;
+  font-size: 15px;
+  margin-top: 5px;
+  margin-left: 3px;
+  font-weight: bold;
 }
 
 .house-detail-bookmark {
-    position: absolute;
-    right: 0;
-    color: #000;
-    margin-left: auto;
-    cursor: pointer;
+  position: absolute;
+  right: 0;
+  color: #000;
+  margin-left: auto;
+  cursor: pointer;
 }
 
 .house-detail-bookmark:hover {
-    transition: all 0.3s ease;
-    color: #007bff;
+  transition: all 0.3s ease;
+  color: #007bff;
 }
 
 .house-detail-content {
-    padding: 20px;
-    /* border: 1px solid #000; */
+  padding: 20px;
+  /* border: 1px solid #000; */
 }
 
 .house-detail-graph-title {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1.1;
-    margin-top: 15px;
-    width: 95%;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.1;
+  margin-top: 15px;
+  width: 95%;
 }
-.bi-bar-chart-line-fill{
-    margin-right: 3px;
-    color: #007bff;
-}
-
-.house-detail-graph-year-select{
-    position: relative;
-    left: 5px;
-    bottom: 1px;
-    margin-left: auto;
-    font-size: 15px;
-    font-weight: normal;
-    width: 17%;
-    text-align: center;
-    border: none;
+.bi-bar-chart-line-fill {
+  margin-right: 3px;
+  color: #007bff;
 }
 
-.house-detail-graph-year-select:focus{
-    outline: none;
+.house-detail-graph-year-select {
+  position: relative;
+  left: 5px;
+  bottom: 1px;
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: normal;
+  width: 17%;
+  text-align: center;
+  border: none;
+}
+
+.house-detail-graph-year-select:focus {
+  outline: none;
 }
 
 .house-detail-graph {
-    width: 100%;
-    height: 300px;
+  width: 100%;
+  height: 300px;
 }
 
 #house-detail-year-graph {
-    width: 100%;
-    /* height: 400px; */
+  width: 100%;
+  /* height: 400px; */
 }
 
 .house-detail-info {
-    /* border: 1px solid #000; */
-    position: relative;
-    margin: 0 auto;
-    margin-top: 60px;
-    width: 85%;
-    font-size: 14px;
+  /* border: 1px solid #000; */
+  position: relative;
+  margin: 0 auto;
+  margin-top: 60px;
+  width: 85%;
+  font-size: 14px;
 }
 
-.house-detail-info-deal-avg-title{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.house-detail-info-deal-avg-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.house-detail-info-deal-cnt{
-    width: 100%;
-    margin-top: 10px;
-    text-align: right;
+.house-detail-info-deal-cnt {
+  width: 100%;
+  margin-top: 10px;
+  text-align: right;
 }
 
 .house-detail-distance {
-    margin-top: 30px;
-    border: 1px solid #000;
-    width: 100%;
-    height: 500px;
+  margin-top: 30px;
+  border: 1px solid #000;
+  width: 100%;
+  height: 500px;
+}
+
+/* custom overlay */
+.overlay_info {
+  border-radius: 6px;
+  margin-bottom: 12px;
+  float: left;
+  position: relative;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  background-color: #fff;
+}
+.overlay_info:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.overlay_info a {
+  display: block;
+  background: #d95050;
+  background: #d95050;
+  text-decoration: none;
+  color: #fff;
+  padding: 12px 36px 12px 14px;
+  font-size: 14px;
+  border-radius: 6px 6px 0 0;
+}
+.overlay_info i {
+  color: #fff;
+  font-size: 18px;
+  position: relative;
+  top: 2px;
+}
+.overlay_info a strong {
+  padding-left: 20px;
+  color: #fff;
+}
+.overlay_info .desc {
+  padding: 14px;
+  position: relative;
+  min-width: 150px;
+  height: 50px;
+}
+
+.overlay_info .address {
+  font-size: 12px;
+  color: #333;
+  position: absolute;
+  left: 20px;
+  right: 14px;
+  top: 10px;
+  white-space: normal;
+}
+.overlay_info:after {
+  content: "";
+  position: absolute;
+  margin-left: -11px;
+  left: 50%;
+  bottom: -12px;
+  width: 22px;
+  height: 12px;
+  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png)
+    no-repeat 0 bottom;
 }
