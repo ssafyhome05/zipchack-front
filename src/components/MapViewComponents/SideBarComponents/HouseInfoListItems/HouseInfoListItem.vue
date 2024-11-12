@@ -50,6 +50,7 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(['click-house']);
 const houseDetailStore = useHouseDetailStore();
 
 onMounted(() => {
@@ -82,6 +83,7 @@ const clickHouse = (house) => {
     houseDetailStore.setHouseDetail(house);
     const address = `${props.sidoName} ${props.gugunName} ${props.dongName} ${house.roadNm}`;
     houseDetailStore.setAddress(address);
-    console.log(house.aptSeq);
+    emit('click-house', house);
+    console.log(house);
 };
 </script>
