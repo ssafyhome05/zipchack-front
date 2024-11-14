@@ -11,7 +11,7 @@
                 </span>
             </div>
             <div class="house-deal-list-item-detail-cnt-price">
-                거래량 {{ house.dealCnt }}회 / 평균 {{ house.avgDealAmount }}만 원
+                총 거래량 {{ house.dealCnt }}회 / 평균 {{ house.avgDealAmount }}만 원
             </div>
             <div class="house-deal-list-item-detail-address">
                 <p>{{ sidoName }} {{ gugunName }} {{ dongName }} {{ house.roadNm }}</p>

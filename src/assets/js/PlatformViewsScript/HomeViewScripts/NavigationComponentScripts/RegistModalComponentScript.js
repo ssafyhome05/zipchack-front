@@ -15,11 +15,11 @@ export default {
 
         const schema = yup.object({
             userId: yup.string().min(6, "최소 6글자 이상 입력하세요").required("아이디는 필수입니다."),
-            userPassword: yup.string().required("비밀번호는 필수입니다.").min(8, "최소 8글자 이상 입력하세요"),
-            userPasswordConfirm: yup.string().required("비밀번호는 필수입니다.").oneOf([yup.ref('userPassword')], "비밀번호가 일치하지 않습니다."),
+            userPw: yup.string().required("비밀번호는 필수입니다.").min(8, "최소 8글자 이상 입력하세요"),
+            userPasswordConfirm: yup.string().required("비밀번호는 필수입니다.").oneOf([yup.ref('userPw')], "비밀번호가 일치하지 않습니다."),
             userName: yup.string().required("이름은 필수입니다.").min(2, "최소 2글자 이상 입력하세요"),
             userEmail: yup.string().required("이메일은 필수입니다.").email("유효한 이메일을 입력해주세요"),
-            userPhone: yup.string().required("전화번호는 필수입니다."),
+            userPhone: yup.string().required("전화번호는 필수입니다.").min(11, "유효한 전화번호를 입력해주세요"),
             // .matches(/^\d{3}-\d{3,4}-\d{4}$/, "유효한 전화번호를 입력해주세요"),
             userZipcode: yup.string().required("우편번호는 필수입니다."),
             userAddress: yup.string().required("주소는 필수입니다."),
@@ -32,7 +32,7 @@ export default {
         });
 
         const { value: userId, errorMessage: userIdError } = useField('userId');
-        const { value: userPassword, errorMessage: userPasswordError } = useField('userPassword');
+        const { value: userPw, errorMessage: userPwError } = useField('userPw');
         const { value: userPasswordConfirm, errorMessage: userPasswordConfirmError } = useField('userPasswordConfirm');
         const { value: userName, errorMessage: userNameError } = useField('userName');
         const { value: userEmail, errorMessage: userEmailError } = useField('userEmail');
@@ -116,8 +116,8 @@ export default {
             userIdError,
 
             // password verify
-            userPassword,
-            userPasswordError,
+            userPw,
+            userPwError,
             userPasswordConfirm,
             userPasswordConfirmError,
 

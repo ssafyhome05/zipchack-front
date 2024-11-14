@@ -149,7 +149,8 @@ video.bg-video {
     display: block;
     position: relative;
     margin: 0 auto;
-    width: 24px;
+    width: fit-content;
+    left: 10%;
     height: 100px;
     /* bottom: 100%; */
     /* margin-top: 150px; */

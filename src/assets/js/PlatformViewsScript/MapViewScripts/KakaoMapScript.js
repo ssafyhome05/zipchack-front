@@ -1,8 +1,12 @@
 import { KAKAO_API_KEY } from '@/assets/resources/configs/config';
 import { useHouseListStore } from '@/stores/houseListStore';
-import { ref, onMounted, watch, toRaw, watchEffect } from 'vue';
+import { ref, onMounted, watch, toRaw, watchEffect, nextTick } from 'vue';
 import axios from 'axios';
 import { SERVER_URL } from '@/assets/resources/configs/config';
+
+import sampleRouteData from './sample_route.json';
+import start_marker from '@/assets/imgs/mark/start-mark.png';
+import end_marker from '@/assets/imgs/mark/end-mark.png';
 
 export default{
     setup(){
@@ -11,20 +15,96 @@ export default{
         const markers = ref([]);
         const polygon = ref(null);
         const houseInfoList = ref([]);
+        const routes = ref(null);
+        // const start_marker = "@/src/assets/imgs/mark/start-mark.png";
 
-        onMounted(() => {
+        onMounted( async () => {
+            await created();
             // kakao api 스크립트 소스 불러오기 및 지도 출력
             if (window.kakao && window.kakao.maps) {
                 loadMap();
+                nextTick(() => {
+                    drawRoutes();
+                });
             } else {
                 loadScript();
             }
+            
+            
+            
         });
 
         watch(() => houseListStore.houseList, (newVal) => {
             houseInfoList.value = loadHouseInfo(newVal);
         }, { deep: true });
 
+        const  created = async () => {
+            try {
+              const response = await fetch("/src/assets/js/PlatformViewsScript/MapViewScripts/sample_route.json");
+              const data = await response.json();
+              routes.value = data[0].routes; // `routes` 속성만 저장
+              console.log(routes.value);
+            } catch (error) {
+              console.error("JSON 파일 로드 오류:", error);
+            }
+        };
+
+        const createCustomMarker = (iamge, lat, lng) => {
+                const imgSize = new window.kakao.maps.Size(50, 50);
+                const markerImage = new window.kakao.maps.MarkerImage(iamge, imgSize);
+                var markerPosition  = new window.kakao.maps.LatLng(lat, lng); 
+                var marker = new window.kakao.maps.Marker({
+                    map: kakaoMap.value,
+                    position: markerPosition,
+                    image: markerImage,
+                });
+            
+            return marker;  
+        };
+
+        const drawRoutes = () => {
+            ["car", "transport", "walk"].forEach((mode) => {
+
+              if (routes.value[mode]) {
+                    routes.value[mode].forEach((route) => {
+                    console.log("이동수단: ", mode);
+                    console.log("시간: ", route.totalTime);
+                    console.log("거리: ", route.totalDistance);
+                    const start = route.routeInfos
+                        .filter((info) => info.type === "Point") // Filter only "Point" type
+                        .map((info) => {
+                            // Map the coordinates to LatLng objects
+                            return new window.kakao.maps.LatLng(info.coordinates[1], info.coordinates[0]);
+                        }); // Get the first coordinate as the starting point
+
+                    console.log("시작좌표: ", start[0].La, start[0].Ma);
+                    console.log("도착좌표: ", start[start.length - 1].La, start[start.length - 1].Ma);
+
+                    // 시작
+                    createCustomMarker(start_marker, start[0].Ma, start[0].La);
+                    // 종료
+                    createCustomMarker(end_marker, start[start.length - 1].Ma, start[start.length - 1].La);
+
+                    const path = route.routeInfos
+                            .filter((info) => info.type === "LineString")
+                            .flatMap((info) =>
+                            info.coordinates.map(
+                                (coord) => new window.kakao.maps.LatLng(coord[1], coord[0])
+                            )
+                        );
+                    
+                    const polyline = new window.kakao.maps.Polyline({
+                        map: kakaoMap.value,
+                        path,
+                        strokeWeight: 4,
+                        strokeColor: mode === "car" ? "#f44336" : "#c90076",
+                        strokeOpacity: 1,
+                        strokeStyle: "solid",
+                    });
+                });
+              }
+            });
+          };
         const loadScript = () => {
             const script = document.createElement("script");
             script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false&libraries=services`; 

@@ -1,7 +1,8 @@
 <template>
     <div v-if="houseDetail !== null" class="house-detail-container">
+        <i class="bi bi-x detail-close-btn"></i>
         <div class="load-view-container" id="load-view-container">
-            로드뷰 넣을거임
+            
         </div>
         <div class="house-detail-header">
             <div class="house-detail-title">
@@ -18,23 +19,7 @@
         <div class="house-detail-content">
             <!-- 거래 추이 그래프 - 컴포넌트 분리 필요 -->
             <div class="house-detail-graph">
-                <p class="house-detail-graph-title">
-                    <i class="bi bi-bar-chart-line-fill"></i>
-                    거래 추이
-
-                    <select class="house-detail-graph-year-select" @change="changeYear">
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                    </select>
-                </p>
-                <Bar
-                    id="house-detail-year-graph"
-                    :options="chartOptions"
-                    :data="chartData"
-                />
+                <HouseGraph />
             </div>
 
             <!-- 거래 횟수 및 평균 거래 금액 -->
@@ -54,7 +39,36 @@
             <!-- 해당 매물에서부터 주변 편의 시설까지의 거리 및 소요 시간 -->
             <!-- 컴포넌트 분리 필요 -->
             <div class="house-detail-distance">
-                
+                    <table class="house-detail-distance-info">
+                        <thead>
+                            <tr>
+                                <th class="house-detail-distance-info-title">소요 거리</th>
+                                <th class="house-detail-distance-info-icon"><i class="bi bi-car-front-fill"></i></th>
+                                <td class="table-line"></td>
+                                <th class="house-detail-distance-info-icon"><i class="bi bi-person-walking"></i></th>
+                                <td class="table-line"></td>
+                                <th class="house-detail-distance-info-icon"><i class="bi bi-bus-front"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="house-detail-distance-info-location">집</td>
+                                <td class="house-detail-distance-info-time"><a>2분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>5분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>없음</a></td>
+                            </tr>
+                            <tr>
+                                <td class="house-detail-distance-info-location">집</td>
+                                <td class="house-detail-distance-info-time"><a>3분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>10분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>없음</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>

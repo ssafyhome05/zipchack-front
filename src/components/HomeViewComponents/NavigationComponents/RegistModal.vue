@@ -45,13 +45,13 @@
                         type="password" 
                         class="password input" 
                         id="user-password"
-                        name="userPassword"
-                        v-model="userPassword"
+                        name="userPw"
+                        v-model="userPw"
                         required
                     />
                     <label for="user-password">Password</label>    
                     <span></span>
-                    <p  v-show="userPasswordError"  class="pw-error">{{ userPasswordError }}</p>
+                    <p  v-show="userPwError"  class="pw-error">{{ userPwError }}</p>
                 </div>
 
                 <div class="pwcomfirm-box input-box">
@@ -122,7 +122,7 @@
                         v-model="userPhone"
                         required
                     />
-                    <label for="user-tel">전화번호 (ex. 010-1234-5678)</label>
+                    <label for="user-tel">전화번호 (ex. 01012345678)</label>
                     <span></span>
                     <p v-show="userPhoneError" class="tel-error">{{ userPhoneError }}</p>
                 </div>
