@@ -1,7 +1,8 @@
 <template>
     <div v-if="houseDetail !== null" class="house-detail-container">
+        <i class="bi bi-x detail-close-btn"></i>
         <div class="load-view-container" id="load-view-container">
-            로드뷰 넣을거임
+            
         </div>
         <div class="house-detail-header">
             <div class="house-detail-title">
@@ -18,23 +19,7 @@
         <div class="house-detail-content">
             <!-- 거래 추이 그래프 - 컴포넌트 분리 필요 -->
             <div class="house-detail-graph">
-                <p class="house-detail-graph-title">
-                    <i class="bi bi-bar-chart-line-fill"></i>
-                    거래 추이
-
-                    <select class="house-detail-graph-year-select" @change="changeYear">
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                    </select>
-                </p>
-                <Bar
-                    id="house-detail-year-graph"
-                    :options="chartOptions"
-                    :data="chartData"
-                />
+                <HouseGraph />
             </div>
 
             <!-- 거래 횟수 및 평균 거래 금액 -->
