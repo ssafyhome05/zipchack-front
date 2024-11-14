@@ -39,7 +39,36 @@
             <!-- 해당 매물에서부터 주변 편의 시설까지의 거리 및 소요 시간 -->
             <!-- 컴포넌트 분리 필요 -->
             <div class="house-detail-distance">
-                
+                    <table class="house-detail-distance-info">
+                        <thead>
+                            <tr>
+                                <th class="house-detail-distance-info-title">소요 거리</th>
+                                <th class="house-detail-distance-info-icon"><i class="bi bi-car-front-fill"></i></th>
+                                <td class="table-line"></td>
+                                <th class="house-detail-distance-info-icon"><i class="bi bi-person-walking"></i></th>
+                                <td class="table-line"></td>
+                                <th class="house-detail-distance-info-icon"><i class="bi bi-bus-front"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="house-detail-distance-info-location">집</td>
+                                <td class="house-detail-distance-info-time"><a>2분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>5분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>없음</a></td>
+                            </tr>
+                            <tr>
+                                <td class="house-detail-distance-info-location">집</td>
+                                <td class="house-detail-distance-info-time"><a>3분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>10분</a></td>
+                                <td class="table-line"></td>
+                                <td class="house-detail-distance-info-time"><a>없음</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>

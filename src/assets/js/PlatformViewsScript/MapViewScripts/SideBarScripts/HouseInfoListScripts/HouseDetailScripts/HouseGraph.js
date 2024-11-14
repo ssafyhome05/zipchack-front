@@ -107,6 +107,7 @@ export default {
                     legend: {
                         display: true,
                         position: 'top',
+                        
                     }
                 },
                 scales: {
