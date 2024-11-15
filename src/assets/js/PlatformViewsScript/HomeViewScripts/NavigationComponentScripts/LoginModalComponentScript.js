@@ -15,7 +15,7 @@ export default {
             const modalElement = document.getElementById('login-modal');
             const modalInstance = Modal.getInstance(modalElement);
             if (modalInstance) {
-              modalInstance.hide();
+                modalInstance.hide();
             }
         };  
 
@@ -51,17 +51,17 @@ export default {
                     },
                     withCredentials: true,
                 });
-                
+                console.log(response.headers.authorization)
                 if(response.status === 200){
                     showSuccessToast("로그인되었습니다.");
-                    userInfoStore.setUser();
+                    userInfoStore.setUser(response.headers.authorization);
                 }else{
                     showWarningToast("아이디 또는 비밀번호를 확인해주세요.");
                 }
     
                 isAuthorized.value = true;
-            
-                window.location.href = '/';
+
+                closeLoginModal();
             } catch (error) {
                 showWarningToast("아이디 또는 비밀번호를 확인해주세요.");
                 isAuthorized.value = false;
