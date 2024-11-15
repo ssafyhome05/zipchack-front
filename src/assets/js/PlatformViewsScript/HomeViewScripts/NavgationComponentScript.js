@@ -46,6 +46,7 @@ export default {
             });
             
             userInfoStore.user = null;
+            userInfoStore.access_token = null;
             window.location.href = '/';
         };
 
