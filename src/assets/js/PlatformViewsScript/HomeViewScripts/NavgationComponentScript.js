@@ -15,14 +15,21 @@ export default {
             getUser();
         });
 
-        watch(() => userInfoStore.user, (newVal) => {
-            user.value = newVal;
-        });
+        watch(
+            () => userInfoStore.user,
+            (newVal) => {
+                if (newVal) {
+                    user.value = newVal;
+                } else {
+                    console.log('사용자 정보 없음.');
+                }
+            }
+        );
 
         // user store에 저장되어 있는 정보로
         // 유저 로그인 여부 확인
         function getUser() {
-            userInfoStore.setUser();
+            // userInfoStore.setUser();
             user.value = userInfoStore.getUser;
         };
 

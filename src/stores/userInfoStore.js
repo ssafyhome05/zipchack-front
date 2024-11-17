@@ -25,8 +25,8 @@ export const useUserInfoStore = defineStore('userInfo', {
                 //times는 토큰 재발급 시도 횟수
                 if(times === 0 || !access_token) return;
                 axios.get(`${SERVER_URL}/api/user/info`, {
-                headers: {
-                    'Authorization': access_token
+                    headers: {
+                        'Authorization': access_token
                     }
                 }).then((res) => {
                     this.user = res.data
@@ -34,7 +34,7 @@ export const useUserInfoStore = defineStore('userInfo', {
                     // 이 부분이 중요한데 access token이 만료되면 reissue하는 로직
                     // 거의 모든 axios 요청에 대해서 들어가야 하는 부분인데 어떻게 처리하면 좋을까?
                     console.log(err)
-                    if(err.response.status === 401) {
+                    if(err.response.status === 401012) {
                         console.log('토큰 재발급')
                         await reissueAccessToken();
                         getUserInfo(times - 1);
@@ -50,5 +50,7 @@ export const useUserInfoStore = defineStore('userInfo', {
             this.access_token = response.headers.authorization;
         }
     },
+    // 새로고침 시 데이터 유지
+    persist: true,
 });
 

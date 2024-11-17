@@ -7,8 +7,11 @@
         <div class="house-detail-header">
             <div class="house-detail-title">
                 <span>{{ houseDetail.aptNm }}</span>
-                <span class="house-detail-bookmark">
-                    <i class="bi bi-star    "></i>
+                <span v-if="houseDetail.bookmark === false" class="house-detail-bookmark">
+                    <i class="bi bi-star"></i>
+                </span>
+                <span v-else class="house-detail-none-bookmark">
+                    <i class="bi bi-star-fill"></i>
                 </span>
             </div>
             <div class="house-detail-address">

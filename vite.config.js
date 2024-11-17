@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
+import fs from 'fs';
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
@@ -17,5 +18,10 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    // https: {
+    //   key: fs.readFileSync('./localhost-key.pem'),
+    //   cert: fs.readFileSync('./localhost.pem'),
+    // },
+    https: false,
   },
 })
