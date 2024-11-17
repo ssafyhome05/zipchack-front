@@ -92,8 +92,6 @@ const clickBookmark = async (aptSeq, isBookmark) => {
     } else {
         try {
             await removeHouseBookmark(aptSeq, access_token, 1);
-            // 북마크 상태 업데이트
-            showInfoToast("북마크에서 삭제되었습니다.");
         } catch (error) {
             console.error("북마크 삭제 중 오류 발생:", error);
             showErrorToast("오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.");
