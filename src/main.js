@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue';
 import router from './router';
@@ -16,6 +17,8 @@ import "bootstrap"
 import { addComponents } from '@/assets/resources/configs/components';
 
 const app = createApp(App);
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
 // regist components
 addComponents(app);
@@ -24,7 +27,7 @@ addComponents(app);
 app.use(VueCookies); // vue-cookies
 app.use(VueSonner); // vue-sonner
 
-app.use(createPinia()); // regist pinia
+app.use(pinia); // regist pinia
 app.use(router); // regist router
 
 app.mount('#app');

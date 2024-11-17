@@ -1,15 +1,20 @@
-import { onMounted, ref, reactive, nextTick } from 'vue';
+import { onMounted, ref, reactive, watch, computed } from 'vue';
 import { Modal } from 'bootstrap';
 import axios from 'axios';
 import { SERVER_URL, KAKAO_API_KEY } from '@/assets/resources/configs/config.js';
 import { useHouseListStore } from '@/stores/houseListStore.js';
 import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
+import { useUserInfoStore } from '@/stores/userInfoStore';
+
 export default {
     setup() {
     // Store 초기화
     const houseListStore = useHouseListStore();
     const houseDetailStore = useHouseDetailStore();
+    const userInfoStore = useUserInfoStore();
     
+    const userSeq = ref(null);
+
     // Refs와 reactive state 설정
     const sido = ref("");
     const gugun = ref("");
@@ -35,6 +40,14 @@ export default {
         document.addEventListener('gugun-selected', e => handleGugunSelection(e.detail, e.target.innerText));
         document.addEventListener('dong-selected', e => handleDongSelection(e.detail, e.target.innerText));
     });
+    
+    watch(
+        () => houseListStore.houseList,
+        (newVal) => {
+            houseInfoList.value = newVal;
+        },
+        { immediate: true }
+    );
 
     const loadScript = () => {
         const script = document.createElement("script");
@@ -238,8 +251,12 @@ export default {
 
     async function searchHouse(dongCode){
         
+        // get user seq
+        if(userInfoStore.getUser){
+            userSeq.value = userInfoStore.getUser.data.userSeq;
+        }
 
-        let inputKeyword = document.querySelector('.search-input').value;
+        const inputKeyword = document.querySelector('.search-input').value;
         keyword.value = inputKeyword;
         if(keyword.value != ""){
             document.querySelector('.search-subtitle').style.display = "block";
@@ -256,8 +273,8 @@ export default {
         houseListStore.setGugunName(gugunName.value);
         houseListStore.setDongName(dongName.value);
 
-        await houseListStore.setHouseList(dongCode, keyword.value);
-        houseInfoList.value =  await houseListStore.getHouseList;
+        await houseListStore.setHouseList(dongCode, keyword.value, userSeq.value);
+        houseInfoList.value =  await houseListStore.houseList;
 
         const detailContainer = document.querySelector('.house-detail-container');
         if(detailContainer){
@@ -327,6 +344,7 @@ export default {
         markers,
         polygon,
         showModal,
+        houseListStore,
         
         // methods
         openSidoModal,

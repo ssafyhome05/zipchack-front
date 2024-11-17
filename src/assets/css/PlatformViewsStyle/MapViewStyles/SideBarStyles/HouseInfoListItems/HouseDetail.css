@@ -78,6 +78,14 @@
   cursor: pointer;
 }
 
+.house-detail-none-bookmark {
+  position: absolute;
+  right: 0;
+  color: #007bff;
+  margin-left: auto;
+  cursor: pointer;
+}
+
 .house-detail-bookmark:hover {
   transition: all 0.3s ease;
   color: #007bff;
