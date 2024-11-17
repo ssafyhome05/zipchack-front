@@ -1,6 +1,6 @@
 import { KAKAO_API_KEY } from '@/assets/resources/configs/config.js';
 import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
-import { ref, onMounted, watch, nextTick, onBeforeMount, watchEffect } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 
 
 export default {

@@ -5,8 +5,8 @@ import axios from 'axios';
 import { SERVER_URL } from '@/assets/resources/configs/config';
 
 import sampleRouteData from './sample_route.json';
-import start_marker from '@/assets/imgs/mark/start-mark.png';
-import end_marker from '@/assets/imgs/mark/end-mark.png';
+import start_marker from '@/assets/imgs/mark/test-mark.png';
+import end_marker from '@/assets/imgs/mark/red-mark.png';
 
 export default{
     setup(){
@@ -29,9 +29,7 @@ export default{
             } else {
                 loadScript();
             }
-            
-            
-            
+    
         });
 
         watch(() => houseListStore.houseList, (newVal) => {
@@ -42,16 +40,14 @@ export default{
             try {
               const response = await fetch("/src/assets/js/PlatformViewsScript/MapViewScripts/sample_route.json");
               const data = await response.json();
-              routes.value = data[0].routes; // `routes` 속성만 저장
-              console.log(routes.value);
+              routes.value = data[0].routes;
             } catch (error) {
               console.error("JSON 파일 로드 오류:", error);
             }
         };
 
-        const createCustomMarker = (iamge, lat, lng) => {
-                const imgSize = new window.kakao.maps.Size(50, 50);
-                const markerImage = new window.kakao.maps.MarkerImage(iamge, imgSize);
+        const createCustomMarker = (size, iamge, lat, lng) => {
+                const markerImage = new window.kakao.maps.MarkerImage(iamge, size);
                 var markerPosition  = new window.kakao.maps.LatLng(lat, lng); 
                 var marker = new window.kakao.maps.Marker({
                     map: kakaoMap.value,
@@ -67,23 +63,21 @@ export default{
 
               if (routes.value[mode]) {
                     routes.value[mode].forEach((route) => {
-                    console.log("이동수단: ", mode);
-                    console.log("시간: ", route.totalTime);
-                    console.log("거리: ", route.totalDistance);
-                    const start = route.routeInfos
-                        .filter((info) => info.type === "Point") // Filter only "Point" type
+                    // console.log("이동수단: ", mode);
+                    // console.log("시간: ", route.totalTime);
+                    // console.log("거리: ", route.totalDistance);
+                    const points = route.routeInfos
+                        .filter((info) => info.type === "Point")
                         .map((info) => {
-                            // Map the coordinates to LatLng objects
                             return new window.kakao.maps.LatLng(info.coordinates[1], info.coordinates[0]);
-                        }); // Get the first coordinate as the starting point
-
-                    console.log("시작좌표: ", start[0].La, start[0].Ma);
-                    console.log("도착좌표: ", start[start.length - 1].La, start[start.length - 1].Ma);
+                        });
 
                     // 시작
-                    createCustomMarker(start_marker, start[0].Ma, start[0].La);
+                    const imgSize = new window.kakao.maps.Size(28, 35);
+                    createCustomMarker(imgSize, start_marker, points[0].Ma, points[0].La);
                     // 종료
-                    createCustomMarker(end_marker, start[start.length - 1].Ma, start[start.length - 1].La);
+                    const imgSize2 = new window.kakao.maps.Size(28, 35);
+                    createCustomMarker(imgSize2, end_marker, points[points.length - 1].Ma, points[points.length - 1].La);
 
                     const path = route.routeInfos
                             .filter((info) => info.type === "LineString")
@@ -97,7 +91,7 @@ export default{
                         map: kakaoMap.value,
                         path,
                         strokeWeight: 4,
-                        strokeColor: mode === "car" ? "#f44336" : "#c90076",
+                        strokeColor: "#007bff",
                         strokeOpacity: 1,
                         strokeStyle: "solid",
                     });
