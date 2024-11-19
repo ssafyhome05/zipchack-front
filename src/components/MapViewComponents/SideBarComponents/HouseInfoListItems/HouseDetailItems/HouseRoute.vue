@@ -33,11 +33,12 @@
                 </td>
                 <td class="table-line"></td>
                 <td class="house-detail-distance-info-time">
-                    <a class="exist-time" v-if="route.transport.length !== 0">
+                    <a class="exist-time" v-if="route.transport.length !== 0" @click="showTransportRoutesModal">
                         {{ Math.floor(Math.min(...route.transport.map(t => t.totalTime)) / 3600) + "시간 " +  Math.ceil((Math.min(...route.transport.map(t => t.totalTime)) / 3600) / 60) + "분"}}
                     </a>
                     <a class="none-exist-time" v-else>없음</a>
                 </td>
+                <TransportModal :route="route.transport" :isClicked="isClicked" v-show="isClicked"/>
             </tr>
             <tr>
                 <td :colspan="6">

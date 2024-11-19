@@ -27,6 +27,7 @@ export default {
         const kakaoMap = ref(null);
         const polylines = ref([]);
         const markers = ref([]);
+        const isClicked = ref(false);
 
 
         onMounted(() => {
@@ -45,6 +46,7 @@ export default {
         watch(() => houseDetailStore.houseDetail, (newVal) => {
             spotRouteStore.routeList = [];
             routeList.value = spotRouteStore.routeList;
+            clearMapObjects();
             if(userInfoStore.user){
                 isLogin.value = true;
                 houseDetail.value = newVal;
@@ -77,21 +79,18 @@ export default {
             const markerImage = new window.kakao.maps.MarkerImage(image, size);
             const markerPosition = new window.kakao.maps.LatLng(lat, lng);
         
-            // 마커 생성
             const marker = new window.kakao.maps.Marker({
                 map: kakaoMap.value,
                 position: markerPosition,
                 image: markerImage,
             });
         
-            // 생성된 마커를 배열에 추가
             markers.value.push(marker);
         
             return marker;
         };
         
         const drawPolyline = (type, routeInfos) => {
-            // 이전 Polyline 및 마커 삭제
             clearMapObjects();
         
             const points = [];
@@ -114,15 +113,12 @@ export default {
                     )
                 );
         
-            // 시작 지점 마커 추가
             const imgSizeStart = new window.kakao.maps.Size(28, 35);
             createCustomMarker(imgSizeStart, start_marker, points[0].Ma, points[0].La);
         
-            // 끝 지점 마커 추가
             const imgSizeEnd = new window.kakao.maps.Size(28, 37);
             createCustomMarker(imgSizeEnd, end_marker, points[points.length - 1].Ma, points[points.length - 1].La);
         
-            // Polyline 생성
             const polyline = new window.kakao.maps.Polyline({
                 map: kakaoMap.value,
                 path,
@@ -132,20 +128,21 @@ export default {
                 strokeStyle: "solid",
             });
         
-            // 생성된 Polyline을 배열에 추가
             polylines.value.push(polyline);
         };
         
-        // 이전 Polyline 및 마커를 삭제하는 함수
         const clearMapObjects = () => {
-            // 모든 Polyline 삭제
             polylines.value.forEach((polyline) => polyline.setMap(null));
             polylines.value = [];
         
-            // 모든 마커 삭제
             markers.value.forEach((marker) => marker.setMap(null));
             markers.value = [];
         };
+
+        const showTransportRoutesModal = () => {
+            clearMapObjects();
+            isClicked.value = !isClicked.value;
+        }
         
 
         return {
@@ -153,10 +150,11 @@ export default {
             serverUrl,
             houseDetail,
             routeList,
-
+            isClicked,
 
             openSearchModal,
-            drawPolyline
+            drawPolyline,
+            showTransportRoutesModal
         }
     },
 }
