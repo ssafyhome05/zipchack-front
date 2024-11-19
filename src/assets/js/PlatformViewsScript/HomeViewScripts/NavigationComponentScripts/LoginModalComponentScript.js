@@ -10,7 +10,7 @@ export default {
         const serverUrl = ref(SERVER_URL);
         const userInfoStore = useUserInfoStore();
         const isAuthorized = ref(true);
-        const route = useRoute();
+
         function closeLoginModal() {
             const modalElement = document.getElementById('login-modal');
             const modalInstance = Modal.getInstance(modalElement);
@@ -51,7 +51,7 @@ export default {
                     },
                     withCredentials: true,
                 });
-                console.log(response.headers.authorization)
+        
                 if(response.status === 200){
                     showSuccessToast("로그인되었습니다.");
                     userInfoStore.setUser(response.headers.authorization);

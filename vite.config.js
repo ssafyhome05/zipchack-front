@@ -18,6 +18,11 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    host: true,
+    proxy: {
+      '/api': 'http://localhost:8080', // Replace with your backend server's URL
+    },
+    cors: true,
     // https: {
     //   key: fs.readFileSync('./localhost-key.pem'),
     //   cert: fs.readFileSync('./localhost.pem'),

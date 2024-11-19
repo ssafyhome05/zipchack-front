@@ -1,0 +1,135 @@
+.search-modal-title{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    width: 100%;
+}
+
+.addr-search-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.addr-search-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+.addr-search-name p{
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    text-align: start;
+    padding-left: 20px;
+    width: 100%;
+}
+
+.addr-search-name input{
+    padding-left: 10px;
+    width: 90%;
+    height: 40px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: 1px solid #666666;
+}
+
+.addr-search-name input::placeholder{
+    font-weight: bold;
+}
+
+.addr-search-name{
+    margin: 20px 0px;
+    width: 100%;
+}
+
+.addr-search-input{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.addr-search-input p{
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    text-align: start;
+    padding-left: 20px;
+    width: 100%;
+}
+
+.addr-search-input input{
+    padding-left: 10px;
+    width: 90%;
+    height: 40px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: 1px solid #666666;
+}
+
+.addr-search-input input::placeholder{
+    font-weight: bold;
+}
+
+.search-addr-button{
+    position: absolute;
+    display: inline-block;
+    padding: 10px 15px;
+    right: 28px;
+    top: -5px;
+    border: none;
+    /* background-color: transparent; */
+    color: white;
+    background-color: #007bff;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.search-addr-button:hover{
+    background-color: #0066d2;
+    transition: 0.5s ease-in-out;
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: center;
+}
+
+.cancle{
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color: #666666;
+}
+
+.search{
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.line{
+    height: 20px;
+    padding: 0;
+    margin: 0 5px;
+    border-right: 0.12rem solid #ccc;
+}
+
+/* .modal {
+    z-index: 4 !important;
+}
+.modal-backdrop {
+    z-index: 1 !important;
+} */

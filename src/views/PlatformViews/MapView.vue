@@ -5,6 +5,7 @@
     <SidoModal />
     <GugunModal />
     <DongModal />
+    <SearchModal />
 </template>
 
 <script setup>

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { SERVER_URL } from '@/assets/resources/configs/config';
+// import { reissueAccessToken } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
 import axios from 'axios';
 
 export const useUserInfoStore = defineStore('userInfo', {
@@ -10,9 +11,12 @@ export const useUserInfoStore = defineStore('userInfo', {
 
     getters: {
         getUser() {
-            console.log(this.user) //이후에 /api/user/info 에서 받아올 유저 정보 변경 필요
+            // console.log(this.user) //이후에 /api/user/info 에서 받아올 유저 정보 변경 필요
             return this.user;
         },
+        getAccessToken(){
+            return this.access_token;
+        }
     },
 
     actions: {
@@ -43,12 +47,16 @@ export const useUserInfoStore = defineStore('userInfo', {
             }
             getUserInfo(1);
         },
-        // refresh token을 통해 access token 재발급 함수
-        reissueAccessToken: async () => {
+         // refresh token을 통해 access token 재발급 함수
+        reissueAccessToken: async function() {
             axios.defaults.withCredentials = true;
-            const response = await axios.post(`${SERVER_URL}/api/auth/reissue`)
-            this.access_token = response.headers.authorization;
-        }
+            try {
+                const response = await axios.post(`${SERVER_URL}/api/auth/reissue`);
+                this.access_token = response.headers.authorization; // this가 올바르게 동작
+            } catch (error) {
+                console.error("토큰 재발급 실패:", error);
+            }
+        }        
     },
     // 새로고침 시 데이터 유지
     persist: true,

@@ -1,11 +1,12 @@
 import { KAKAO_API_KEY } from '@/assets/resources/configs/config.js';
 import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
+import { useSpotRouteStore } from "@/stores/SpotRouteStore";
 import { ref, onMounted, watch, nextTick } from 'vue';
-
 
 export default {
     setup() {
         const houseDetailStore = useHouseDetailStore();
+        const spotRouteStore = useSpotRouteStore();
         const houseDetail = ref(null);
         const address = ref(null);
 
@@ -21,6 +22,7 @@ export default {
         watch(() => houseDetailStore.houseDetail, (newVal) => {
             houseDetail.value = newVal;
             address.value = houseDetailStore.getAddress;
+           
             nextTick(() => {
                 if (houseDetail.value && houseDetail.value.latitude && houseDetail.value.longitude) {
                     addRoadview(houseDetail.value.latitude, houseDetail.value.longitude);
@@ -71,20 +73,9 @@ export default {
 
         // 커스텀 오버레이
         const customOverlay = (aptNm, address, latitude, longitude, roadview, roadviewClient) => {
-            // var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-            // mapCenter = new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-            // mapOption = {
-            //     center: mapCenter, // 지도의 중심좌표
-            //     level: 3 // 지도의 확대 레벨
-            // };
-
-            // var map = new kakao.maps.Map(mapContainer, mapOption);
 
             var content = ' <div class="overlay_info">';
             content += '        <a><i class="bi bi-house-fill"></i><strong>' + aptNm + '</strong></a>';
-            // content += '        <div class="desc">';
-            // content += '            <span class="address">' + address + '</span>';
-            // content += '        </div>';
             content += '    </div>';
 
             var position = new window.kakao.maps.LatLng(latitude, longitude);
@@ -94,8 +85,6 @@ export default {
                 xAnchor: 0.5, // 커스텀 오버레이의 x축 위치입니다. 1에 가까울수록 왼쪽에 위치합니다. 기본값은 0.5 입니다
                 yAnchor: 1.1 // 커스텀 오버레이의 y축 위치입니다. 1에 가까울수록 위쪽에 위치합니다. 기본값은 0.5 입니다
             });
-            // 커스텀 오버레이를 지도에 표시
-            // overlay.setMap(map);
 
             window.kakao.maps.event.addListener(roadview, 'init', function() {
 
@@ -107,7 +96,6 @@ export default {
                     yAnchor: 0.5 // 커스텀 오버레이의 y축 위치입니다. 1에 가까울수록 위쪽에 위치합니다. 기본값은 0.5 입니다
                 });
             
-                //rvCustomOverlay.setAltitude(2); //커스텀 오버레이의 고도값을 설정합니다.(로드뷰 화면 중앙이 0입니다)
                 rvCustomOverlay.setMap(roadview);
             
                 var projection = roadview.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체.

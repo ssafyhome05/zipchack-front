@@ -1,15 +1,21 @@
 import axios from "axios";
-import { SERVER_URL } from "@/assets/resources/configs/config";
+import { SERVER_URL } from "@/assets/resources/configs/config.js";
 import { useUserInfoStore } from "@/stores/userInfoStore";
 
-const reissueAccessToken = async () => {
+async function reissueAccessToken() {
     const userInfoStore = useUserInfoStore();
-    
+    const access_token = userInfoStore.getAccessToken;
     try {
         axios.defaults.withCredentials = true;
-
-        const response = await axios.post(`${SERVER_URL}/api/auth/reissue`);
-        
+        console.log("test", userInfoStore.getAccessToken)
+        const response = await axios.post(`${SERVER_URL}/api/auth/reissue`, null, 
+            {   
+                headers: {
+                    "Authorization": `${userInfoStore.getAccessToken}`,
+                },
+                withCredentials: true
+            });
+        console.log("re", response.headers.authorization)
         userInfoStore.access_token = response.headers.authorization;
 
         console.log("re", userInfoStore.access_token);
@@ -19,4 +25,6 @@ const reissueAccessToken = async () => {
     }
 };
 
-export { reissueAccessToken };
+export{
+    reissueAccessToken
+}

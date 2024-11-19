@@ -1,104 +1,36 @@
+/*global kakao*/
 import { KAKAO_API_KEY } from '@/assets/resources/configs/config';
 import { useHouseListStore } from '@/stores/houseListStore';
+import { useKakaoMapStore } from "@/stores/kakaoMapStore";
 import { ref, onMounted, watch, toRaw, watchEffect, nextTick } from 'vue';
 import axios from 'axios';
 import { SERVER_URL } from '@/assets/resources/configs/config';
-
-import sampleRouteData from './sample_route.json';
-import start_marker from '@/assets/imgs/mark/test-mark.png';
-import end_marker from '@/assets/imgs/mark/red-mark.png';
+import defaultMarkerImage from '@/assets/imgs/mark/house-mark.png';
+import bookmarkMarkerImage from '@/assets/imgs/mark/bookmark-mark.png';
 
 export default{
     setup(){
         const houseListStore = useHouseListStore();
+        const kakaoMapStore = useKakaoMapStore();
         const kakaoMap = ref(null);
         const markers = ref([]);
         const polygon = ref(null);
         const houseInfoList = ref([]);
         const routes = ref(null);
-        // const start_marker = "@/src/assets/imgs/mark/start-mark.png";
 
         onMounted( async () => {
-            await created();
-            // kakao api 스크립트 소스 불러오기 및 지도 출력
             if (window.kakao && window.kakao.maps) {
                 loadMap();
-                nextTick(() => {
-                    drawRoutes();
-                });
-            } else {
+            } 
+            else {
                 loadScript();
             }
-    
         });
 
         watch(() => houseListStore.houseList, (newVal) => {
             houseInfoList.value = loadHouseInfo(newVal);
         }, { deep: true });
 
-        const  created = async () => {
-            try {
-              const response = await fetch("/src/assets/js/PlatformViewsScript/MapViewScripts/sample_route.json");
-              const data = await response.json();
-              routes.value = data[0].routes;
-            } catch (error) {
-              console.error("JSON 파일 로드 오류:", error);
-            }
-        };
-
-        const createCustomMarker = (size, iamge, lat, lng) => {
-                const markerImage = new window.kakao.maps.MarkerImage(iamge, size);
-                var markerPosition  = new window.kakao.maps.LatLng(lat, lng); 
-                var marker = new window.kakao.maps.Marker({
-                    map: kakaoMap.value,
-                    position: markerPosition,
-                    image: markerImage,
-                });
-            
-            return marker;  
-        };
-
-        const drawRoutes = () => {
-            ["car", "transport", "walk"].forEach((mode) => {
-
-              if (routes.value[mode]) {
-                    routes.value[mode].forEach((route) => {
-                    // console.log("이동수단: ", mode);
-                    // console.log("시간: ", route.totalTime);
-                    // console.log("거리: ", route.totalDistance);
-                    const points = route.routeInfos
-                        .filter((info) => info.type === "Point")
-                        .map((info) => {
-                            return new window.kakao.maps.LatLng(info.coordinates[1], info.coordinates[0]);
-                        });
-
-                    // 시작
-                    const imgSize = new window.kakao.maps.Size(28, 35);
-                    createCustomMarker(imgSize, start_marker, points[0].Ma, points[0].La);
-                    // 종료
-                    const imgSize2 = new window.kakao.maps.Size(28, 35);
-                    createCustomMarker(imgSize2, end_marker, points[points.length - 1].Ma, points[points.length - 1].La);
-
-                    const path = route.routeInfos
-                            .filter((info) => info.type === "LineString")
-                            .flatMap((info) =>
-                            info.coordinates.map(
-                                (coord) => new window.kakao.maps.LatLng(coord[1], coord[0])
-                            )
-                        );
-                    
-                    const polyline = new window.kakao.maps.Polyline({
-                        map: kakaoMap.value,
-                        path,
-                        strokeWeight: 4,
-                        strokeColor: "#007bff",
-                        strokeOpacity: 1,
-                        strokeStyle: "solid",
-                    });
-                });
-              }
-            });
-          };
         const loadScript = () => {
             const script = document.createElement("script");
             script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false&libraries=services`; 
@@ -110,18 +42,19 @@ export default{
         const loadMap = () => {
             const container = document.getElementById("map"); 
             const options = {
-                center: new window.kakao.maps.LatLng(33.450701, 126.570667), 
+                center: new window.kakao.maps.LatLng(37.5012767241426, 127.039600248343), 
                 level: 3
             };
-            kakaoMap.value = new window.kakao.maps.Map(container, options); 
+            kakaoMap.value = new window.kakao.maps.Map(container, options);
+            kakaoMapStore.setMapInstance(kakaoMap.value);
             loadMaker();
         };
 
         // 지정한 위치에 마커 불러오기
         const loadMaker = () => {
             const markerPosition = new window.kakao.maps.LatLng(
-                33.450701,
-                126.570667
+                37.5012767241426,
+                127.039600248343
             );
             const marker = new window.kakao.maps.Marker({
                 position: markerPosition,
@@ -151,10 +84,14 @@ export default{
             for (let i = 0; i < houseList.length; i++) {
                 const position = new window.kakao.maps.LatLng(houseList[i].latitude, houseList[i].longitude);
                 
-                const marker = new window.kakao.maps.Marker({
-                    map: kakaoMap.value,
-                    position: position,
-                });
+                // const marker = new window.kakao.maps.Marker({
+                //     map: kakaoMap.value,
+                //     position: position,
+                // });
+                const markerImg = houseList[i].bookmark === true ? bookmarkMarkerImage : defaultMarkerImage;
+                const markerImgSize = new window.kakao.maps.Size(28, 37);
+                const marker = createCustomMarker(markerImgSize, markerImg, houseList[i].latitude, houseList[i].longitude);
+
         
                 const infowindow = new window.kakao.maps.InfoWindow({
                     content: houseList[i].aptNm,
@@ -284,18 +221,21 @@ export default{
             };
         };
 
-        const addRoadview = (latitude, longitude) => {
-            const roadviewContainer = document.getElementById("load-view-container");
-            const roadview = new window.kakao.maps.Roadview(roadviewContainer);
-            const roadviewClient = new window.kakao.maps.RoadviewClient();
-
-            // 로드뷰 위치 설정
-            const position = new window.kakao.maps.LatLng(latitude, longitude);
-            roadviewClient.getNearestPanoId(position, 200, (panoId) => {
-                if (panoId) {
-                    roadview.setPanoId(panoId, position);
-                }
+        const createCustomMarker = (size, image, lat, lng) => {
+            const markerImage = new window.kakao.maps.MarkerImage(image, size);
+            const markerPosition = new window.kakao.maps.LatLng(lat, lng);
+        
+            // 마커 생성
+            const marker = new window.kakao.maps.Marker({
+                map: kakaoMap.value,
+                position: markerPosition,
+                image: markerImage,
             });
+        
+            // 생성된 마커를 배열에 추가
+            markers.value.push(marker);
+        
+            return marker;
         };
 
         return {

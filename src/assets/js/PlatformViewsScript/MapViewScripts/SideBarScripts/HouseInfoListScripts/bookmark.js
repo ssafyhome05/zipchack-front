@@ -4,7 +4,7 @@ import { useHouseListStore } from "@/stores/houseListStore";
 import { useUserInfoStore } from "@/stores/userInfoStore";
 import { useHouseDetailStore } from "@/stores/houseDetailStore";
 import { showWarningToast, showSuccessToast, showErrorToast, showInfoToast } from '@/assets/js/PlatformViewsScript/CommonScripts/showToast';
-import { reissueAccessToken } from "../../../CommonScripts/reissueAccessToken";
+import { reissueAccessToken } from "@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken";
 
 
 
@@ -47,12 +47,12 @@ const addHouseBookmark = async (aptSeq, access_token, times) => {
 
                 // detail에도 업데이트
                 const house = houseListStore.houseList.find(h => h.aptSeq === aptSeq);
-                console.log(house)
+
                 if (house) {
                     house.bookmark = true;
                     houseDetailStore.setHouseDetail(house);
                 }
-                }
+            }
         }).catch((error) => {
             console.error("Bookmark failed:", error);
             showErrorToast("오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.");
@@ -80,8 +80,7 @@ const removeHouseBookmark = async (aptSeq, access_token, times) => {
         const userInfoStore = useUserInfoStore();
         const houseDetailStore = useHouseDetailStore();
 
-        const response = await axios.delete(
-            `${SERVER_URL}/api/bookmark/house/${aptSeq}`,
+        const response = await axios.delete(`${SERVER_URL}/api/bookmark/house/${aptSeq}`,
             {
                 headers: {
                     Authorization: `${access_token}`,

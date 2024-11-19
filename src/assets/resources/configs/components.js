@@ -15,6 +15,8 @@ import DongModal from '@/components/common/DongModal.vue';
 import HouseInfoListItem from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseInfoListItem.vue';
 import HouseDetail from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetail.vue';
 import HouseGraph from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/HouseGraph.vue';
+import HouseRoute from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/HouseRoute.vue';
+import SearchModal from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/SearchModal.vue';
 // common
 
 
@@ -36,4 +38,6 @@ export function addComponents(app) {
   app.component('HouseInfoListItem', HouseInfoListItem);
   app.component('HouseDetail', HouseDetail);
   app.component('HouseGraph', HouseGraph);
+  app.component('HouseRoute', HouseRoute);
+  app.component('SearchModal', SearchModal)
 }
