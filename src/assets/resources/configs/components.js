@@ -17,6 +17,7 @@ import HouseDetail from '@/components/MapViewComponents/SideBarComponents/HouseI
 import HouseGraph from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/HouseGraph.vue';
 import HouseRoute from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/HouseRoute.vue';
 import SearchModal from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/SearchModal.vue';
+import TransportModal from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/TransportModal.vue';
 // common
 
 
@@ -39,5 +40,6 @@ export function addComponents(app) {
   app.component('HouseDetail', HouseDetail);
   app.component('HouseGraph', HouseGraph);
   app.component('HouseRoute', HouseRoute);
-  app.component('SearchModal', SearchModal)
+  app.component('SearchModal', SearchModal);
+  app.component('TransportModal', TransportModal);
 }

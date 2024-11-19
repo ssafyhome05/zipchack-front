@@ -1,0 +1,59 @@
+.transport-modal {
+    width: 100px;
+    height: fit-content;
+    position: fixed;
+    top: 65%;
+    left: 935px;
+    background-color: white;
+    box-shadow: 3px 3px 3px rgba(133, 133, 133, 0.366);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease-in-out;
+}
+
+.transport-route{
+    /* border: 1px solid #ccc; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 45px;
+}
+
+.transport-route button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: white;
+    border-radius: 25px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.transport-route button:hover{
+    background-color: #007bff;
+    color: white;
+}
+
+.transport-route button.active{
+    background-color: #007bff;
+    color: white;
+}
+
+.transport-route button:not(.active) {
+    background-color: white; /* 비활성 상태 배경 */
+    color: black; /* 비활성 상태 글자색 */
+
+}
+
+.line{
+    display: block;
+    height: 0;
+    width: 90%;
+    border-bottom: 0.1rem solid #ccc;
+}
+
+
