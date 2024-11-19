@@ -32,8 +32,8 @@
 
 <script setup>
 import ToptenItem from './ToptenItem.vue'
-import { useTopTenStore } from '/stores/topTenStore'
-import { onMounted, ref, computed } from 'vue'
+import { useTopTenStore } from '@/stores/topTenStore'
+import { onMounted, computed } from 'vue'
 
 const store = useTopTenStore()
 
@@ -55,7 +55,8 @@ const handleToggle = () => {
 }
 
 onMounted(() => {
-  store.startTestInterval()
+  store.getListData()
+  store.getLoadDataBy5minutes()
 })
 </script>
 
