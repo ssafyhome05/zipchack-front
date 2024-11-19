@@ -275,7 +275,7 @@ export default {
 
         await houseListStore.setHouseList(dongCode, keyword.value, userSeq.value);
         houseInfoList.value = await houseListStore.houseList;
-
+ 
         const detailContainer = document.querySelector('.house-detail-container');
         if(detailContainer){
             houseDetailStore.setHouseDetail(null);

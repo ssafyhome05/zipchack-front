@@ -33,18 +33,20 @@ export const useHouseListStore = defineStore('houseInfoList', {
     },
     actions: {
         async setHouseList(dong, keyword, userSeq) {
+            const HouseSearchWithTimeDto = {
+                dongCode: dong,
+                keyword: keyword,
+                userSeq: userSeq,
+            }
             try {
-                const response = await axios.get(`${SERVER_URL}/api/house`, {
-                    params: {
-                        dongCode: dong,
-                        keyWord: keyword,
-                        userSeq: userSeq,
-                    }
-                });
-
-                this.houseList = response.data;
-                this.dongCode = dong;
-                this.keyWord = keyword;
+                await axios.post(`${SERVER_URL}/api/house`, HouseSearchWithTimeDto)
+                    .then(response => {
+                        if(response.data.code === 200050){
+                            this.houseList = response.data.data;
+                            this.dongCode = dong;
+                            this.keyWord = keyword;
+                        }
+                    }); 
             } catch (error) {
                 console.error("데이터 가져오기에 실패했습니다:", error);
             }

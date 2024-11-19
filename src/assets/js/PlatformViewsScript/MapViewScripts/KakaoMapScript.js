@@ -115,8 +115,8 @@ export default{
                     params: { dongCode: dong }
                 });
                 
-                if (response.data && Array.isArray(response.data)) {
-                    const coordinates = response.data.map((location) => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    const coordinates = response.data.data.map((location) => {
                         return {
                             lat: location.lat,
                             lng: location.lng

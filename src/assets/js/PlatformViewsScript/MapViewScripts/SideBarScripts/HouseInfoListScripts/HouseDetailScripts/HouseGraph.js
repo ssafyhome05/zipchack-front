@@ -76,15 +76,22 @@ export default {
         };
 
         const loadGraphData = async (houseSeq) => {
-            const response = await axios.get(`${SERVER_URL}/api/house/detail/status`, {
+            await axios.get(`${SERVER_URL}/api/house/status`, {
                 params: {
                     "houseSeq": houseSeq,
                     "year": 2020,
                 }
+            }).then(response => {
+                if(response.data.code === 200050){
+                    const data = response.data.data;
+                    dealCnt.value = data.map(item => item.dealCnt);
+                    avgAreaAmount.value = data.map(item => item.avgAreaPrice);
+                    updateChartData();
+                }
             });
-            dealCnt.value = response.data.map(item => item.dealCnt);
-            avgAreaAmount.value = response.data.map(item => item.avgAreaPrice);
-            updateChartData();
+            
+            
+            
         };
 
         watch(() => houseDetailStore.houseDetail, (newVal) => {
