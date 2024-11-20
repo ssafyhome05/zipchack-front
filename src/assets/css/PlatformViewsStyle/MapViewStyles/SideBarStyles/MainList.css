@@ -29,7 +29,8 @@
 .content-list-item{
     position: relative;
     width: 90%;
-    height: 85px;
+    height: 100%;
+    padding: 10px 20px;
     border-radius: 5px;
     margin: 15px auto;
     background-color: white;
