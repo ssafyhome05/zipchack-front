@@ -18,6 +18,7 @@ import HouseGraph from '@/components/MapViewComponents/SideBarComponents/HouseIn
 import HouseRoute from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/HouseRoute.vue';
 import SearchModal from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/SearchModal.vue';
 import TransportModal from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/TransportModal.vue';
+import RequiredLogin from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/RequiredLogin.vue';
 // common
 
 
@@ -42,4 +43,5 @@ export function addComponents(app) {
   app.component('HouseRoute', HouseRoute);
   app.component('SearchModal', SearchModal);
   app.component('TransportModal', TransportModal);
+  app.component('RequiredLogin', RequiredLogin);
 }

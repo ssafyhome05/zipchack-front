@@ -25,6 +25,30 @@ async function reissueAccessToken() {
     }
 };
 
+async function test() {
+    const userInfoStore = useUserInfoStore();
+    const access_token = userInfoStore.getAccessToken;
+    try {
+        axios.defaults.withCredentials = true;
+        console.log("test", userInfoStore.getAccessToken)
+        const response = await axios.post(`${SERVER_URL}/api/auth/reissue`, null, 
+            {   
+                headers: {
+                    "Authorization": `${userInfoStore.getAccessToken}`,
+                },
+                withCredentials: true
+            });
+        console.log("re", response.headers.authorization)
+        userInfoStore.access_token = response.headers.authorization;
+
+        console.log("re", userInfoStore.access_token);
+    } catch (error) {
+        console.error("토큰 재발급 실패:", error);
+        throw error;
+    }
+};
+
 export{
-    reissueAccessToken
+    reissueAccessToken,
+    test
 }
