@@ -149,6 +149,7 @@ export default {
         document.querySelector('.dong').classList.add('active');
         dong.value = dongCode;
     };
+    
     // 구군 및 동 데이터 요청
     function getGugun(value){
         if(value){
