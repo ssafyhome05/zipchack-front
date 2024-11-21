@@ -83,7 +83,7 @@ const saveCustomSpot = () => {
                     'Authorization': access_token,
                 }
             })
-            .then(async(response) => {
+            .then(async(res) => {
                 if (res.data.code === 401012 || res.data.code === 401011) {
                     console.log("토큰 갱신이 필요합니다.");
                     await test();
@@ -92,12 +92,6 @@ const saveCustomSpot = () => {
                 }
 
                 if(res.status === 200){
-                    // console.log("사용자 북마크 매물 불러오기 완료", res.status);
-                    bookmarkHouseList.value = res.data;
-                    // console.log(bookmarkHouseList.value);
-                }
-                if(response.status === 200){
-                    const data = response.data;
                     customName.value = null;
                     roadAddress.value = null;
                     jibunAddress.value = null;
