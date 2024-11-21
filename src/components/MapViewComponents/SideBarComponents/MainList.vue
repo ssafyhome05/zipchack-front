@@ -19,7 +19,11 @@ export default {
     },
     data() {
         return {
-            mainItems: [{title: '인기 검색어', component: ToptenBox}, {title: '뉴스에서 핫한 지역', component: NewsBox}, {title: '가장 많은 거래가 있었던 매물', component: 'DealBox'}]
+            mainItems: [
+                {title: '인기 검색어', component: ToptenBox}, 
+                {title: '뉴스에서 핫한 지역', component: NewsBox}, 
+                // {title: '가장 많은 거래가 있었던 매물', component: 'DealBox'}
+            ]
         }
     },
 }

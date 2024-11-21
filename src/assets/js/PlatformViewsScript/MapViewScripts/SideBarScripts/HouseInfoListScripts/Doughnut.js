@@ -33,7 +33,6 @@ export default{
         watch(() => houseListStore.gugunName, (newVal) => {
             gugunName.value = newVal;
             setChartOptions();
-            console.log("name", gugunName.value)
         }, {deep: true});
 
         watch(() => houseListStore.dongCode, (newVal) => {
@@ -47,7 +46,6 @@ export default{
             gugunName.value = houseListStore.gugunName;
             await loadDoughnutGraphData(dongCode);
             setChartOptions();
-            console.log("mount", gugunName.value)
             dataLoaded.value = true;
         });
 

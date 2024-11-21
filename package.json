@@ -23,7 +23,9 @@
     "vue-cookies": "^1.8.4",
     "vue-router": "^4.4.5",
     "vue-sonner": "^1.2.5",
+    "vue-spinner": "^1.0.4",
     "vue3-infinite-loading": "^1.0.0",
+    "vue3-spinners": "^1.2.2",
     "yup": "^1.4.0"
   },
   "devDependencies": {
