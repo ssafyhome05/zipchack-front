@@ -1,7 +1,7 @@
 <template>
 
     <div v-if="houseDetail !== null" class="house-detail-container">
-        <i class="bi bi-x detail-close-btn"></i>
+        <i class="bi bi-x detail-close-btn" @click.stop="closeDetailModal"></i>
         <div class="load-view-container" id="load-view-container">
             
         </div>

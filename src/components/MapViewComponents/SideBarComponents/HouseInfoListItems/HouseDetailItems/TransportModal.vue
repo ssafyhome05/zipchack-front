@@ -20,6 +20,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useKakaoMapStore } from "@/stores/kakaoMapStore";
+import { useHouseDetailStore } from '@/stores/houseDetailStore';
 import start_marker from '@/assets/imgs/mark/test-mark.png';
 import end_marker from '@/assets/imgs/mark/red-mark.png';
 
@@ -35,6 +36,7 @@ const props = defineProps({
 });
 
 const kakaoMapStore = useKakaoMapStore();
+const houseDetailStore = useHouseDetailStore();
 const kakaoMap = ref(kakaoMapStore.mapInstance);
 const selectedOption = ref(null);
 const polylines = ref([]);
@@ -46,9 +48,17 @@ const routeOptions = computed(() =>
 );
 
 watch(() => props.isClicked, () => {
-    clearMapObjects();
+    if(!props.isClicked){
+        clearMapObjects();
+    }
 });
 
+watch(() => houseDetailStore.showDetailModal, (newShowDetailModal) => {
+    console.log("대중교통", houseDetailStore.showDetailModal)
+    if (!newShowDetailModal) {
+        clearMapObjects();
+    }
+});
 
 const selectOption = (index) => {
     selectedOption.value = index;

@@ -12,6 +12,7 @@ export const useHouseListStore = defineStore('houseInfoList', {
         sidoName: ref(''),
         gugunName: ref(''),
         dongName: ref(''),
+        dongPopInfo: ref([]),
     }),
 
     getters: {
@@ -30,6 +31,9 @@ export const useHouseListStore = defineStore('houseInfoList', {
         getDongName() {
             return this.dongName;
         },
+        getDongPopInfo(){
+            return this.dongPopInfo;
+        }
     },
     actions: {
         async setHouseList(dong, keyword, userSeq) {
@@ -61,6 +65,19 @@ export const useHouseListStore = defineStore('houseInfoList', {
         setDongName(name) {
             this.dongName = name;
         },
+
+        async setDongPopInfo(dong){
+            await axios.get(`${SERVER_URL}/api/house/population`, {
+                params: {
+                    dongCode: dong,
+                }
+            }).then(response => {
+                const data = response.data;
+                if(data.code === 200050){
+                    this.dongPopInfo = data.data;
+                }
+            })
+        }
     },
     // 새로고침 시 데이터 유지
     // persist: true,

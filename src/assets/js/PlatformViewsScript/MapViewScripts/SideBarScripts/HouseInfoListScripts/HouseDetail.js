@@ -107,10 +107,15 @@ export default {
             });
         }
 
+        const closeDetailModal = () => {
+            houseDetailStore.showDetailModal = false;
+        }
         
         return {
             houseDetail,
             address,
+
+            closeDetailModal
         };
     },
 };

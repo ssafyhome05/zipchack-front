@@ -30,7 +30,8 @@ export default {
     const houseInfoList = ref([]);
     const markers = reactive([]);
     let polygon = ref(null);
-    const showModal = ref(false);
+    const showModal = ref(houseDetailStore.showDetailModal);
+    const showDoughnutGraph = ref(houseDetailStore.showDoughnutGraph);
 
     // Mounted 시점에 지도 및 초기 설정 로드
     onMounted(() => {
@@ -40,14 +41,23 @@ export default {
         document.addEventListener('gugun-selected', e => handleGugunSelection(e.detail, e.target.innerText));
         document.addEventListener('dong-selected', e => handleDongSelection(e.detail, e.target.innerText));
     });
-    
+
     watch(
-        () => houseListStore.houseList,
-        (newVal) => {
-            houseInfoList.value = newVal;
-        },
-        { immediate: true }
+        [() => houseListStore.houseList, () => houseDetailStore.showDetailModal, () => houseDetailStore.showDoughnutGraph],
+        ([newHouseList, newShowModal, newshowDoughnutGraph], [oldHouseList, oldShowModal, oldshowDoughnutGraph]) => {
+            houseInfoList.value = newHouseList;
+            showModal.value = newShowModal;
+            showDoughnutGraph.value = newshowDoughnutGraph;
+        }
     );
+      
+    // watch(
+    //     () => houseListStore.houseList,
+    //     (newVal) => {
+    //         houseInfoList.value = newVal;
+    //     },
+    //     { immediate: true }
+    // );
 
     const loadScript = () => {
         const script = document.createElement("script");
@@ -116,6 +126,7 @@ export default {
         document.querySelector('.sido').innerText = sidoName;
         document.querySelector('.sido').classList.add('active');
         sido.value = sidoCode;
+
         // 3. 구군 데이터 요청
         getGugun(sidoCode);
 
@@ -276,6 +287,10 @@ export default {
 
         await houseListStore.setHouseList(dongCode, keyword.value, userSeq.value);
         houseInfoList.value = await houseListStore.houseList;
+
+        await houseListStore.setDongPopInfo(dongCode);
+        houseDetailStore.showDoughnutGraph = true;
+        showDoughnutGraph.value = true;
  
         const detailContainer = document.querySelector('.house-detail-container');
         if(detailContainer){
@@ -286,33 +301,13 @@ export default {
     }
 
     function openHouseDetail(house) {
-        showModal.value = true;
+        houseDetailStore.showDetailModal = true;
+        console.log(houseDetailStore.showDetailModal)
         houseDetailStore.setHouseDetail(house);
         houseDetailStore.setAddress(
             sidoName.value + " " + gugunName.value + " " + dongName.value + " " + house.roadNm
         );
-        // nextTick(() => {
-        //     addRoadview(house.latitude, house.longitude);
-        // });
     }
-
-    const addRoadview = (latitude, longitude) => {
-        const roadviewContainer = document.getElementById("load-view-container");
-        const roadview = new window.kakao.maps.Roadview(roadviewContainer);
-        const roadviewClient = new window.kakao.maps.RoadviewClient();
-        if(latitude && longitude) {
-        // 로드뷰 위치 설정
-        const position = new window.kakao.maps.LatLng(latitude, longitude);
-            roadviewClient.getNearestPanoId(position, 200, (panoId) => {
-                if (panoId) {
-                    roadview.setPanoId(panoId, position);
-                }
-            });
-        }else{
-            const address = houseDetailStore.getAddress;
-            addRoadviewToAddress(address, roadview, roadviewClient);
-        }
-    };
 
     const addRoadviewToAddress = (address, roadview, roadviewClient) => {
         var geocoder = new kakao.maps.services.Geocoder();
@@ -345,6 +340,7 @@ export default {
         markers,
         polygon,
         showModal,
+        showDoughnutGraph,
         houseListStore,
         
         // methods

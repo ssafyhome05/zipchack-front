@@ -366,3 +366,10 @@
     margin-left: auto;
     z-index: 1;
 }
+
+.doughnut-modal{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 6;
+}
