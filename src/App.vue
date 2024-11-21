@@ -5,7 +5,7 @@ AuthorizationScripts();
 </script>
 
 <template>
-    <PlatformView />
+    <RouterView />
 </template>
 
 <style scoped>

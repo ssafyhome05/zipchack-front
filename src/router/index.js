@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import PlatformView from '@/views/PlatformView.vue';
-import WelcomeView from '@/views/PlatformViews/WelcomeView.vue';
-import MapView from '@/views/PlatformViews/MapView.vue';
-import HouseDetail from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetail.vue';
+import AdminViews from '@/views/AdminViews/AdminViews.vue';
+import DashBoardView from '@/views/AdminViews/DashBoardView.vue';
+import NoticeManageView from '@/views/AdminViews/NoticeManageView.vue';
+import UserManageView from '@/views/AdminViews/UserManageView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,19 +14,26 @@ const router = createRouter({
       component: PlatformView,
     },
     {
-      path: '/welcome',
-      name: 'welcome',
-      component: WelcomeView,
-    },
-    {
-      path: '/map',
-      name: 'map',
-      component: MapView,
-    },
-    {
-      path: '/house-detail',
-      name: 'house-detail',
-      component: HouseDetail,
+      path: '/admin',
+      name: 'admin',
+      component: AdminViews,
+      children: [
+        {
+          path: 'dashboard',
+          name: 'dashboard',
+          component: DashBoardView,
+        },
+        {
+          path: 'notice_manage',
+          name: 'noticeManage',
+          component: NoticeManageView,
+        },
+        {
+          path: 'user_manage',
+          name: 'userManage',
+          component: UserManageView,
+        },
+      ],
     },
   ],
 })
