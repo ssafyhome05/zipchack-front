@@ -104,6 +104,5 @@ const clickHouse = (house) => {
     const address = `${props.sidoName} ${props.gugunName} ${props.dongName} ${house.roadNm}`;
     houseDetailStore.setAddress(address);
     emit('click-house', house);
-    console.log(house);
 };
 </script>

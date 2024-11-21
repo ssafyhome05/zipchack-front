@@ -5,6 +5,8 @@ export const useHouseDetailStore = defineStore('houseDetail', {
     state: () => ({
         houseDetail: ref(null),
         address: ref(null),
+        showDetailModal: ref(false),
+        showDoughnutGraph: ref(false),
     }),
     getters: {
         getHouseDetail() {

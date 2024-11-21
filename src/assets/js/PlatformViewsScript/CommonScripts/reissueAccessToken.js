@@ -33,9 +33,6 @@ async function test() {
         console.log("test", userInfoStore.getAccessToken)
         const response = await axios.post(`${SERVER_URL}/api/auth/reissue`, null, 
             {   
-                headers: {
-                    "Authorization": `${userInfoStore.getAccessToken}`,
-                },
                 withCredentials: true
             });
         console.log("re", response.headers.authorization)
