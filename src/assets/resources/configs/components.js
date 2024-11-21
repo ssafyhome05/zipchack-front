@@ -21,6 +21,7 @@ import TransportModal from '@/components/MapViewComponents/SideBarComponents/Hou
 import RequiredLogin from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/RequiredLogin.vue';
 import BookmarkListItem from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/BookmarkListItem.vue';
 import DoughnutChart from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/DoughnutChart.vue';
+import CustomLocationItem from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/CustomLocationItem.vue';
 // common
 
 
@@ -48,4 +49,5 @@ export function addComponents(app) {
   app.component('RequiredLogin', RequiredLogin);
   app.component('BookmarkListItem', BookmarkListItem);
   app.component('DoughnutChart', DoughnutChart);
+  app.component('CustomLocationItem', CustomLocationItem);
 }

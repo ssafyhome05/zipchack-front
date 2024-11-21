@@ -1,12 +1,10 @@
 import {defineStore} from 'pinia';
 import { SERVER_URL } from '@/assets/resources/configs/config';
-import { ref } from 'vue';
 import axios from 'axios';
 
 export const useNewsListStore = defineStore('newsList', {
     state: () => ({
-        newsList: [123],
-        
+        newsList: [], 
     }),
 
     getters: {

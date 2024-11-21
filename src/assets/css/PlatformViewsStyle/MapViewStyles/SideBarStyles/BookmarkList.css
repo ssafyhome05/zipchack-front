@@ -1,0 +1,71 @@
+.none-user{
+    width: 425px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.none-bookmark-list{
+    /* width: 425px; */
+    height: 94%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.none-bookmark-list-desc{
+    /* width: 425px; */
+    /* height: 0%; */
+    font-weight: 17px;
+}
+
+.bookmark-desc{
+    width: 100%;
+    height: 10px;
+    font-size: 19px;
+    padding-left: 25px;
+    padding-top: 40px;
+    font-weight: bold;
+    padding-bottom: 40px;
+}
+
+.bookmark-list{
+    position: relative;
+    width: 424px;
+    height: 100%;
+    overflow-y: scroll;
+    padding-top: 30px;
+    margin-bottom: 20px;
+}
+
+.bookmark-list::-webkit-scrollbar {
+  width: 0.5vw;
+}
+
+.bookmark-list::-webkit-scrollbar-thumb {
+  background-color: #cacaca;
+  border-radius: 10px;
+}
+
+.spinner{
+    position: relative;
+    left: 45%;
+    top: 40%;
+}
+
+.user-custom-location-desc{
+    width: 100%;
+    height: 10px;
+    font-size: 19px;
+    padding-left: 25px;
+    padding-top: 10px;
+    font-weight: bold;
+    padding-bottom: 40px;
+}
+
+.user-custom-location-list{
+    height: fit-content;
+}

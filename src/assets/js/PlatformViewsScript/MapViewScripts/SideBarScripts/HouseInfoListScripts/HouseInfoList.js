@@ -287,6 +287,7 @@ export default {
 
         await houseListStore.setHouseList(dongCode, keyword.value, userSeq.value);
         houseInfoList.value = await houseListStore.houseList;
+        await searchCount(dongCode);
 
         await houseListStore.setDongPopInfo(dongCode);
         houseDetailStore.showDoughnutGraph = true;
@@ -309,22 +310,15 @@ export default {
         );
     }
 
-    const addRoadviewToAddress = (address, roadview, roadviewClient) => {
-        var geocoder = new kakao.maps.services.Geocoder();
-
-        geocoder.addressSearch(address, function(result, status) {
-            console.log(address);
-            if (status === kakao.maps.services.Status.OK) {
-                const latitude = result[0].y;
-                const longitude = result[0].x;
-                roadviewClient.getNearestPanoId(new kakao.maps.LatLng(latitude, longitude), 200, (panoId) => {
-                    if (panoId) {
-                        roadview.setPanoId(panoId, new kakao.maps.LatLng(latitude, longitude));
-                    }
-                });
-            }
+    async function searchCount(code){
+        const dongCode = Number(code)
+        await axios.post(`${SERVER_URL}/api/house/search?dongCode=${dongCode}`
+        ).then(res => {
+            console.log("카운트 증가요", res.data);
+        }).catch(err => {
+            console.log(err);
         });
-    };
+    }
 
     return {
         // datas
