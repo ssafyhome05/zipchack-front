@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboard-container">
+    <div class="admin-base-container">
         <SectionContainer :item="sectionList[0]" />
         <div class="bottom-container">
             <SectionContainer :item="sectionList[1]" />
@@ -11,14 +11,18 @@
 <script setup>
 import { ref } from 'vue';
 import SectionContainer from '@/components/adminComponents/SectionContainer.vue';
-import BoardTable from '@/components/adminComponents/BoardTable.vue';
-import TaskProgressCircle from '@/components/adminComponents/TaskProgressCircle.vue';
-import TaskBasic from '@/components/adminComponents/TaskBasic.vue';
+import BoardComponent from '@/components/adminComponents/AdminBoard.vue';
+import TaskProgressCircle from '@/components/adminComponents/AdminTaskProgress.vue';
+import TaskBasic from '@/components/adminComponents/AdminTaskStatus.vue';
 
 const sectionList = ref([
     {
-        title: '공지사항',
-        component: BoardTable
+        title: '최근 공지사항',
+        component: BoardComponent,
+        props: {
+            tableType: 'notice'
+        },
+        pagenation: false
     },
     {
         title: '매물 거래내역 갱신',
@@ -33,27 +37,16 @@ const sectionList = ref([
 </script>
 
 <style scoped>
-.dashboard-container {
-    padding: 20px;
-    background-color: #f5f5f5;
-    height: calc(100vh - 84px);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
 .bottom-container {
     display: flex;
     gap: 20px;
-    height: calc((100% - 20px) / 2); /* 상단 컨테이너와 동일한 높이 */
-}
-
-/* 상단 테이블 컨테이너 */
-.dashboard-container > .section-container {
     height: calc((100% - 20px) / 2);
 }
 
-/* 하단 테이블 컨테이너들 */
+.admin-base-container > .section-container {
+    height: calc((100% - 20px) / 2);
+}
+
 .bottom-container > .section-container {
     width: 50%;
     height: 100%;

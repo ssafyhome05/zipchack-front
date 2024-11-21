@@ -156,12 +156,6 @@ onUnmounted(() => {
   gap: 8px;
 }
 
-.button {
-  font-size: 1rem;
-  font-weight: bold;
-  width: 100%;
-}
-
 .button-container {
   display: flex;
   flex-direction: column;
@@ -224,6 +218,9 @@ button {
   background-color: #0D6BFF;
   border-color: #0D6BFF;
   transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
 }
 
 select:hover, button:hover {

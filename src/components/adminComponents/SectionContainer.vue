@@ -4,7 +4,7 @@
         {{ item.title }}
     </div>
     <div class="section-item">
-        <component :is="item.component" />
+        <component :is="item.component" v-bind="item.props" :pagenation="item.pagenation" />
     </div>
   </div>
 </template>
