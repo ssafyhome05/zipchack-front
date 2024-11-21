@@ -40,7 +40,7 @@ const router = createRouter({
           component: UserManageView,
         },
         {
-          path: 'notice_write',
+          path: 'notice_write/:id?',
           name: 'noticeWrite',
           component: NoticeWriteView,
         },

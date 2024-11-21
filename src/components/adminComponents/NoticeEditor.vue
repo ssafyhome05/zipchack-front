@@ -25,26 +25,92 @@
     </div>
     <div class="button-container">
       <button class="cancel-button" @click="$router.push('/admin/notice_manage')">취소</button>
-      <button class="submit-button" @click="handleSubmit">등록</button>
+      <button class="submit-button" @click="handleSubmit">
+        {{ isEdit ? '수정' : '등록' }}
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useAdminStore } from '@/stores/adminStore';
 
 const router = useRouter();
+const route = useRoute();
+const adminStore = useAdminStore();
 
 const noticeData = ref({
   title: '',
   content: '',
-  expiryDate: ''
+  expiryDate: '',
+  author: '관리자',
+  createdAt: new Date().toISOString().split('T')[0]
+});
+
+const isEdit = ref(false);
+
+onMounted(() => {
+  const noticeId = route.params.id;
+  if (noticeId) {
+    isEdit.value = true;
+    const notice = adminStore.noticeData.find(notice => notice.id === parseInt(noticeId));
+    if (notice) {
+      noticeData.value = {
+        title: notice.title,
+        content: notice.content || '',
+        expiryDate: notice.expiryDate,
+        author: notice.author,
+        createdAt: notice.createdAt
+      };
+    } else {
+      alert('존재하지 않는 공지사항입니다.');
+      router.push('/admin/notice_manage');
+    }
+  }
 });
 
 const handleSubmit = () => {
-  // TODO: 공지사항 등록 로직 구현
-  router.push('/admin/notice_manage');
+  try {
+    if (!noticeData.value.title.trim()) {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+    if (!noticeData.value.expiryDate) {
+      alert('만료일을 선택해주세요.');
+      return;
+    }
+
+    const noticeId = route.params.id;
+    if (isEdit.value) {
+      const index = adminStore.noticeData.findIndex(notice => notice.id === parseInt(noticeId));
+      if (index !== -1) {
+        adminStore.noticeData[index] = {
+          ...adminStore.noticeData[index],
+          title: noticeData.value.title,
+          content: noticeData.value.content,
+          expiryDate: noticeData.value.expiryDate
+        };
+      }
+    } else {
+      const newId = Math.max(...adminStore.noticeData.map(n => n.id)) + 1;
+      adminStore.noticeData.unshift({
+        id: newId,
+        title: noticeData.value.title,
+        content: noticeData.value.content,
+        author: noticeData.value.author,
+        createdAt: noticeData.value.createdAt,
+        expiryDate: noticeData.value.expiryDate,
+        views: 0
+      });
+    }
+
+    router.push('/admin/notice_manage');
+  } catch (error) {
+    console.error('공지사항 저장 실패:', error);
+    alert('저장에 실패했습니다.');
+  }
 };
 </script>
 

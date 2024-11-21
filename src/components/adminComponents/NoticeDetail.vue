@@ -27,13 +27,17 @@
       </div>
     </div>
     <div class="button-container">
+      <template v-if="canModify">
+        <button class="edit-button" @click="handleEdit">수정하기</button>
+        <button class="delete-button" @click="handleDelete">삭제하기</button>
+      </template>
       <button class="list-button" @click="$router.push('/admin/notice_manage')">목록으로</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -43,6 +47,26 @@ const props = defineProps({
     required: true
   }
 });
+
+const canModify = computed(() => {
+  return true;
+});
+
+const handleEdit = () => {
+  router.push(`/admin/notice_write/${props.item.id}`);
+};
+
+const handleDelete = async () => {
+  if (confirm('정말 삭제하시겠습니까?')) {
+    try {
+      await deleteNotice(props.item.id);
+      router.push('/admin/notice_manage');
+    } catch (error) {
+      console.error('공지사항 삭제 실패:', error);
+      alert('삭제에 실패했습니다.');
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -108,6 +132,7 @@ const props = defineProps({
   justify-content: center;
   padding: 20px;
   border-top: 1px solid #dee2e6;
+  gap: 10px;
 }
 
 .list-button {
@@ -124,6 +149,38 @@ const props = defineProps({
 .list-button:hover {
   background-color: white;
   color: #0D6BFF;
+}
+
+.edit-button {
+  padding: 10px 30px;
+  background-color: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: white;
+  color: #28a745;
+}
+
+.delete-button {
+  padding: 10px 30px;
+  background-color: #dc3545;
+  color: white;
+  border: 1px solid #dc3545;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: white;
+  color: #dc3545;
 }
 
 /* 스크롤바 스타일링 */
