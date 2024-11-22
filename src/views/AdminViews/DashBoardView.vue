@@ -11,26 +11,26 @@
 <script setup>
 import { ref } from 'vue';
 import SectionContainer from '@/components/adminComponents/SectionContainer.vue';
-import BoardComponent from '@/components/adminComponents/AdminBoard.vue';
-import TaskProgressCircle from '@/components/adminComponents/AdminTaskProgress.vue';
-import TaskBasic from '@/components/adminComponents/AdminTaskStatus.vue';
+import AdminBoard from '@/components/adminComponents/AdminBoard.vue';
+import AdminTaskProgress from '@/components/adminComponents/AdminTaskProgress.vue';
+import AdminTaskStatus from '@/components/adminComponents/AdminTaskStatus.vue';
 
 const sectionList = ref([
     {
         title: '최근 공지사항',
-        component: BoardComponent,
+        component: AdminBoard,
         props: {
             tableType: 'notice'
         },
-        pagenation: false
+        isPaginated: false
     },
     {
         title: '매물 거래내역 갱신',
-        component: TaskProgressCircle
+        component: AdminTaskProgress
     },
     {
         title: '지역 별 통계 정보 갱신',
-        component: TaskBasic
+        component: AdminTaskStatus
     }
 ])
 

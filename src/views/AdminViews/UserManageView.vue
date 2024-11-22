@@ -7,14 +7,14 @@
 <script setup>
 import { ref } from 'vue';
 import SectionContainer from '@/components/adminComponents/SectionContainer.vue';
-import BoardComponent from '@/components/adminComponents/AdminBoard.vue';
+import AdminBoard from '@/components/adminComponents/AdminBoard.vue';
 
 const item = ref({
     title: '사용자 관리',
-    component: BoardComponent,
+    component: AdminBoard,
     props: {
         tableType: 'user'
     },
-    pagenation: true
+    isPaginated: true
 })
 </script>

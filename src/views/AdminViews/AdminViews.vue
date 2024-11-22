@@ -1,5 +1,5 @@
 <template>
-  <header class="admin-header"></header>
+  <header class="admin-header" />
   <div class="admin-wrap">
     <AdminSidebarComponent />
     <router-view />
