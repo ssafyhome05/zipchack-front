@@ -6,7 +6,9 @@
     @click="moveMap(news.cityName)" 
   >
     <h5 class="city-name">{{ news.cityName }}</h5>
+
     <a :href="news.url" class="title" target="_blank">{{ news.title }}</a>
+
     <div class="image-container">
       <img :src="news.img" alt="News Image" />
     </div>
@@ -15,6 +17,7 @@
 </template>
 
 <script>
+
 import newsList from '@/assets/js/PlatformViewsScript/MapViewScripts/SideBarScripts/MainItemListScripts/newsList.js';
 export default newsList;
 
@@ -38,11 +41,14 @@ export default newsList;
 }
 
 .city-name {
+
   font-size: 0.9rem;
+
   margin-bottom: 4px;
 }
 
 .title {
+
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 8px;
@@ -79,6 +85,7 @@ export default newsList;
 }
 
 .source {
+
   font-size: 0.8rem;
   color: #888;
   text-align: right;
@@ -96,7 +103,9 @@ export default newsList;
 .image-container img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
+
 }
 </style>
 

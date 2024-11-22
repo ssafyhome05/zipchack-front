@@ -2,11 +2,14 @@ import { onMounted, ref, } from 'vue';
 import { useNewsListStore } from '@/stores/newsListStore';
 import { useKakaoMapStore } from '@/stores/kakaoMapStore';
 
+
 export default {
+
     setup() {
         const newsListStore = useNewsListStore();
         const kakaoMapStore = useKakaoMapStore();
         
+
         const newsList = ref([]);
         const marker = ref([]);
         const kakaoMap = ref(null);
@@ -15,10 +18,12 @@ export default {
            await newsListStore.setNewsList();
            newsList.value = newsListStore.getNewsList;
            kakaoMap.value = kakaoMapStore.mapInstance;
+
         });
 
         const openLink = (url) => {
             window.open(url, '_blank');
+
         };
 
         const moveMap = (name) =>{
