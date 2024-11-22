@@ -3,7 +3,6 @@ import { SERVER_URL } from '@/assets/resources/configs/config';
 import { ref } from 'vue';
 import axios from 'axios';
 
-
 export const useHouseListStore = defineStore('houseInfoList', {
     state: () => ({
         houseList: ref([]),
@@ -13,6 +12,7 @@ export const useHouseListStore = defineStore('houseInfoList', {
         gugunName: ref(''),
         dongName: ref(''),
         dongPopInfo: ref([]),
+        dongNearBy: ref([]),
     }),
 
     getters: {
@@ -77,7 +77,28 @@ export const useHouseListStore = defineStore('houseInfoList', {
                     this.dongPopInfo = data.data;
                 }
             })
-        }
+        },
+
+        async setNearBy(dong){
+            try{
+                // console.log(testData)
+                // this.dongNearBy = testData;
+                await axios.get(`${SERVER_URL}/api/spot`,
+                    {
+                        params: {
+                            dongCode: dong,
+                        }   
+                    }
+                ).then((res) => {
+                    if(res.data.code === 200030){
+                         this.dongNearBy = res.data.data;
+                    }
+                    console.log(res.data.data);
+                });
+            }catch(err){
+                console.log(err);
+            }
+        },
     },
     // 새로고침 시 데이터 유지
     // persist: true,

@@ -285,8 +285,14 @@ export default {
         houseListStore.setGugunName(gugunName.value);
         houseListStore.setDongName(dongName.value);
 
+        // house list
         await houseListStore.setHouseList(dongCode, keyword.value, userSeq.value);
         houseInfoList.value = await houseListStore.houseList;
+
+        // get nearby
+        await houseListStore.setNearBy(dongCode);
+
+        // top 10 count
         await searchCount(dongCode);
 
         await houseListStore.setDongPopInfo(dongCode);

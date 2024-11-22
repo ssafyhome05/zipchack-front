@@ -16,7 +16,7 @@
 import axios from 'axios';
 import { SERVER_URL } from '@/assets/resources/configs/config';
 import { useUserInfoStore } from '@/stores/userInfoStore';
-import { test } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
+import { reissueAccessToken } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
 
 defineProps({
     customSpots: {

@@ -2,7 +2,7 @@
     <div class="side-list">
         <!-- side-list-menu  -->
         <div class="side-list-menu">
-            <div class="side-list-menu-item-logo">
+            <div class="side-list-menu-item-logo" @click="scrollToTop">
                 <img :src="zLogo" class="side-list-menu-item-logo-img" />
             </div>
             <div class="side-list-menu-item1" @click="changeTab('main')" :class="{'active': selectedTab === 'main'}">   

@@ -8,7 +8,7 @@
     <SearchModal />
 </template>
 
-<script setup>
+<script>
 
 </script>
 

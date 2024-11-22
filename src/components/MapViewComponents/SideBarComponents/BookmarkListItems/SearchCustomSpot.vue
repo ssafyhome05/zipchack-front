@@ -34,7 +34,7 @@ import { SERVER_URL } from '@/assets/resources/configs/config';
 import { ref } from 'vue';
 import { showWarningToast } from '@/assets/js/PlatformViewsScript/CommonScripts/showToast';
 import { useUserInfoStore } from '@/stores/userInfoStore';
-import { test } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
+import { reissueAccessToken } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
 
 const emit = defineEmits(['close-model', 'refresh-list']);
 
@@ -86,7 +86,7 @@ const saveCustomSpot = () => {
             .then(async(res) => {
                 if (res.data.code === 401012 || res.data.code === 401011) {
                     console.log("토큰 갱신이 필요합니다.");
-                    await test();
+                    await reissueAccessToken();
                     const newAccessToken = userInfoStore.access_token;
                     return saveCustomSpot();
                 }

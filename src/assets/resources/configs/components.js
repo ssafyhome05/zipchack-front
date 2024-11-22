@@ -23,6 +23,7 @@ import BookmarkListItem from '@/components/MapViewComponents/SideBarComponents/B
 import DoughnutChart from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/DoughnutChart.vue';
 import CustomLocationItem from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/CustomLocationItem.vue';
 import ToggleBox from '@/components/MapViewComponents/ToggleBox.vue';
+import NoticeModal from '@/components/HomeViewComponents/NavigationComponents/NoticeModal.vue';
 // common
 
 
@@ -52,4 +53,5 @@ export function addComponents(app) {
   app.component('DoughnutChart', DoughnutChart);
   app.component('CustomLocationItem', CustomLocationItem);
   app.component('ToggleBox', ToggleBox);
+  app.component('NoticeModal', NoticeModal);
 }

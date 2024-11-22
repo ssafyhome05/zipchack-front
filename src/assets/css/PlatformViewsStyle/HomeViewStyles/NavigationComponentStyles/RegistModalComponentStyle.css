@@ -4,10 +4,6 @@
     padding-left: 17px;
 }
 
-/* .regist-modal-body {
-    width: 100%;
-} */
-
 .regist-modal-body::-webkit-scrollbar {
     width: 0.5vw;
 }
@@ -25,7 +21,7 @@
     align-items: center;
     /* width: 100%; */
     margin-top: 30px;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
     gap: 10px;
 }
 
@@ -172,7 +168,6 @@ label:hover {
 .name-error,
 .email-error,
 .tel-error,
-.post-code-error,
 .road-address-error,
 .detail-address-error {
     position: relative;
@@ -183,6 +178,20 @@ label:hover {
     line-height: 0.0;
     /* right: 25%; */
     /* left: 0%; */
+    text-align: left;
+    width: 80%;
+}
+
+.email-code-error,
+.post-code-error{
+    position: relative;
+    color: red;
+    font-size: 14px;
+    /* margin-left: 10px; */
+    font-weight: bold;
+    line-height: 0.0;
+    top: 18px;
+    left: 4%;
     text-align: left;
     width: 80%;
 }
@@ -208,4 +217,45 @@ label:hover {
     color: #000;
     background-color: rgb(231, 231, 231, 0.54);
     transition: all 0.5s ease;
+}
+
+.form-footer{
+    padding-top: 20px;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+}
+
+.regist-footer-line{
+    color: #ccc;
+    margin-left: 18px;
+    margin-right: 12px;
+    cursor:default;
+}
+
+.go-login-button{
+    font-size: 18px;
+    line-height: 1.2;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.go-login-button:hover{
+    font-weight: bold;
+}
+
+.regist-button{
+    border: none;
+    background-color: transparent;
+    color: #007bff;
+    font-size: 18px;
+    line-height: 1.1;
+}
+
+.regist-button:hover{
+    font-weight: bold;
 }

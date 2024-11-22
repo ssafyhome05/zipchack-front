@@ -9,11 +9,6 @@
         <div class="masthead-content text-white">
           <div class="container-fluid px-4 px-lg-0">
             <img :src="zipchackMainImage" class="main-logo" />
-            <!-- <h1 class="fst-italic lh-1 mb-4">Our SSAFYHOME is Coming Soon</h1>
-            <p class="mb-5">
-              We're working hard to finish the development of this site. Sign up
-              below to receive updates and to be notified when we launch!
-            </p> -->
 
             <div class="mouse_scroll">
               <div class="mouse">
@@ -32,7 +27,6 @@
 
 <script>
 import HomeViewScript from '@/assets/js/PlatformViewsScript/HomeViewScript.js';
-import NavigationComponentScript from '@/components/HomeViewComponents/Navigation.vue';
 export default HomeViewScript;
 </script>
 

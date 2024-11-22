@@ -7,8 +7,8 @@
                     <img :src="logo" class="logo" />
                 </a>
                 </li>
-                <li><a href="#">Community</a></li>
-                <li><a href="#">About</a></li>
+                <li><a @click="openNoticeModal">Notice</a></li>
+                <li><a @click="">About</a></li>
             </ul>
         </nav>
 
@@ -50,6 +50,7 @@
     
     <LoginModalComponent />
     <RegistModalComponent />
+    <NoticeModal />
 </template>
 
 <script>
