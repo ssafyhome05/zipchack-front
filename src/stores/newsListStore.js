@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export const useNewsListStore = defineStore('newsList', {
     state: () => ({
-        newsList: [123],
+        newsList: [],
         
     }),
 
@@ -19,7 +19,7 @@ export const useNewsListStore = defineStore('newsList', {
             await axios.get(`${SERVER_URL}/api/house/news`)
                 .then(response => {
                     if(response.data.code === 200050){
-                        this.newsList = response.data.data.news;
+                        this.newsList = response.data.data;
                     }
                 })
                 .catch((error)=> console.error("데이터 가져오기에 실패했습니다:", error)); 
