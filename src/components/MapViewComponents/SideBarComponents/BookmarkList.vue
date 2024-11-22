@@ -55,7 +55,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useUserInfoStore } from '@/stores/userInfoStore';
 import { useHouseDetailStore } from '@/stores/houseDetailStore';
 import { SERVER_URL } from '@/assets/resources/configs/config';
-import { reissueAccessToken, test } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
+import { reissueAccessToken } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
 import axios from 'axios';
 
 import SearchCustomSpot from './BookmarkListItems/SearchCustomSpot.vue';
@@ -103,20 +103,15 @@ const getBookmarkList = async (access_token, times) => {
         }).then(async (res) => {
             if (res.data.code === 401012 || res.data.code === 401011) {
                 console.log("토큰 갱신이 필요합니다.");
-                await test();
+                reissueAccessToken();
                 const newAccessToken = userInfoStore.access_token;
-                return await getBookmarkList(newAccessToken, times - 1);
+                return getBookmarkList(newAccessToken, times - 1);
             }
 
             if(res.status === 200){
-                // console.log("사용자 북마크 매물 불러오기 완료", res.status);
                 bookmarkHouseList.value = res.data;
-                // console.log(bookmarkHouseList.value);
             }
-        }).catch(err => {
-            console.log(err);
         });
-
     }catch(error){
         console.log(error);
     }finally{
@@ -138,15 +133,13 @@ const getUserCustomSpotList = async (access_token, times) => {
         }).then(async (res) => {
             if (res.data.code === 401012 || res.data.code === 401011) {
                 console.log("토큰 갱신이 필요합니다.");
-                await test();
+                reissueAccessToken();
                 const newAccessToken = userInfoStore.access_token;
-                return await getBookmarkList(newAccessToken, times - 1);
+                return getBookmarkList(newAccessToken, times - 1);
             }
 
             if(res.status === 200){
-                console.log("사용자 지역 불러오기 완료", res.data);
                 userCustomSpotList.value = res.data;
-                console.log(bookmarkHouseList.value);
             }
         }).catch(err => {
             console.log(err);

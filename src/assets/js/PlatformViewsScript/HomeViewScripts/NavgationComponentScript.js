@@ -33,16 +33,12 @@ export default {
             user.value = userInfoStore.getUser;
         };
 
-        // 로그인 모달 열기
         function openLoginModal() {
-            // Wait for the DOM to load fully
             nextTick(() => {
                 const modalElement = document.querySelector('#login-modal');
                 if (modalElement) {
                     const modalInstance = new Modal(modalElement);
                     modalInstance.show();
-                } else {
-                    console.error('Modal element not found');
                 }
             });
         };
@@ -57,11 +53,22 @@ export default {
             window.location.href = '/';
         };
 
+        const openNoticeModal = () => {
+            nextTick(() => {
+                const modalElement = document.querySelector('#notice-modal');
+                if (modalElement) {
+                    const modalInstance = new Modal(modalElement);
+                    modalInstance.show();
+                }
+            });
+        }
+
         return { 
             logo, 
             user,
             openLoginModal,
-            logout
+            openNoticeModal,
+            logout,
         };
     }
 }

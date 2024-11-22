@@ -2,6 +2,7 @@
   <div class="kakao-map" id="map">
 
   </div>
+  <ToggleBox />
 </template>
 
 <script>

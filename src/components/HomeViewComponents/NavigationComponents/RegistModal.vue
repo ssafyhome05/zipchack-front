@@ -12,7 +12,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title" id="exampleModalLabel">Regist</h1>
+          <h1 class="modal-title" id="exampleModalLabel">회원가입</h1>
           <button
             type="button"
             class="btn-close"
@@ -36,7 +36,7 @@
                     />
                     <label for="user-id">Id</label>
                     <span></span>
-                    <a class="id-verify-btn" @click="idDuplicateCheck">중복</a>
+                    <a class="id-verify-btn" @click="idDuplicatedCheck">중복</a>
                     <p v-show="userIdError" class="id-error">{{ userIdError }}</p>
                 </div>
 
@@ -97,7 +97,7 @@
                     <p v-show="userEmailError" class="email-error">{{ userEmailError }}</p>
                 </div>
 
-                <!-- <div class="verify-email-code code-input-box">
+                <div class="verify-email-code code-input-box" v-show="isSendEmail">
                     <Field 
                         type="text" 
                         class="email-code-input" 
@@ -109,9 +109,9 @@
                     />
                     <span></span>
                     <p class="timer" v-text="TimeStr"></p>
-                    <a class="email-code-check-btn" >인증</a>
+                    <a class="email-code-check-btn" @click="checkVerifyEmail">인증</a>
                     <p v-show="emailCodeError" class="email-code-error">{{ emailCodeError }}</p>
-                </div> -->
+                </div>
 
                 <div class="tel-box input-box">
                     <Field 
@@ -169,26 +169,21 @@
                     <label for="user-detail-address">상세주소</label>
                     <span></span>
                 </div>
-                <input type="submit" value="Submit" />
-            </Form>
-          <!-- <form id="regist-form" @submit.prevent="registerUser">
-                
-                
-                
-                
-                
-                
-                
-                
-                
-          </form> -->
-          
-        </div>
-        <div class="modal-footer">
 
-          <button type="button" class="btn btn-primary"  @click="goLoginModal">Login</button>
-          <button type="button" class="btn btn-primary" @click="registerUser">SignUp</button>
+                <div class="form-footer">
+                    <a class="go-login-button" @click="goLoginModal">로그인</a>
+                    <span class="regist-footer-line">|</span>
+                    <input type="submit" value="회원가입" class="regist-button"/>
+                </div>
+                
+            </Form>
         </div>
+        <!-- <div class="modal-footer">
+
+          <button type="button" class="go-login-button"  @click="goLoginModal">Login</button>
+          <span class="regist-footer-line">|</span>
+          <button type="button" class="signup-button" @click="registerUser">SignUp</button>
+        </div> -->
 
       </div>
     </div>

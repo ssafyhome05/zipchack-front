@@ -20,6 +20,7 @@ nav ul{
 nav a{
     line-height: 50px;
     height: 50px;
+    cursor: pointer;
 }
 
 nav li a{
@@ -45,6 +46,7 @@ ul{
 }
 li{
     /*position: relative;*/
+    margin-left: 20px;
     display: inline-block;
 }
 li a{

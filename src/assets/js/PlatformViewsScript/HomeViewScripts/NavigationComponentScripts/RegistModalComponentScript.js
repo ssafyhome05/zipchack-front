@@ -2,9 +2,11 @@ import { ref } from 'vue';
 import { Modal } from 'bootstrap';
 import { useForm, useField, Form, Field } from 'vee-validate';
 import { SERVER_URL } from '@/assets/resources/configs/config.js';
+import { toast } from 'vue-sonner';
 import { showWarningToast, showSuccessToast, showErrorToast } from '@/assets/js/PlatformViewsScript/CommonScripts/showToast';
 import axios from 'axios';
 import * as yup from 'yup';
+import { errorMessages } from 'vue/compiler-sfc';
 
 export default {
     components: {
@@ -24,10 +26,10 @@ export default {
             userZipcode: yup.string().required("우편번호는 필수입니다."),
             userAddress: yup.string().required("주소는 필수입니다."),
             userAddress2: yup.string().notRequired(),
-            // emailCode: yup.string().required("인증코드는 필수입니다."),
+            emailCode: yup.string().required("인증코드는 필수입니다."),
         });
     
-        const { errors, handleSubmit } = useForm({
+        const { validate, validateField, setFieldValue, resetForm, handleSubmit, errors } = useForm({
             validationSchema: schema,
         });
 
@@ -36,6 +38,7 @@ export default {
         const { value: userPasswordConfirm, errorMessage: userPasswordConfirmError } = useField('userPasswordConfirm');
         const { value: userName, errorMessage: userNameError } = useField('userName');
         const { value: userEmail, errorMessage: userEmailError } = useField('userEmail');
+        const { value: emailCode, errorMessage: emailCodeError} = useField('emailCode');
         const { value: userPhone, errorMessage: userPhoneError } = useField('userPhone');
         const { value: userZipcode, errorMessage: userZipcodeError } = useField('userZipcode');
         const { value: userAddress, errorMessage: userAddressError } = useField('userAddress');
@@ -47,9 +50,8 @@ export default {
 
         // 인증
         const duplicateCheckIsSuccess = ref(false);
+        const isSendEmail = ref(false);
         const verifyEmailIsSuccess = ref(false);
-        const passwordConfirmIsSuccess = ref(false);
-        const verifyEmailCode = ref("");
 
         // 메인 인증 제한시간
         const Timer = ref(null);
@@ -57,14 +59,28 @@ export default {
         const TimeStr = ref("01:00");
 
         const registUser = handleSubmit(async values => {
+            if (!duplicateCheckIsSuccess.value) {
+                showWarningToast("아이디 중복 확인을 완료해주세요.");
+                return;
+            }
+        
+            if (!isSendEmail.value) {
+                showWarningToast("이메일 인증을 완료해주세요.");
+                return;
+            }
+        
+            if (!verifyEmailIsSuccess.value) {
+                showWarningToast("이메일 인증 코드 확인을 완료해주세요.");
+                return;
+            }
             try{
                 const response = await axios.post(`${SERVER_URL}/api/user`, values, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
-                
-                if(response.status === 201){
+
+                if(response.data.code === 201020){
                     showSuccessToast("회원가입이 완료되었습니다.");
 
                     document.getElementById('regist-form').reset();
@@ -78,10 +94,144 @@ export default {
             }
         });
 
+        const idDuplicatedCheck = async () => {
+            
+            const isUserIdValid = await validateField('userId');
+            if (!isUserIdValid.valid) {
+                showWarningToast("아이디 형식을 확인해주세요");
+                return;
+            }
+
+           const id = userId.value;
+            try{
+                const response = await axios.get(`${SERVER_URL}/api/user/check/duplicate`, {
+                    params: {
+                        userId: id,
+                    }
+                });
+
+                if(response.data.code === 200024){
+                    showSuccessToast("사용 가능한 아이디입니다.");
+                    duplicateCheckIsSuccess.value = true;
+                }else{
+                    showWarningToast("사용할 수 없는 아이디입니다.");
+                    duplicateCheckIsSuccess.value = false;
+                }
+
+            }catch(error){
+                showWarningToast("사용할 수 없는 아이디입니다.");
+                duplicateCheckIsSuccess.value = false;
+            }
+        }
+
+        const sendVerifyEmail = async () => {
+            const isUserEmailValid = await validateField('userEmail');
+
+            if (!isUserEmailValid.valid) {
+                showWarningToast("이메일 형식을 확인해주세요");
+                return;
+            }
+
+            const loadingToastId = toast.loading("인증 메일을 전송 중입니다...");
+
+            const email = userEmail.value;
+            try{
+                const response = await axios.post(`${SERVER_URL}/api/user/send/mail`, email, 
+                    {
+                        headers: {
+                            'Content-Type': 'application/json;charset=UTF-8'
+                        }
+                    }
+                );
+
+                if(response.data.code === 201021){
+                    toast.dismiss(loadingToastId);
+                    showSuccessToast(response.data.message);
+                    emailCode.value = null;
+                    isSendEmail.value = true;
+
+                    timerStart();
+
+                }else{
+                    toast.dismiss(loadingToastId);
+                    showWarningToast("이메일 전송 실패, 다시 시도해주세요.");
+                    isSendEmail.value = true;
+                }
+
+            }catch(errer){
+                toast.dismiss(loadingToastId);
+                showWarningToast("잠시 후에 다시 시도해주세요.");
+                isSendEmail.value = true;
+            }
+        }
+
+        const checkVerifyEmail = async () => {
+            const isEmailCodeValid = await validateField('emailCode');
+
+            if (!isEmailCodeValid.valid) {
+                showWarningToast("인증 코드를 입력해주세요.");
+                return;
+            }
+
+            const email = userEmail.value;
+            const code = emailCode.value;
+            try{
+                const response = await axios.get(`${SERVER_URL}/api/user/check/mail`, 
+                    {
+                        params: {
+                            "email": email,
+                            "key": code
+                        }
+                    }
+                );
+
+                console.log(response.data);
+
+            }catch(error) {
+                console.log(error);
+                showWarningToast("이메일 인증 실패, 다시 시도해주세요.");
+                verifyEmailIsSuccess.value = false;
+            }
+        }
+
+        const timerStart = () => {
+
+            if (Timer.value) {
+                timerStop(Timer.value);
+            }
+        
+            TimeCounter.value = 60;
+            TimeStr.value = "01:00";
+
+            const interval = setInterval(() => {
+                TimeCounter.value--;
+        
+                const minutes = Math.floor(TimeCounter.value / 60).toString().padStart(2, '0');
+                const seconds = (TimeCounter.value % 60).toString().padStart(2, '0');
+                TimeStr.value = `${minutes}:${seconds}`;
+        
+                if (TimeCounter.value <= 0) {
+                    timerStop(interval);
+                    verifyEmailIsSuccess.value = false;
+                }
+            }, 1000);
+        
+            Timer.value = interval;
+            return interval;
+        };
+        
+        const timerStop = (interval) => {
+            clearInterval(interval);
+            TimeCounter.value = 0;
+            TimeStr.value = "01:00";
+            Timer.value = null;
+        };
+
         function closeRegistModal() {
             const modalElement = document.getElementById('regist-modal');
             const modalInstance = Modal.getInstance(modalElement);
             if (modalInstance) {
+                document.getElementById('regist-form').reset();
                 modalInstance.hide();
             }
         }
@@ -91,6 +241,7 @@ export default {
             const loginModalElement = document.getElementById('login-modal');
             const loginModalInstance = Modal.getInstance(loginModalElement);
             if (loginModalInstance) {
+                document.getElementById('regist-form').reset();
                 loginModalInstance.show();
             }
         }
@@ -130,8 +281,8 @@ export default {
             userEmailError,
 
             // email code verify
-            // emailCode,
-            // emailCodeError,
+            emailCode,
+            emailCodeError,
 
             // tel verify
             userPhone,
@@ -154,8 +305,8 @@ export default {
             // roadAddress,
             // detailAddress,
             duplicateCheckIsSuccess,
+            isSendEmail,
             verifyEmailIsSuccess,
-            passwordConfirmIsSuccess,
             Timer,
             TimeCounter,
             TimeStr,
@@ -164,6 +315,9 @@ export default {
             openPostcode,
             closeRegistModal,
             goLoginModal,
+            idDuplicatedCheck,
+            sendVerifyEmail,
+            checkVerifyEmail,
             registUser,
         };
     }

@@ -6,6 +6,7 @@ import zLogo from '@/assets/resources/images/z.png';
 import zipchak from '@/assets/resources/images/zipchak.png';
 import activeZipchak from '@/assets/resources/images/activeZipchak.png';
 import { useHouseDetailStore } from '@/stores/houseDetailStore';
+import { useScrollStore } from '@/stores/scrollStore';
 
 export default {
     components: {
@@ -18,6 +19,7 @@ export default {
         const selectedTab = shallowRef('main');
         const selectedComponent = shallowRef(MainList);
         const houseDetailStore = useHouseDetailStore();
+        const scrollStore = useScrollStore();
 
         onMounted(() => {
             showDefaultList();
@@ -46,6 +48,10 @@ export default {
             
         };      
 
+        const scrollToTop = () => {
+            scrollStore.scrollToTop();
+        }
+
         return { 
             // images
             zLogo,
@@ -55,9 +61,10 @@ export default {
             // tab components
             selectedComponent, 
             selectedTab,
-
+            
             // methods
-            changeTab 
+            changeTab,
+            scrollToTop
         };
     }
 }
