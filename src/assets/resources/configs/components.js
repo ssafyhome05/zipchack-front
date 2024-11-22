@@ -24,6 +24,7 @@ import DoughnutChart from '@/components/MapViewComponents/SideBarComponents/Hous
 import CustomLocationItem from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/CustomLocationItem.vue';
 import ToggleBox from '@/components/MapViewComponents/ToggleBox.vue';
 import NoticeModal from '@/components/HomeViewComponents/NavigationComponents/NoticeModal.vue';
+import NoticeItem from '@/components/HomeViewComponents/NavigationComponents/NoticeItem.vue';
 // common
 
 
@@ -54,4 +55,5 @@ export function addComponents(app) {
   app.component('CustomLocationItem', CustomLocationItem);
   app.component('ToggleBox', ToggleBox);
   app.component('NoticeModal', NoticeModal);
+  app.component('NoticeItem', NoticeItem);
 }
