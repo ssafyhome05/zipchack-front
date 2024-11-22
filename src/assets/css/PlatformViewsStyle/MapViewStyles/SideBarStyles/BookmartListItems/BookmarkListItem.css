@@ -1,0 +1,46 @@
+.bookmark-list-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+}
+
+.bookmark-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    height: 85px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(78, 78, 78, 0.3);
+    cursor: pointer;
+}
+
+.bookmark-item:hover{
+    height: 95px;
+    border: 2px solid #007bff;
+}
+
+.bookmark-item-title{
+    display: flex;
+    color: #007bff;
+    font-size: 18px;
+    font-weight: bold;
+    width: 90%;
+    height: 30px;
+}
+
+.bookmark-item-desc{
+    width: 90%;
+    font-size: 15px;
+    color: #333;
+}
+
+.bookmark-item-like{
+    position: relative;
+    margin-left: auto;
+    bottom: 2px;
+}

@@ -3,7 +3,7 @@ import { useUserInfoStore } from "@/stores/userInfoStore"
 import { useHouseDetailStore } from "@/stores/houseDetailStore";
 import { useSpotRouteStore } from "@/stores/SpotRouteStore";
 import { useKakaoMapStore } from "@/stores/kakaoMapStore";
-import { ref, onMounted, watch, nextTick } from "vue";
+import { ref, onMounted, watch, nextTick, onUnmounted } from "vue";
 import { SERVER_URL } from "@/assets/resources/configs/config";
 import { reissueAccessToken } from "@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken";
 import { Modal } from 'bootstrap';
@@ -27,6 +27,7 @@ export default {
         const kakaoMap = ref(null);
         const polylines = ref([]);
         const markers = ref([]);
+        const showRoute = ref(false);
         const isClicked = ref(false);
 
 
@@ -44,6 +45,7 @@ export default {
         });
 
         watch(() => houseDetailStore.houseDetail, (newVal) => {
+            console.log("hey")
             spotRouteStore.routeList = [];
             routeList.value = spotRouteStore.routeList;
             clearMapObjects();
@@ -86,11 +88,20 @@ export default {
             });
         
             markers.value.push(marker);
-        
+            
             return marker;
         };
         
         const drawPolyline = (type, routeInfos) => {
+            if(showRoute.value){
+                // polylines.value = [];
+                clearMapObjects();
+                showRoute.value = false;
+                return drawPolyline(type, routeInfos);
+            }
+
+            showRoute.value = true;
+            isClicked.value = false;
             clearMapObjects();
         
             const points = [];

@@ -3,16 +3,16 @@ import axios from 'axios'
 import { SERVER_URL } from '@/assets/resources/configs/config'
 
 const defaultListData = [
-  {rank: 1, dongName: 'DEFAULT', changed: -1, dongcode: 'DEFAULT'},
-  {rank: 2, dongName: 'DEFAULT', changed: 2, dongcode: 'DEFAULT'},
-  {rank: 3, dongName: 'DEFAULT', changed: 3, dongcode: 'DEFAULT'},
-  {rank: 4, dongName: 'DEFAULT', changed: -3, dongcode: 'DEFAULT'},
-  {rank: 5, dongName: 'DEFAULT', changed: 5, dongcode: 'DEFAULT'},
-  {rank: 6, dongName: 'DEFAULT', changed: 0, dongcode: 'DEFAULT'},
-  {rank: 7, dongName: 'DEFAULT', changed: 7, dongcode: 'DEFAULT'},
-  {rank: 8, dongName: 'DEFAULT', changed: 8, dongcode: 'DEFAULT'},
-  {rank: 9, dongName: 'DEFAULT', changed: 9, dongcode: 'DEFAULT'},
-  {rank: 10, dongName: 'DEFAULT', changed: 99, dongcode: 'DEFAULT'}
+  {rank: 1, dongName: '-', changed: -1, dongcode: 'DEFAULT'},
+  {rank: 2, dongName: '-', changed: 2, dongcode: 'DEFAULT'},
+  {rank: 3, dongName: '-', changed: 3, dongcode: 'DEFAULT'},
+  {rank: 4, dongName: '-', changed: -3, dongcode: 'DEFAULT'},
+  {rank: 5, dongName: '-', changed: 5, dongcode: 'DEFAULT'},
+  {rank: 6, dongName: '-', changed: 0, dongcode: 'DEFAULT'},
+  {rank: 7, dongName: '-', changed: 7, dongcode: 'DEFAULT'},
+  {rank: 8, dongName: '-', changed: 8, dongcode: 'DEFAULT'},
+  {rank: 9, dongName: '-', changed: 9, dongcode: 'DEFAULT'},
+  {rank: 10, dongName: '-', changed: 99, dongcode: 'DEFAULT'}
 ]
 
 export const useTopTenStore = defineStore('topTen', {
@@ -51,6 +51,8 @@ export const useTopTenStore = defineStore('topTen', {
 
     async getListData() {
       try {
+        // const response = await axios.get(`${SERVER_URL}/api/house/topten`)
+        // this.listData = response.data
         const response = await axios.get(`${SERVER_URL}/api/house/topten`)
         this.listData = response.data
       } catch (error) {
@@ -65,8 +67,8 @@ export const useTopTenStore = defineStore('topTen', {
         this.loadData[rank -1] = null
       }
       if (!this.isExpanded && rank === 3 && this.loadData == Array(10).fill(null)) {
-        this.listData.splice(3, this.listData.length - 3, ...this.loadData.slice(3))
-        this.loadData = Array(10).fill(null)
+        this.listData.splice(3, this.listData.length - 3, ...this.loadData.slice(3));
+        this.loadData = Array(10).fill(null);
       }
     }
   }

@@ -89,9 +89,6 @@ export default {
                     updateChartData();
                 }
             });
-            
-            
-            
         };
 
         watch(() => houseDetailStore.houseDetail, (newVal) => {

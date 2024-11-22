@@ -19,6 +19,9 @@ import HouseRoute from '@/components/MapViewComponents/SideBarComponents/HouseIn
 import SearchModal from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/SearchModal.vue';
 import TransportModal from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/HouseDetailItems/TransportModal.vue';
 import RequiredLogin from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/RequiredLogin.vue';
+import BookmarkListItem from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/BookmarkListItem.vue';
+import DoughnutChart from '@/components/MapViewComponents/SideBarComponents/HouseInfoListItems/DoughnutChart.vue';
+import CustomLocationItem from '@/components/MapViewComponents/SideBarComponents/BookmarkListItems/CustomLocationItem.vue';
 // common
 
 
@@ -44,4 +47,7 @@ export function addComponents(app) {
   app.component('SearchModal', SearchModal);
   app.component('TransportModal', TransportModal);
   app.component('RequiredLogin', RequiredLogin);
+  app.component('BookmarkListItem', BookmarkListItem);
+  app.component('DoughnutChart', DoughnutChart);
+  app.component('CustomLocationItem', CustomLocationItem);
 }

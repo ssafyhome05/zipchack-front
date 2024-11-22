@@ -5,6 +5,7 @@ import {ref, onMounted, shallowRef } from 'vue';
 import zLogo from '@/assets/resources/images/z.png';
 import zipchak from '@/assets/resources/images/zipchak.png';
 import activeZipchak from '@/assets/resources/images/activeZipchak.png';
+import { useHouseDetailStore } from '@/stores/houseDetailStore';
 
 export default {
     components: {
@@ -16,6 +17,7 @@ export default {
     setup() {
         const selectedTab = shallowRef('main');
         const selectedComponent = shallowRef(MainList);
+        const houseDetailStore = useHouseDetailStore();
 
         onMounted(() => {
             showDefaultList();
@@ -27,6 +29,8 @@ export default {
         };
 
         const changeTab = (tabName) => {
+            houseDetailStore.showDetailModal = false;
+            houseDetailStore.showDoughnutGraph = false;
             selectedTab.value = tabName;
             switch(tabName) {
                 case "main": 
@@ -39,6 +43,7 @@ export default {
                     selectedComponent.value = BookmarkList; 
                     break;
             }
+            
         };      
 
         return { 

@@ -6,7 +6,9 @@
     @click="moveMap(news.cityName)" 
   >
     <h5 class="city-name">{{ news.cityName }}</h5>
-    <a :href="news.url" class="title">{{ news.title }}</a>
+
+    <a :href="news.url" class="title" target="_blank">{{ news.title }}</a>
+
     <div class="image-container">
       <img :src="news.img" alt="News Image" />
     </div>
@@ -15,7 +17,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+
 import newsList from '@/assets/js/PlatformViewsScript/MapViewScripts/SideBarScripts/MainItemListScripts/newsList.js';
 export default newsList;
 
@@ -39,40 +41,43 @@ export default newsList;
 }
 
 .city-name {
-  font-size: 0.9rem; /* news.title보다 작게 */
+
+  font-size: 0.9rem;
+
   margin-bottom: 4px;
 }
 
 .title {
-  font-weight: bold; /* 기본 굵기 */
-  font-size: 1rem; /* 기본 크기 */
+
+  font-weight: bold;
+  font-size: 1rem;
   margin-bottom: 8px;
-  color: inherit; /* 링크 색상을 상속 */
-  text-decoration: none; /* 기본 밑줄 제거 */
-  position: relative; /* 말풍선 위치 조정을 위해 relative 추가 */
+  color: inherit;
+  text-decoration: none;
+  position: relative;
 }
-/* hover 시 글씨를 굵게 설정 */
+
 .title:hover {
   color:skyblue;
-  font-weight: bolder; /* 글씨를 더 굵게 */
+  font-weight: bolder;
 }
 
 .title:hover::after {
-  content: "기사원문보기"; /* 말풍선에 표시될 텍스트 */
+  content: "기사원문보기";
   position: absolute;
-  top: -25px; /* 텍스트가 위쪽에 위치하도록 조정 */
+  top: -25px;
   left: 50%;
-  transform: translateX(-50%); /* 중앙 정렬 */
-  background-color: #333; /* 말풍선 배경색 */
-  color: #fff; /* 말풍선 텍스트 색상 */
-  padding: 5px 10px; /* 말풍선 여백 */
-  border-radius: 4px; /* 둥근 모서리 */
-  font-size: 0.8rem; /* 말풍선 텍스트 크기 */
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  pointer-events: none; /* 말풍선 클릭 방지 */
+  pointer-events: none;
 }
 
 .title:hover::after {
@@ -80,24 +85,27 @@ export default newsList;
 }
 
 .source {
-  font-size: 0.8rem; /* 출처 부분 한 단위 작게 */
-  color: #888; /* 회색 설정 */
+
+  font-size: 0.8rem;
+  color: #888;
   text-align: right;
 }
 
-/* 이미지 스타일 */
 .image-container {
-  width: 100%; /* 이미지 가로 사이즈를 부모에 맞춤 */
-  height: 150px; /* 이미지가 차지할 고정 높이 */
-  overflow: hidden; /* 이미지가 높이를 넘어갈 경우 숨김 */
-  border-radius: 8px; /* 이미지에 둥근 테두리 적용 */
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 8px;
   margin-bottom: 8px;
+  margin-top: 8px;
 }
 
 .image-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 가로는 맞추고, 세로는 잘리게 */
+
+  object-fit: cover;
+
 }
 </style>
 

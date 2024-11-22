@@ -46,6 +46,8 @@
         v-if="showModal"
         :houseDetail="houseDetail"
     />
+
+    <DoughnutChart v-if="showDoughnutGraph"/>
     
 </template>
 

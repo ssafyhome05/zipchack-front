@@ -1,12 +1,14 @@
 import {defineStore} from 'pinia';
 import { SERVER_URL } from '@/assets/resources/configs/config';
-import { ref } from 'vue';
+
+
 import axios from 'axios';
 
 export const useNewsListStore = defineStore('newsList', {
     state: () => ({
-        newsList: [],
-        
+
+        newsList: [], 
+
     }),
 
     getters: {
@@ -19,7 +21,9 @@ export const useNewsListStore = defineStore('newsList', {
             await axios.get(`${SERVER_URL}/api/house/news`)
                 .then(response => {
                     if(response.data.code === 200050){
+
                         this.newsList = response.data.data;
+
                     }
                 })
                 .catch((error)=> console.error("데이터 가져오기에 실패했습니다:", error)); 

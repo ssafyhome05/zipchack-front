@@ -27168,7 +27168,7 @@ export default {
         }, { deep: true});
 
         const searchCustomSpot = () => {
-            if (!customName.value || !roadAddress.value || !jibunAddress.value) {
+            if (!customName.value && (!roadAddress.value || !jibunAddress.value)) {
                 showWarningToast("별명과 주소를 모두 입력해주세요.");
                 return;
             }
