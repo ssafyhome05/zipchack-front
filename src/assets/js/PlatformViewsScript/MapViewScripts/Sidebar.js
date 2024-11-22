@@ -1,17 +1,23 @@
 import MainList from '@/components/MapViewComponents/SideBarComponents/MainList.vue';
 import HouseInfoList from '@/components/MapViewComponents/SideBarComponents/HouseInfoList.vue';
 import BookmarkList from '@/components/MapViewComponents/SideBarComponents/BookmarkList.vue';
+import DashboardList from '@/components/MapViewComponents/SideBarComponents/DashboardList.vue';
+
 import {ref, onMounted, shallowRef } from 'vue';
 import zLogo from '@/assets/resources/images/z.png';
 import zipchak from '@/assets/resources/images/zipchak.png';
 import activeZipchak from '@/assets/resources/images/activeZipchak.png';
+import dashboard from '@/assets/resources/images/dashboard.png';
+import activeDashboard from '@/assets/resources/images/activeDashboard.png';
 import { useHouseDetailStore } from '@/stores/houseDetailStore';
+
 
 export default {
     components: {
         MainList,
         HouseInfoList,
-        BookmarkList
+        BookmarkList,
+        DashboardList
     },
 
     setup() {
@@ -42,6 +48,9 @@ export default {
                 case "bookmark": 
                     selectedComponent.value = BookmarkList; 
                     break;
+                case "dashboard": 
+                    selectedComponent.value = DashboardList; 
+                    break;
             }
             
         };      
@@ -51,6 +60,8 @@ export default {
             zLogo,
             zipchak,
             activeZipchak,
+            dashboard,
+            activeDashboard,
 
             // tab components
             selectedComponent, 
