@@ -1,7 +1,7 @@
 <template>
   <div class="table-footer">
     <div class="items-per-page">
-      <select v-model="selectedItemsPerPage" @change="handleItemsPerPageChange">
+      <select v-model="selectedPageSize" @change="handlePageSizeChange">
         <option v-for="n in [5, 10, 15, 20]" :key="n" :value="n">
           {{ n }}개씩 보기
         </option>
@@ -10,24 +10,16 @@
     <div class="pagination-wrapper">
       <PaginationComponent
         :current-page="currentPage"
-        :total-pages="totalPages"
-        @page-change="handlePageChange"
+        :page-size="selectedPageSize"
+        :total-items="totalItems"
+        @update:currentPage="handlePageChange"
       />
-    </div>
-    <div class="right-section">
-      <button 
-        v-if="tableType === 'notice'" 
-        class="register-button"
-        @click="goToNoticeWrite"
-      >
-        공지 등록하기
-      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import PaginationComponent from '@/components/adminComponents/Pagnation.vue';
 
@@ -36,35 +28,23 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  currentItemsPerPage: {
+  totalItems: {
     type: Number,
-    default: 5
-  },
-  hasPagination: {
-    type: Boolean,
-    default: false
+    default: 1
   },
   currentPage: {
     type: Number,
     default: 1
-  },
-  totalItems: {
-    type: Number,
-    default: 0
   }
 });
 
-const emit = defineEmits(['update:itemsPerPage', 'update:currentPage']);
+const emit = defineEmits(['update:pageSize', 'update:currentPage']);
 
 const router = useRouter();
-const selectedItemsPerPage = ref(props.currentItemsPerPage);
+const selectedPageSize = ref(5);
 
-const totalPages = computed(() => {
-  return Math.ceil(props.totalItems / props.currentItemsPerPage);
-});
-
-const handleItemsPerPageChange = () => {
-  emit('update:itemsPerPage', selectedItemsPerPage.value);
+const handlePageSizeChange = () => {
+  emit('update:pageSize', selectedPageSize.value);
 };
 
 const handlePageChange = (newPage) => {

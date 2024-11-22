@@ -26,10 +26,12 @@
 
 <script setup>
 import BoardTableItem from './BoardTableItem.vue';
-import { computed } from 'vue';
-import { useAdminStore } from '@/stores/adminStore';
+import { computed, watch, onMounted } from 'vue';
+import { useUserManageStore } from '@/stores/userManageStore';
+import { useNoticeManageStore } from '@/stores/noticeManageStore';
 
-const adminStore = useAdminStore();
+const userManageStore = useUserManageStore();
+const noticeManageStore = useNoticeManageStore();
 
 const props = defineProps({
     tableType: {
@@ -37,13 +39,17 @@ const props = defineProps({
         required: true,
         validator: (value) => ['notice', 'user'].includes(value)
     },
-    itemsPerPage: {
+    pageSize: {
         type: Number,
         default: 5
     },
-    hasPagination: {
+    isPaginated: {
         type: Boolean,
         default: false
+    },
+    currentPage: {
+        type: Number,
+        default: 1
     }
 });
 
@@ -51,41 +57,59 @@ const props = defineProps({
 const columns = computed(() => {
     if (props.tableType === 'notice') {
         return [
-            { key: 'id', title: '번호', width: '10%' },
-            { key: 'title', title: '제목', width: '40%' },
+            { key: 'noticeSeq', title: '번호', width: '10%' },
+            { key: 'noticeTitle', title: '제목', width: '40%' },
             { key: 'author', title: '글쓴이', width: '15%' },
             { key: 'createdAt', title: '등록일', width: '17.5%' },
-            { key: 'expiryDate', title: '만료일', width: '17.5%' }
+            { key: 'modifiedAt', title: '수정일', width: '17.5%' }
         ];
     } else {
         return [
-            { key: 'id', title: '번호', width: '10%' },
-            { key: 'name', title: '이름', width: '18%' },
-            { key: 'userId', title: '아이디', width: '18%' },
-            { key: 'joinDate', title: '가입일자', width: '18%' },
-            { key: 'isSNS', title: 'SNS가입여부', width: '18%' },
+            { key: 'userSeq', title: '번호', width: '10%' },
+            { key: 'userName', title: '이름', width: '18%' },
+            { key: 'userId', title: '아이디/SNS분류', width: '18%' },
+            { key: 'userEmail', title: '이메일', width: '25%' },
+            { key: 'createdAt', title: '가입일자', width: '11%' },
             { key: 'function', title: '기능', width: '18%' }
         ];
     }
 });
 
-const dummyData = computed(() => {
-    return props.tableType === 'notice' ? adminStore.noticeData : adminStore.userData;
+// 데이터를 저장할 ref 추가
+const displayItems = computed(() => {
+  if (props.tableType === 'notice') {
+    return noticeManageStore.getNoticeData;
+  } else {
+    return userManageStore.getUserData;
+  }
 });
 
-const displayItems = computed(() => {
-    if (!props.hasPagination) {
-        return dummyData.value.slice(0, 5);
+// watch 수정
+watch(
+  [() => props.currentPage, () => props.pageSize],
+  async ([newPage, newPageSize], [oldPage, oldPageSize]) => {  // 이전 값과 새로운 값을 받아옴
+    try {
+      if (props.tableType === 'notice') {
+        await noticeManageStore.axiosGetNoticeData(newPage, newPageSize);
+      } else {
+        await userManageStore.axiosGetUserData(newPage, newPageSize);
+      }
+    } catch (error) {
+      console.error('데이터 로딩 중 오류 발생:', error);
     }
-    return dummyData.value.slice(0, props.itemsPerPage);
-});
+  },
+  {
+    immediate: true,  // 컴포넌트 마운트 시 즉시 실행
+    deep: true       // 깊은 감시
+  }
+);
 
 // displayItems의 실제 개수를 기반으로 행 높이를 계산하기 위한 computed 속성 추가
 const rowCount = computed(() => displayItems.value.length);
 
 // 테이블 높이 계산을 위한 computed 속성 수정
 const tableHeight = computed(() => {
-    if (props.hasPagination) {
+    if (props.isPagination) {
         return 'calc(100vh - 320px)'; // 상단 여백(20px) + 하단 여백(20px) + 헤더(84px) + 푸터(156px)
     }
     return '100%';
@@ -167,5 +191,11 @@ const rowHeight = computed(() => {
     color: #0D6BFF;
 }
 
+.social-icon {
+    width: 20px;  /* 원하는 크기로 조정 */
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
 
 </style>

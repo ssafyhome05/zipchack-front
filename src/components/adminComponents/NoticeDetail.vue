@@ -1,29 +1,29 @@
 <template>
   <div class="notice-detail-component">
     <div class="notice-header">
-      <h2 class="notice-title">{{ item.title }}</h2>
+      <h2 class="notice-title">{{ item.noticeTitle }}</h2>
       <div class="notice-info">
         <div class="info-item">
           <span class="label">글 번호</span>
-          <span class="value">{{ item.id }}</span>
+          <span class="value">{{ item.noticeSeq }}</span>
         </div>
         <div class="info-item">
           <span class="label">작성자</span>
-          <span class="value">{{ item.author }}</span>
+          <span class="value">관리자</span>
         </div>
         <div class="info-item">
           <span class="label">작성일</span>
           <span class="value">{{ item.createdAt }}</span>
         </div>
-        <div class="info-item">
+        <!-- <div class="info-item">
           <span class="label">만료일</span>
           <span class="value">{{ item.expiryDate }}</span>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="notice-content-wrapper">
       <div class="notice-content">
-        {{ item.content }}
+        {{ item.noticeContent }}
       </div>
     </div>
     <div class="button-container">
@@ -39,6 +39,11 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserInfoStore } from '@/stores/userInfoStore';
+import axios from 'axios';
+import { SERVER_URL } from "@/assets/resources/configs/config";
+
+const adminUserStore = useUserInfoStore();
 
 const router = useRouter();
 const props = defineProps({
@@ -53,13 +58,13 @@ const canModify = computed(() => {
 });
 
 const handleEdit = () => {
-  router.push(`/admin/notice_write/${props.item.id}`);
+  router.push(`/admin/notice_write/${props.item.noticeSeq}`);
 };
 
 const handleDelete = async () => {
   if (confirm('정말 삭제하시겠습니까?')) {
     try {
-      await deleteNotice(props.item.id);
+      await deleteNotice(props.item.noticeSeq);
       router.push('/admin/notice_manage');
     } catch (error) {
       console.error('공지사항 삭제 실패:', error);
@@ -67,6 +72,26 @@ const handleDelete = async () => {
     }
   }
 };
+
+const deleteNotice = async (id) => {
+  try {
+    const response = await axios.delete(`${SERVER_URL}/api/notice/${id}`,
+      {
+      headers: {
+        'Authorization': adminUserStore.access_token
+      }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    if(error.response.data.code === 401012) {
+      adminUserStore.reissueAccessToken().then(() => {
+        deleteNotice(id);
+      });
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -4,7 +4,7 @@
         {{ item.title }}
     </div>
     <div class="section-item">
-        <component :is="item.component" v-bind="item.props" :pagenation="item.pagenation" />
+        <component :is="item.component" v-bind="item.props" :isPaginated="item.isPaginated" />
     </div>
   </div>
 </template>

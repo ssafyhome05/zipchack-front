@@ -2,23 +2,40 @@
     <div class="board-container">
         <BoardTable 
             :tableType="tableType" 
-            :itemsPerPage="itemsPerPage"
-            :hasPagination="pagenation"
+            :pageSize="pageSize"
+            :isPaginated="isPaginated"
+            :currentPage="currentPage"
             class="table-section"
         />
         <TableFooter
-            v-if="pagenation"
+            v-if="isPaginated"
             :tableType="tableType"
-            v-model:itemsPerPage="itemsPerPage"
-            v-model:currentPage="currentPage"
+            :totalItems="totalItems"
+            :currentPage="currentPage"
+            :pageSize="pageSize"
+            @update:pageSize="handlePageSizeChange"
+            @update:currentPage="handlePageChange"
         />
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import BoardTable from './BoardTable.vue';
 import TableFooter from './TableFooter.vue';
+import { useNoticeManageStore } from '@/stores/noticeManageStore';
+import { useUserManageStore } from '@/stores/userManageStore';
+
+const noticeStore = useNoticeManageStore();
+const userStore = useUserManageStore();
+
+const totalItems = computed(() => {
+    if (props.tableType === 'notice') {
+        return noticeStore.getTotal;
+    } else {
+        return userStore.getTotal;
+    }
+});
 
 const props = defineProps({
     tableType: {
@@ -26,10 +43,20 @@ const props = defineProps({
         required: true,
         validator: (value) => ['notice', 'user'].includes(value)
     },
-    pagenation: Boolean
+    isPaginated: Boolean
 });
 
-const itemsPerPage = ref(5);
+const handlePageChange = (newPage) => {
+    currentPage.value = newPage;
+    console.log(currentPage.value);
+};
+
+const handlePageSizeChange = (newPageSize) => {
+    pageSize.value = newPageSize;
+    console.log(pageSize.value);
+};
+
+const pageSize = ref(5);
 const currentPage = ref(1);
 </script>
 

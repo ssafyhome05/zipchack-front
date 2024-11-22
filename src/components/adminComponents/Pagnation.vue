@@ -1,44 +1,65 @@
 <template>
     <div class="pagination-buttons">
-        <button class="pagination-button" :disabled="currentPage === 1">이전</button>
+        <button @click="pageGroup -= 1" class="pagination-button" :disabled="pageGroup === 1">이전</button>
         <div class="page-numbers">
             <button 
                 v-for="page in displayPages" 
                 :key="page"
                 class="page-number"
                 :class="{ active: currentPage === page }"
+                @click="$emit('update:currentPage', page)"
             >
                 {{ page }}
             </button>
         </div>
-        <button class="pagination-button" :disabled="currentPage === totalPages">다음</button>
+        <button @click="pageGroup += 1" class="pagination-button" :disabled="pageGroup === Math.ceil(totalPages / 5)">다음</button>
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { watch, computed } from 'vue';
 
 const props = defineProps({
-    modelValue: {
+    currentPage: {
+        type: Number,
+        default: 1
+    },
+    pageSize: {
         type: Number,
         default: 5
+    },
+    totalItems: {
+        type: Number,
+        default: 1
     }
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:currentPage']);
 
-const selectedItemsPerPage = ref(props.modelValue);
-const currentPage = ref(1);
-const totalPages = ref(5);
-const displayPages = [1, 2, 3, 4, 5];
+const totalPages = computed(() => {
+    if (props.tableType === 'notice') {
+        return Math.ceil(props.totalItems / props.pageSize);
+    } else {
+        return Math.ceil(props.totalItems / props.pageSize);
+    }
+});
+const pageGroup = Math.ceil(props.currentPage / 5);
+const displayPages = computed(() => {
+    const startPage = (pageGroup - 1) * 5 + 1;
+    const endPage = Math.min(startPage + 4, totalPages.value);
+    return [...Array(endPage - startPage + 1).keys()].map(num => num + startPage);
+});
 
 const handleItemsPerPageChange = () => {
-    emit('update:modelValue', Number(selectedItemsPerPage.value));
+    emit('update:currentPage', Number(props.pageSize));
 };
 
 // props 변경 시 로컬 상태 업데이트
-watch(() => props.modelValue, (newValue) => {
-    selectedItemsPerPage.value = newValue;
+watch(() => props.pageSize, () => {
+    console.log(props.currentPage, totalPages.value);
+    if (props.currentPage > totalPages.value) {
+        emit('update:currentPage', totalPages.value);
+    }
 });
 </script>
 

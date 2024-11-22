@@ -6,16 +6,18 @@
       </header>
       <div class="admin-info">
         <table>
+          <tbody>
             <tr class="info-row">
                 <td class="label">관리자</td>
                 <td class="divider">:</td>
-                <td class="value"><b>송준형</b>님</td>
+                <td class="value"><b>`ADMIN_{{ adminUserStore.user.seq }}``</b>님</td>
             </tr>
             <tr class="info-row">
                 <td class="label">권한</td>
                 <td class="divider">:</td>
-                <td class="value">관리자</td>
+                <td class="value">{{ adminUserStore.getUser.role }}</td>
             </tr>
+          </tbody>
         </table>
       </div>
       <div class="nav-header">
@@ -32,14 +34,22 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useUserInfoStore } from '@/stores/userInfoStore';
 
 const route = useRoute();
+const adminUserStore = useUserInfoStore();
 
 const isNoticeRoute = computed(() => {
     return route.path.includes('/admin/notice');
 });
+
+onMounted(() => {
+  adminUserStore.getUserInfo;
+  console.log(adminUserStore);
+
+})
 </script>
 
 <style scoped>

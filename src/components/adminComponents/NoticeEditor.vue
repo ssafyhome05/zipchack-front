@@ -3,22 +3,12 @@
     <div class="notice-header">
       <div class="input-group">
         <label>제목</label>
-        <input type="text" v-model="noticeData.title" placeholder="제목을 입력하세요" />
-      </div>
-      <div class="info-group">
-        <div class="info-item">
-          <span class="label">작성자</span>
-          <span class="value">관리자</span>
-        </div>
-        <div class="info-item">
-          <span class="label">만료일</span>
-          <input type="date" v-model="noticeData.expiryDate" />
-        </div>
+        <input type="text" v-model="props.item.noticeTitle" placeholder="제목을 입력하세요" />
       </div>
     </div>
     <div class="notice-content-wrapper">
       <textarea 
-        v-model="noticeData.content" 
+        v-model="props.item.noticeContent" 
         placeholder="내용을 입력하세요"
         class="notice-content">
       </textarea>
@@ -33,21 +23,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useAdminStore } from '@/stores/adminStore';
+import { useUserInfoStore } from '@/stores/userInfoStore';
+import axios from 'axios';
+import { SERVER_URL } from "@/assets/resources/configs/config";
+
+const adminUserStore = useUserInfoStore();
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  }
+});
 
 const router = useRouter();
 const route = useRoute();
-const adminStore = useAdminStore();
-
-const noticeData = ref({
-  title: '',
-  content: '',
-  expiryDate: '',
-  author: '관리자',
-  createdAt: new Date().toISOString().split('T')[0]
-});
 
 const isEdit = ref(false);
 
@@ -55,55 +47,53 @@ onMounted(() => {
   const noticeId = route.params.id;
   if (noticeId) {
     isEdit.value = true;
-    const notice = adminStore.noticeData.find(notice => notice.id === parseInt(noticeId));
-    if (notice) {
-      noticeData.value = {
-        title: notice.title,
-        content: notice.content || '',
-        expiryDate: notice.expiryDate,
-        author: notice.author,
-        createdAt: notice.createdAt
-      };
-    } else {
-      alert('존재하지 않는 공지사항입니다.');
-      router.push('/admin/notice_manage');
-    }
   }
 });
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   try {
-    if (!noticeData.value.title.trim()) {
+    if (!props.item.noticeTitle.trim()) {
       alert('제목을 입력해주세요.');
-      return;
-    }
-    if (!noticeData.value.expiryDate) {
-      alert('만료일을 선택해주세요.');
       return;
     }
 
     const noticeId = route.params.id;
     if (isEdit.value) {
-      const index = adminStore.noticeData.findIndex(notice => notice.id === parseInt(noticeId));
-      if (index !== -1) {
-        adminStore.noticeData[index] = {
-          ...adminStore.noticeData[index],
-          title: noticeData.value.title,
-          content: noticeData.value.content,
-          expiryDate: noticeData.value.expiryDate
-        };
+      try {
+        const response = await axios.put(`${SERVER_URL}/api/notice/${noticeId}`,
+          props.item,
+          {
+          headers: {
+            'Authorization': adminUserStore.access_token
+          }
+        }
+      );
+        console.log(response);
+      } catch (error) {
+        if(error.response.data.code === 401012) {
+          adminUserStore.reissueAccessToken().then(() => {
+            handleSubmit();
+          });
+        }
       }
     } else {
-      const newId = Math.max(...adminStore.noticeData.map(n => n.id)) + 1;
-      adminStore.noticeData.unshift({
-        id: newId,
-        title: noticeData.value.title,
-        content: noticeData.value.content,
-        author: noticeData.value.author,
-        createdAt: noticeData.value.createdAt,
-        expiryDate: noticeData.value.expiryDate,
-        views: 0
-      });
+      try {
+        const response = await axios.post(`${SERVER_URL}/api/notice`,
+          props.item,
+        {
+          headers: {
+            'Authorization': adminUserStore.access_token
+          }
+        }
+      );
+        console.log(response);
+      } catch (error) {
+        if(error.response.data.code === 401012) {
+          adminUserStore.reissueAccessToken().then(() => {
+            handleSubmit();
+          });
+        }
+      }
     }
 
     router.push('/admin/notice_manage');

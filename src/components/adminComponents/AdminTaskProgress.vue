@@ -1,9 +1,14 @@
 <script setup>
 import axios from "axios";
 import { ref, onUnmounted, computed, watch } from "vue";
+import { useUserInfoStore } from '@/stores/userInfoStore';
+
+const adminUserStore = useUserInfoStore();
 
 const progress_percent = ref(0);
 const sseConnection = ref(null);
+const year = ref(null);
+const month = ref(null);
 
 const sseMessageHandler = (event) => {
   const eventData = JSON.parse(event.data);
@@ -22,6 +27,12 @@ watch(progress_percent, (newVal) => {
 
 const closeConnection = () => {
   if (sseConnection.value) {
+    if (progress_percent.value == 100) {
+    //성공이벤트
+    }
+    else {
+      //실패이벤트
+    }
     console.log("연결 종료");
     sseConnection.value.close();
     sseConnection.value = null;
@@ -32,10 +43,21 @@ const startSseConnection = async () => {
   closeConnection();
 
   try {
-    const response = await axios.post("http://localhost:8080/api/house/admin/house?startCd=11110&endCd=60000&dealYmd=202001");
+    const response = await axios.post(`http://localhost:8080/api/house/admin/house?startCd=11110&endCd=60000&dealYmd=${year.value}${month.value}`,
+      null,
+      {
+        headers: {
+          'Authorization': adminUserStore.access_token
+        }
+      }
+    );
     console.log('서버 응답:', response.data.data);
     
-    sseConnection.value = new EventSource(response.data.data, { withCredentials: true });
+    sseConnection.value = new EventSource(response.data.data, { withCredentials: true }, {
+      headers: {
+        'Authorization': adminUserStore.access_token
+      }
+    });
     console.log('SSE 연결 생성:', sseConnection.value);
     
     sseConnection.value.onmessage = sseMessageHandler;

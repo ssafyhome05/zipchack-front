@@ -2,31 +2,63 @@
   <div class="task-basic-container">
     <div class="task-info">
       <table>
-        <tr class="info-row">
-          <td class="label">마지막 업데이트</td>
-          <td class="divider">:</td>
-          <td class="value">2024년 11월 21일</td>
-        </tr>
-        <tr class="info-row">
-          <td class="label">수정한 관리자</td>
-          <td class="divider">:</td>
-          <td class="value">ADMIN_03</td>
-        </tr>
-        <tr class="info-row">
-          <td class="label">접속 IP</td>
-          <td class="divider">:</td>
-          <td class="value">192.168.0.1</td>
-        </tr>
+        <tbody>
+          <tr class="info-row">
+            <td class="label">마지막 업데이트</td>
+            <td class="divider">:</td>
+            <td class="value">2024년 11월 21일</td>
+          </tr>
+          <tr class="info-row">
+            <td class="label">수정한 관리자</td>
+            <td class="divider">:</td>
+            <td class="value">ADMIN_03</td>
+          </tr>
+          <tr class="info-row">
+            <td class="label">접속 IP</td>
+            <td class="divider">:</td>
+            <td class="value">192.168.0.1</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <div class="button-container">
-      <button class="button">데이터 업데이트</button>
+      <button @click="updateData" class="button">데이터 업데이트</button>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import axios from 'axios';
+import { SERVER_URL } from "@/assets/resources/configs/config";
+import { useUserInfoStore } from '@/stores/userInfoStore';
+
+const adminUserStore = useUserInfoStore();
+console.log(adminUserStore);
+
+const updateData = async () => {
+  try{
+    const response = await axios.post(`${SERVER_URL}/api/house/admin/population?year=2022`,
+      null,
+      {
+        headers: {
+          'Authorization': adminUserStore.access_token
+        }
+      }
+    );
+    const result = response.data.code;
+    if (result == 201052) {
+    alert('데이터 업데이트 완료');
+    //버튼 클릭시 성공이벤트
+  }
+  } catch (error) {
+    console.error('데이터 업데이트 실패:', error);
+    if (error.response.data.code == 401012) {
+      adminUserStore.reissueAccessToken().then(() => {
+        updateData();
+      });
+    }
+  }
+}
 </script>
 
 <style scoped>
