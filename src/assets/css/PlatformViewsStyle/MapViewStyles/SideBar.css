@@ -47,7 +47,10 @@
     margin: 0 auto;
 }
 
-.side-list-menu-item1, .side-list-menu-item2, .side-list-menu-item3{
+.side-list-menu-item1, 
+.side-list-menu-item2, 
+.side-list-menu-item3, 
+.side-list-menu-item4{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -55,24 +58,22 @@
     height: 95px;
     color: rgb(160, 160, 160);
     cursor: pointer;
-}
-
-.side-list-menu-item1:hover, .side-list-menu-item2:hover, .side-list-menu-item3:hover{
-    background-color: #f0f0f0;
-    transition: background-color 0.3s;
-}
-
-.side-list-menu-item1,
-.side-list-menu-item2,
-.side-list-menu-item3 {
     cursor: pointer;
     padding: 10px;
     transition: background-color 0.3s ease;
 }
 
+.side-list-menu-item1:hover, .side-list-menu-item2:hover, .side-list-menu-item3:hover, .side-list-menu-item4:hover{
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+
+
 .side-list-menu-item1.active,
 .side-list-menu-item2.active,
-.side-list-menu-item3.active {
+.side-list-menu-item3.active,
+.side-list-menu-item4.active {
     background-color: #007bff; /* 선택된 탭의 배경색 */
     color: white; /* 선택된 탭의 텍스트 색상 */
 }
@@ -109,4 +110,9 @@
     display: flex;
     flex-direction: column;
     width: 82%;
+}
+
+
+.side-list-dashboard{
+    width:100%;
 }

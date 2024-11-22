@@ -1,5 +1,5 @@
 <template>
-    <div class="side-list">
+    <div class="side-list" :class="{'side-list-dashboard': selectedTab === 'dashboard'}">
         <!-- side-list-menu  -->
         <div class="side-list-menu">
             <div class="side-list-menu-item-logo" @click="scrollToTop">
@@ -17,10 +17,14 @@
                 <i class="bi bi-star-fill side-list-menu-item-tabimg"></i>
                 <span class="side-list-menu-item-tabtext">즐겨찾기</span>
             </div>
+            <div class="side-list-menu-item4" @click="changeTab('dashboard')" :class="{'active': selectedTab === 'dashboard'}">
+                <img :src="selectedTab === 'dashboard' ? activeDashboard : dashboard"  class="side-list-menu-item-tabimg zipchak-img" />
+                <span class="side-list-menu-item-tabtext">대시보드</span>
+            </div>
         </div>
         
         <!-- side-list-content  --> 
-        <div class="side-list-content">
+        <div class = "side-list-content" :class="{'side-list-content-dashboard': selectedTab === 'dashboard'}">
             <!-- show default list -->
             <component :is="selectedComponent" />
         </div>
