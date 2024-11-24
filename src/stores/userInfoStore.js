@@ -33,7 +33,7 @@ export const useUserInfoStore = defineStore('userInfo', {
                         'Authorization': access_token
                     }
                 }).then((res) => {
-                    this.user = res.data
+                    this.user = res.data.data
                 }).catch(async (err) => {
                     // 이 부분이 중요한데 access token이 만료되면 reissue하는 로직
                     // 거의 모든 axios 요청에 대해서 들어가야 하는 부분인데 어떻게 처리하면 좋을까?
