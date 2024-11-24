@@ -1,16 +1,16 @@
 <template>
-    <div class="wrap">
-      <!-- Home Component -->
-      <div class="container">
-        <WelcomeView />
-      </div>
+  <div class="wrap">
+    <!-- Home Component -->
+    <div class="container">
+      <WelcomeView />
+    </div>
 
-      <!-- Map Component -->
-      <div class="container">
-        <MapView />
-      </div>
-
+    <!-- Map Component -->
+    <div class="container">
+      <MapView />
+    </div>
   </div>
+  
   <Toaster position="top-center" z-index="1000" richColors closeButton 
     :toastOptions="{
       style: { 

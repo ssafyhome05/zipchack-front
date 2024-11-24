@@ -5,6 +5,8 @@ import { SERVER_URL, KAKAO_API_KEY } from '@/assets/resources/configs/config.js'
 import { useHouseListStore } from '@/stores/houseListStore.js';
 import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
 import { useUserInfoStore } from '@/stores/userInfoStore';
+import { showInfoToast } from '../../../CommonScripts/showToast';
+import { addLocationBookmark, deleteLocationBookmark } from './bookmark';
 
 export default {
     setup() {
@@ -25,6 +27,7 @@ export default {
     const dongName = ref("");
     
     const keyword = ref("");
+    const isLocationBookmark = ref(false);
     const isLoading = ref(false);
     
     const houseInfoList = ref([]);
@@ -265,7 +268,8 @@ export default {
         
         // get user seq
         if(userInfoStore.getUser){
-            userSeq.value = userInfoStore.getUser.data.userSeq;
+            console.log(userInfoStore.getUser)
+            userSeq.value = userInfoStore.getUser.userSeq ? userInfoStore.getUser.userSeq : userInfoStore.getUser.seq;
         }
 
         const inputKeyword = document.querySelector('.search-input').value;
@@ -288,6 +292,9 @@ export default {
         // house list
         await houseListStore.setHouseList(dongCode, keyword.value, userSeq.value);
         houseInfoList.value = await houseListStore.houseList;
+
+        // get location isbookmark?
+        await getLocationBookmark();
 
         // get nearby
         await houseListStore.setNearBy(dongCode);
@@ -326,6 +333,45 @@ export default {
         });
     }
 
+    const getLocationBookmark = async () => {
+        if(userInfoStore.user){
+            try{
+                const response = await axios.get(`${SERVER_URL}/api/bookmark/location`,
+                    {
+                        headers: {
+                            'Authorization': `${userInfoStore.access_token}`,
+                        }
+                    }
+                );
+                const locationBookmarkList = response.data;
+
+                if (locationBookmarkList.some(item => item.dongCode === dong.value)) {
+                    isLocationBookmark.value = true;
+                } else {
+                    isLocationBookmark.value = false;
+                }
+            }catch(error){
+                console.log(error);
+            }
+        }
+    }
+
+    const doLocationBookmark = async () => {
+        if(!userInfoStore.user){
+            showInfoToast("로그인 후 이용가능합니다,");
+            return;
+        }else if(!dong.value){
+            showInfoToast("지역을 선택해주세요.");
+        }else{
+            if(!isLocationBookmark.value){
+               await addLocationBookmark(dong.value, userInfoStore.access_token, 1);
+            }else{
+                await deleteLocationBookmark(dong.value, userInfoStore.access_token, 1);
+            }
+            await getLocationBookmark();
+        }
+    }
+
     return {
         // datas
         sido,
@@ -342,6 +388,7 @@ export default {
         showModal,
         showDoughnutGraph,
         houseListStore,
+        isLocationBookmark,
         
         // methods
         openSidoModal,
@@ -352,6 +399,7 @@ export default {
         closeDongModal,
         validateForm,
         openHouseDetail,
+        doLocationBookmark
     }
 }
 }

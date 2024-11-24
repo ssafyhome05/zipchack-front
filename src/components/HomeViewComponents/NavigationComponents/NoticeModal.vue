@@ -140,28 +140,34 @@ const handleToggle = ({ noticeSeq }) => {
 
 .th-num{
     width: 8%;
+    font-size: 17px;
     text-align: center;
 }
 
 .th-title{
     padding-left: 2%;
+    font-size: 17px;
     width: 75%;
 }
 
 .th-createdAt{
     width: 15%;
+    font-size: 17px;
     text-align: center;
 }
 
 .pagination-container {
-    position: absolute;
+    /* position: absolute;
     left: 42%;
-    bottom: 4%;
+    bottom: 4%; */
+    position: relative;
+    /* left: 42%; */
+    top: 3.2%;
     display: flex;
     justify-content: center;
     align-items: end;
     gap: 5px;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .pagination-container button {

@@ -131,7 +131,96 @@ const removeHouseBookmark = async (aptSeq, access_token, times) => {
     }
 };
 
+const addLocationBookmark = async (dongCode, access_token, times) => {
+    const userInfoStore = useUserInfoStore();
+
+    if (times === 0 || !access_token) {
+        throw new Error("북마크 추가 실패");
+    }
+
+    try {
+        console.log(dongCode);
+        await axios.post(
+        `${SERVER_URL}/api/bookmark/location`, null,
+            {   
+                headers: {
+                    "Authorization": `${access_token}`,
+                },
+                params: {
+                    "dongCode": dongCode,
+                }
+            }, 
+        ).then(async (res) => {
+            console.log(res.data);
+            if (res.data.code === 401012) {
+                await reissueAccessToken();
+                console.log("재시도");
+                await addHouseBookmark(dongCode, userInfoStore.access_token, times - 1); // 재시도
+            }
+
+            if(res.status === 200){
+                showInfoToast("북마크 지역에 추가되었습니다.");
+            }
+        }).catch((error) => {
+            console.error("Bookmark failed:", error);
+            showErrorToast("오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.");
+        });
+
+        
+    } catch (err) {
+        if (err.response && err.response.status === 401012) {
+            await reissueAccessToken();
+            return addHouseBookmark(aptSeq, userInfoStore.access_token, times - 1);
+        }
+        throw err;
+    }
+};
+
+const deleteLocationBookmark = async (dongCode, access_token, times) => {
+    const userInfoStore = useUserInfoStore();
+
+    if (times === 0 || !access_token) {
+        throw new Error("북마크 추가 실패");
+    }
+
+    try {
+        console.log(dongCode);
+        await axios.delete(
+        `${SERVER_URL}/api/bookmark/location/${dongCode}`,
+            {   
+                headers: {
+                    "Authorization": `${access_token}`,
+                }
+            }, 
+        ).then(async (res) => {
+            console.log(res.data);
+            if (res.data.code === 401012) {
+                await reissueAccessToken();
+                console.log("재시도");
+                await addHouseBookmark(dongCode, userInfoStore.access_token, times - 1); // 재시도
+            }
+
+            if(res.status === 200){
+                showInfoToast("북마크 지역에서 삭제되었습니다.");
+            }
+        }).catch((error) => {
+            console.error("delete Bookmark failed:", error);
+            showErrorToast("오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.");
+        });
+
+        
+    } catch (err) {
+        if (err.response && err.response.status === 401012) {
+            await reissueAccessToken();
+            return addHouseBookmark(aptSeq, userInfoStore.access_token, times - 1);
+        }
+        throw err;
+    }
+};
+
 export {
     addHouseBookmark,
-    removeHouseBookmark
+    removeHouseBookmark,
+    addLocationBookmark,
+    deleteLocationBookmark
 }

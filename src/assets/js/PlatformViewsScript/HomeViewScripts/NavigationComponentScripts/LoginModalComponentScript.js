@@ -51,7 +51,7 @@ export default {
                     },
                     withCredentials: true,
                 });
-        
+                
                 if(response.status === 200){
                     showSuccessToast("로그인되었습니다.");
                     userInfoStore.setUser(response.headers.authorization);

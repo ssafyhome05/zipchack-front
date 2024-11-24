@@ -47,7 +47,7 @@ export default{
             };
             kakaoMap.value = new window.kakao.maps.Map(container, options);
             kakaoMapStore.setMapInstance(kakaoMap.value);
-            loadMaker();
+            // loadMaker();
         };
 
         // 지정한 위치에 마커 불러오기

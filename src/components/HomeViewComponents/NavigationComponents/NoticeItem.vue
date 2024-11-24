@@ -61,9 +61,9 @@ const toggleDetails = () => {
 <style scoped>
 td {
     vertical-align: middle;
-    height: 11vh;
+    height: 10.5vh;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -83,14 +83,13 @@ td {
 }
 
 tr td[colspan="4"] {
-    background-color: #f9f9f9;
     font-size: 16px;
     padding: 30px 9%;
     min-height: 20vh;
     max-height: fit-content;
-    display: flex; /* 플렉스박스로 설정 */
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 (선택 사항) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .display-enter-active{

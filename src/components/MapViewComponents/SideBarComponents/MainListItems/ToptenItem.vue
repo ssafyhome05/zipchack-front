@@ -145,6 +145,8 @@ export default {
   flex: 1;
   text-align: left;
   padding-left: 5px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .topten-item-changed {

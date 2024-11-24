@@ -29,7 +29,10 @@ export default {
     };
 
     onMounted(() => {
-      window.addEventListener('wheel', handleScroll, { passive: false });
+      const bodyElement = document.querySelector('.wrap');
+      console.log("asdas", bodyElement)
+      bodyElement.addEventListener('wheel', handleScroll);
+      // window.addEventListener('wheel', handleScroll, { passive: false });
     });
     
     onBeforeUnmount(() => {

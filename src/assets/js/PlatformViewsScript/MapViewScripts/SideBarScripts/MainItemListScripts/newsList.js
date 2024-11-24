@@ -18,7 +18,6 @@ export default {
            await newsListStore.setNewsList();
            newsList.value = newsListStore.getNewsList;
            kakaoMap.value = kakaoMapStore.mapInstance;
-
         });
 
         const openLink = (url) => {
@@ -36,12 +35,12 @@ export default {
 
                 var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
-                    const mark = new window.kakao.maps.Marker({
-                        map: kakaoMap.value,
-                        position: coords
-                    });
-                    marker.value.push(mark);
-                    kakaoMap.value.setCenter(coords);
+                    // const mark = new window.kakao.maps.Marker({
+                    //     map: kakaoMapStore.mapInstance,
+                    //     position: coords
+                    // });
+                    // marker.value.push(mark);
+                    kakaoMapStore.mapInstance.setCenter(coords);
                 } 
             });    
         }

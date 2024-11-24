@@ -139,7 +139,7 @@ export default {
                 const response = await axios.post(`${SERVER_URL}/api/user/send/mail`, email, 
                     {
                         headers: {
-                            'Content-Type': 'application/json;charset=UTF-8'
+                            'Content-Type': 'application/text;charset=UTF-8'
                         }
                     }
                 );
