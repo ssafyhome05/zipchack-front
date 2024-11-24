@@ -10,12 +10,12 @@
             <tr class="info-row">
                 <td class="label">관리자</td>
                 <td class="divider">:</td>
-                <td class="value"><b>`ADMIN_{{ adminUserStore.user.seq }}``</b>님</td>
+                <td class="value"><b>&nbsp;ADMIN_{{ adminUserStore.user.data.seq }}&nbsp;</b>님</td>
             </tr>
             <tr class="info-row">
                 <td class="label">권한</td>
                 <td class="divider">:</td>
-                <td class="value">{{ adminUserStore.getUser.role }}</td>
+                <td class="value">&nbsp;{{ adminUserStore.getUser.data.role }}&nbsp;</td>
             </tr>
           </tbody>
         </table>
