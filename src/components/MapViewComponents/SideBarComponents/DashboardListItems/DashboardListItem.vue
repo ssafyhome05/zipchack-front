@@ -22,7 +22,7 @@
   <style scoped>
 .section-container {
     padding: 20px;
-    width: 100%;
+    width: 112.5%;
     /* display: flex; */
     flex-direction: column;
 }

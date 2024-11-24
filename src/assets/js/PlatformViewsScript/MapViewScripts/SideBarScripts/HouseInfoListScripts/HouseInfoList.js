@@ -344,13 +344,12 @@ export default {
                     }
                 );
                 const locationBookmarkList = response.data;
-                if (locationBookmarkList.some(item => item.dongCode === dong.value)) {
-                    isLocationBookmark.value = true; // 동일한 데이터가 있으면 true 설정
-                } else {
-                    isLocationBookmark.value = false; // 없으면 false로 설정
-                }
 
-                console.log("즐겨찾기한 동네임?", isLocationBookmark.value);
+                if (locationBookmarkList.some(item => item.dongCode === dong.value)) {
+                    isLocationBookmark.value = true;
+                } else {
+                    isLocationBookmark.value = false;
+                }
             }catch(error){
                 console.log(error);
             }
