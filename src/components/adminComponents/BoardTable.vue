@@ -119,6 +119,10 @@ const rowHeight = computed(() => {
     const headerHeight = 47; // th의 높이(padding 12px * 2 + border 1px + 기본 높이)
     return `calc((${tableHeight.value} - ${headerHeight}px) / ${rowCount.value})`;
 });
+
+const deleteUser = (userSeq) => {
+    userManageStore.getUserData = userManageStore.getUserData.filter(item => item.userSeq !== userSeq);
+};
 </script>
 
 <style scoped>

@@ -33,8 +33,15 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, defineEmits } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { SERVER_URL } from '@/assets/resources/configs/config';
+import { useUserInfoStore } from '@/stores/userInfoStore';
+
+const emit = defineEmits(['deleteUser']);
+
+const adminUserStore = useUserInfoStore();
 
 const socialIcons = {
     'kakao': new URL('@/assets/resources/images/kakao_icon.png', import.meta.url).href,
@@ -66,8 +73,29 @@ const handleRowClick = () => {
     }
 };
 
-const handleFunctionButtonClick = () => {
-    console.log('관리 버튼 클릭');
+const handleFunctionButtonClick = async () => {
+    if (confirm('정말 삭제하시겠습니까?')) {
+    try {
+        await deleteUser(props.item.userSeq);
+    } catch (error) {
+        console.error('사용자 삭제 실패:', error);
+        alert('삭제에 실패했습니다.');
+    }
+  }
+};
+
+const deleteUser = async (userSeq) => {
+    const response = await axios.delete(`${SERVER_URL}/api/user/${userSeq}`,
+    {
+        headers: {
+            'Authorization': adminUserStore.access_token
+        }
+    });
+    console.log(response);
+    if (response.data.code == 204020) {
+        alert('삭제에 성공했습니다.');
+        emit('deleteUser', userSeq);
+    }
 };
 
 // 날짜 포맷팅이 필요한 컬럼들을 정의
