@@ -38,10 +38,17 @@ import { onMounted, computed } from 'vue'
 const store = useTopTenStore()
 
 const displayItems = computed(() => {
+  console.log("dd", store.listData);
   return store.isExpanded 
     ? store.listData.slice(0, 10) 
     : store.listData.slice(0, 3)
 })
+// const displayItems = computed(() => {
+//   const list = Array.isArray(store.listData) ? store.listData : []; // 배열인지 확인
+//   return store.isExpanded 
+//     ? list.slice(0, 10) 
+//     : list.slice(0, 3);
+// });
 
 const getTransitionStyle = (index) => {
   if (!store.isExpanded && index < 3) {

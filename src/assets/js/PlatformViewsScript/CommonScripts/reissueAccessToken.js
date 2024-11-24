@@ -34,7 +34,8 @@ async function reissueAccessToken() {
         const response = await axios.post(`${SERVER_URL}/api/auth/reissue`, null, 
             {   
                 withCredentials: true
-            });
+            }
+        );
         console.log("re", response.headers.authorization)
         userInfoStore.access_token = response.headers.authorization;
 

@@ -40,8 +40,11 @@ export const useTopTenStore = defineStore('topTen', {
         const minutes = now.getMinutes()
         if (minutes % 5 === 1) {
           try {
-            const response = await axios.get(`${SERVER_URL}/api/house/topten`)
-            this.loadData = response.data
+            const response = await axios.get(`${SERVER_URL}/api/house/topten`);
+            this.loadData = response.data.data.elements;
+            if(this.loadData === null){
+              this.loadData = [...defaultListData]
+            }
           } catch (error) {
             this.loadData = Array(10).fill(null)
           }
@@ -51,10 +54,11 @@ export const useTopTenStore = defineStore('topTen', {
 
     async getListData() {
       try {
-        // const response = await axios.get(`${SERVER_URL}/api/house/topten`)
-        // this.listData = response.data
-        const response = await axios.get(`${SERVER_URL}/api/house/topten`)
-        this.listData = response.data
+        const response = await axios.get(`${SERVER_URL}/api/house/topten`);
+        this.listData = response.data.data.elements;
+        if(this.listData === null){
+          this.listData = [...defaultListData]
+        }
       } catch (error) {
         this.listData = [...defaultListData]
       }

@@ -72,7 +72,7 @@ const isSearch = ref(false);
 
 onMounted(() => {
     if(userInfoStore.user){
-        user.value = userInfoStore.user.data;
+        user.value = userInfoStore.user;
         getBookmarkList(userInfoStore.access_token, 1);
         getUserCustomSpotList(userInfoStore.access_token, 1);
     }else{
@@ -103,7 +103,7 @@ const getBookmarkList = async (access_token, times) => {
         }).then(async (res) => {
             if (res.data.code === 401012 || res.data.code === 401011) {
                 console.log("토큰 갱신이 필요합니다.");
-                reissueAccessToken();
+                await reissueAccessToken();
                 const newAccessToken = userInfoStore.access_token;
                 return getBookmarkList(newAccessToken, times - 1);
             }
@@ -113,7 +113,9 @@ const getBookmarkList = async (access_token, times) => {
             }
         });
     }catch(error){
-        console.log(error);
+        await reissueAccessToken();
+        const newAccessToken = userInfoStore.access_token;
+        return getBookmarkList(newAccessToken, times - 1);
     }finally{
         isLoading.value = false;
     }
@@ -133,7 +135,7 @@ const getUserCustomSpotList = async (access_token, times) => {
         }).then(async (res) => {
             if (res.data.code === 401012 || res.data.code === 401011) {
                 console.log("토큰 갱신이 필요합니다.");
-                reissueAccessToken();
+                await reissueAccessToken();
                 const newAccessToken = userInfoStore.access_token;
                 return getBookmarkList(newAccessToken, times - 1);
             }
@@ -146,7 +148,9 @@ const getUserCustomSpotList = async (access_token, times) => {
         });
 
     }catch(error){
-        console.log(error);
+        await reissueAccessToken();
+        const newAccessToken = userInfoStore.access_token;
+        return getBookmarkList(newAccessToken, times - 1);
     }finally{
         isLoading.value = false;
     }

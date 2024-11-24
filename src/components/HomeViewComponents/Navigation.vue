@@ -13,7 +13,7 @@
         </nav>
 
         <div class="auth-box">
-            <div v-if="user == null">
+            <div v-if="!user || user.role === 'ADMIN'">
                 <button
                 type="button"
                 class="btn btn-primary"
@@ -40,7 +40,7 @@
             <div v-else>
                 <span class="user-name">
                 <i class="bi bi-person-fill"></i>
-                {{ user.data.userEmail }} 님 </span>
+                {{ user.userEmail }} 님 </span>
                 <button class="logout-button" @click="logout">
                 <i class="bi bi-box-arrow-right"></i>
                 </button>

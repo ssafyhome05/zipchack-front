@@ -36,7 +36,7 @@ export default {
             if(userInfoStore.user){
                 isLogin.value = true;
                 houseDetail.value = houseDetailStore.getHouseDetail
-                const userSeq = userInfoStore.user.data.userSeq;
+                const userSeq = userInfoStore.user.userSeq;
                 const access_token = userInfoStore.access_token;
     
             }else{

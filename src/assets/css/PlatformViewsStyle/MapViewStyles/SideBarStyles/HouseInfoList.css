@@ -373,3 +373,17 @@
     top: 50%;
     z-index: 6;
 }
+
+.dong-dislike-box{
+    margin-left: 15px;
+    font-size: 22px;
+    color: #666;
+    cursor: pointer;
+}
+
+.dong-like-box{
+    margin-left: 15px;
+    font-size: 22px;
+    color: #007bff;
+    cursor: pointer;
+}

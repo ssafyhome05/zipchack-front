@@ -14,6 +14,14 @@
                 <div class="sido" @click="openSidoModal">시·도</div>
                 <div class="gugun" @click="openGugunModal">구·군</div>
                 <div class="dong" @click="openDongModal">읍·면·동</div>
+
+                <div v-if="isLocationBookmark" class="dong-like-box" @click="doLocationBookmark">
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <div v-else class="dong-dislike-box" @click="doLocationBookmark">
+                    <i class="bi bi-star"></i>
+                </div>
+                
             </div>
             <!-- <div class="option-item-date">
                 <i class="bi bi-calendar-fill start-date-icon"></i>
@@ -21,7 +29,9 @@
                 <i class="bi bi-calendar-fill end-date-icon"></i>
                 <input type="month" class="end-date-input" placeholder="종료일자" />
             </div> -->
+
         </div>
+      
 
         <button type="submit" class="search-btn" value="매물 조회" @click="validateForm"> 매물 조회</button>
         
@@ -52,7 +62,6 @@
 </template>
 
 <script>
-import HouseInfoList from '@/assets/js/PlatformViewsScript/MapViewScripts/SideBarScripts/HouseInfoListScripts/HouseInfoList.js';
 import HouseInfoListScript from '@/assets/js/PlatformViewsScript/MapViewScripts/SideBarScripts/HouseInfoListScripts/HouseInfoList.js';
 import HouseDetail from './HouseInfoListItems/HouseDetail.vue';
 export default HouseInfoListScript;
