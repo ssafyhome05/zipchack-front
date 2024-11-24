@@ -63,17 +63,18 @@ export default {
 
         const getNearstSpost = async (houseSeq, access_token) => {
             isLoading.value = true;
-            await axios.get(`${SERVER_URL}/api/navigate/spot`,{
-                headers: {
-                    'Authorization': access_token,
-                },
-                params: {
-                    "houseSeq": houseSeq,
-                },
-            })
-            .then(response => {
-
-                if(response.status === 200){
+        
+            try {
+                const response = await axios.get(`${SERVER_URL}/api/navigate/spot`, {
+                    headers: {
+                        'Authorization': access_token,
+                    },
+                    params: {
+                        "houseSeq": houseSeq,
+                    },
+                });
+        
+                if (response.status === 200) {
                     console.log(response.data.code);
                     console.log(response.data.data);
                     const data = response.data.data;
@@ -83,15 +84,19 @@ export default {
                         spotRouteStore.addRoute(newRoute);
                     });
                 }
-            })
-            .catch((error) => {
-                console.error("에러 발생:", error);
-                showWarningToast("요청에 실패했습니다.");
-            })
-            .finally(() => {
+            } catch (error) {
+                if (error.response && error.response.data?.code === 401012) {
+                    console.log("토큰 만료로 재발급 시도");
+                    await reissueAccessToken();
+                    await getNearstSpost(houseSeq, userInfoStore.access_token);  // 재시도
+                } else {
+                    console.error("에러 발생:", error);
+                    showWarningToast("요청에 실패했습니다.");
+                }
+            } finally {
                 isLoading.value = false;
-            });
-        };
+            }
+        };        
 
         const openSearchModal = () => {
             nextTick(() => {

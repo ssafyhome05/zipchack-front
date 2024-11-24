@@ -8,6 +8,7 @@ import { useUserInfoStore } from '@/stores/userInfoStore';
 import { showInfoToast } from '../../../CommonScripts/showToast';
 import { addLocationBookmark, deleteLocationBookmark } from './bookmark';
 import { VueSpinner } from 'vue3-spinners';
+import { reissueAccessToken } from '../../../CommonScripts/reissueAccessToken';
 
 export default {
     components: {
@@ -347,27 +348,33 @@ export default {
     }
 
     const getLocationBookmark = async () => {
-        if(userInfoStore.user){
-            try{
-                const response = await axios.get(`${SERVER_URL}/api/bookmark/location`,
-                    {
-                        headers: {
-                            'Authorization': `${userInfoStore.access_token}`,
-                        }
-                    }
-                );
+        if (userInfoStore.user) {
+            try {
+                const response = await axios.get(`${SERVER_URL}/api/bookmark/location`, {
+                    headers: {
+                        'Authorization': `${userInfoStore.access_token}`,
+                    },
+                });
+    
                 const locationBookmarkList = response.data;
-
+    
                 if (locationBookmarkList.some(item => item.dongCode === dong.value)) {
                     isLocationBookmark.value = true;
                 } else {
                     isLocationBookmark.value = false;
                 }
-            }catch(error){
-                console.log(error);
+            } catch (error) {
+                if (error.response && error.response.data?.code === 401012) {
+                    console.log("토큰 만료로 재발급 시도");
+                    await reissueAccessToken();
+                    await getLocationBookmark();  // 재시도
+                } else {
+                    console.log(error);
+                }
             }
         }
-    }
+    };
+    
 
     const doLocationBookmark = async () => {
         if(!userInfoStore.user){

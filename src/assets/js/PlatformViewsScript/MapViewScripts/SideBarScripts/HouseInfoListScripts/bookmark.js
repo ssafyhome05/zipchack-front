@@ -38,7 +38,7 @@ const addHouseBookmark = async (aptSeq, access_token, times) => {
             await houseListStore.setHouseList(
                 houseListStore.dongCode,
                 houseListStore.keyWord,
-                userInfoStore.user.data.userSeq
+                userInfoStore.user.userSeq
             );
 
             const house = houseListStore.houseList.find(h => h.aptSeq === aptSeq);
@@ -80,7 +80,7 @@ const removeHouseBookmark = async (aptSeq, access_token, times) => {
             await houseListStore.setHouseList(
                 houseListStore.dongCode,
                 houseListStore.keyWord,
-                userInfoStore.user.data.userSeq
+                userInfoStore.user.userSeq
             );
 
             const house = houseListStore.houseList.find(h => h.aptSeq === aptSeq);

@@ -7,7 +7,7 @@
         </td>
         <td class="notice-createdAt">{{ formatDate(notice.createdAt) }}</td>
     </tr>
-    <Transition name="display"  mode="out-in" >
+    <Transition name="display" mode="out-in">
         <tr v-show="isVisible">
             <td class="notice-content-title">내용</td>
             <td colspan="3">
