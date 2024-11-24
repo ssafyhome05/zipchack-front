@@ -269,10 +269,11 @@
 
 .house-detail-distance-info-location{
   height: 45px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   color: #007bff;
   text-align: center;
+  width: 100px;
 }
 
 .house-detail-distance-info-time{
@@ -349,4 +350,25 @@
 .search-addr-btn:hover{
   background-color: #0066d2;
   transition: 0.5s ease-in-out;
+}
+
+.route-loading{
+  position: relative;
+  /* background-color: red; */
+  border: 1px;
+  width: 100%;
+  height: 200px;
+  /* display: flex; */
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.route-spinner{
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  left: 45%;
+  /* left: 100%; */
 }

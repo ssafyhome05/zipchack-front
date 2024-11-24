@@ -1,7 +1,7 @@
 .doughnut-div {
-    position: fixed;
+    position: absolute;
     top: 1.5%;
-    right: 1%;
+    left: 73.5vw;
     padding: 10px;
     z-index: 2;
     width: 430px;

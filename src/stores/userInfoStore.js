@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { SERVER_URL } from '@/assets/resources/configs/config';
-// import { reissueAccessToken } from '@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken';
 import axios from 'axios';
 
 export const useUserInfoStore = defineStore('userInfo', {

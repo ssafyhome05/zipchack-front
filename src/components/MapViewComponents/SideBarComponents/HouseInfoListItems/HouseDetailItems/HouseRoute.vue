@@ -15,8 +15,13 @@
             </tr>
         </thead>
         <tbody v-if="isLogin">
+            <tr>
+               <td colspan="8" v-if="isLoading" class="route-loading">
+                    <VueSpinner size="40" color="#007bff" class="route-spinner"/>
+               </td> 
+            </tr>
             <tr v-for="(route, index) in routeList" :key="index">
-                <td class="house-detail-distance-info-location">{{ route.customName }}</td>
+                <td class="house-detail-distance-info-location">{{ route.customName  }}</td>
                 <td class="house-detail-distance-info-time">
                     <a class="exist-time" v-if="route.car.length != 0" @click.stop="drawPolyline('car', route.car[0].routeInfos)">
                         {{ Math.floor(route.car[0].totalTime / 3600) + "시간 " + Math.ceil((route.car[0].totalTime % 3600) / 60) + "분" }}
@@ -42,7 +47,7 @@
             </tr>
             <tr>
                 <td :colspan="6">
-                    <button class="search-addr-btn" @click="openSearchModal">편의시설 검색하기</button>
+                    <button class="search-addr-btn" @click="openSearchModal">장소 검색하기</button>
                 </td>
             </tr>
         </tbody>

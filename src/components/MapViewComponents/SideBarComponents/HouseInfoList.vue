@@ -58,10 +58,15 @@
     />
 
     <DoughnutChart v-if="showDoughnutGraph"/>
+
+    <div v-if="isLoading" class="loading-screen">
+        <VueSpinner size="50" color="#007bff" class="search-spinner"/>
+    </div>
     
 </template>
 
 <script>
+// import { VueSpinner } from 'vue3-spinners';
 import HouseInfoListScript from '@/assets/js/PlatformViewsScript/MapViewScripts/SideBarScripts/HouseInfoListScripts/HouseInfoList.js';
 import HouseDetail from './HouseInfoListItems/HouseDetail.vue';
 export default HouseInfoListScript;

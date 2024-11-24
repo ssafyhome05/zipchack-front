@@ -7,8 +7,12 @@ import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
 import { useUserInfoStore } from '@/stores/userInfoStore';
 import { showInfoToast } from '../../../CommonScripts/showToast';
 import { addLocationBookmark, deleteLocationBookmark } from './bookmark';
+import { VueSpinner } from 'vue3-spinners';
 
 export default {
+    components: {
+        VueSpinner
+    },
     setup() {
     // Store 초기화
     const houseListStore = useHouseListStore();
@@ -265,6 +269,8 @@ export default {
     };
 
     async function searchHouse(dongCode){
+
+        isLoading.value = true;
         
         // get user seq
         if(userInfoStore.getUser){
@@ -302,10 +308,13 @@ export default {
         // top 10 count
         await searchCount(dongCode);
 
+        // dong population info
         await houseListStore.setDongPopInfo(dongCode);
         houseDetailStore.showDoughnutGraph = true;
         showDoughnutGraph.value = true;
- 
+        
+        isLoading.value = false;
+        
         const detailContainer = document.querySelector('.house-detail-container');
         if(detailContainer){
             houseDetailStore.setHouseDetail(null);
@@ -315,12 +324,16 @@ export default {
     }
 
     function openHouseDetail(house) {
+        isLoading.value = true;
+
         houseDetailStore.showDetailModal = true;
         console.log(houseDetailStore.showDetailModal)
         houseDetailStore.setHouseDetail(house);
         houseDetailStore.setAddress(
             sidoName.value + " " + gugunName.value + " " + dongName.value + " " + house.roadNm
         );
+
+        isLoading.value = false;
     }
 
     async function searchCount(code){

@@ -90,71 +90,81 @@ watch(
 
 
 const getBookmarkList = async (access_token, times) => {
-    if(times === 0){
-        return;
-    }
-    try{
+    // if (times === 0) {
+    //     console.error("재시도 한도를 초과했습니다.");
+    //     return;
+    // }
+    try {
         isLoading.value = true;
-        await axios.get(`${SERVER_URL}/api/bookmark/house`, 
-        {
+        const res = await axios.get(`${SERVER_URL}/api/bookmark/house`, {
             headers: {
                 "Authorization": `${access_token}`,
-            }
-        }).then(async (res) => {
-            if (res.data.code === 401012 || res.data.code === 401011) {
-                console.log("토큰 갱신이 필요합니다.");
-                await reissueAccessToken();
-                const newAccessToken = userInfoStore.access_token;
-                return getBookmarkList(newAccessToken, times - 1);
-            }
-
-            if(res.status === 200){
-                bookmarkHouseList.value = res.data;
-            }
+            },
         });
-    }catch(error){
+
+        // 토큰 갱신이 필요한 경우 처리
+        if (res.data.code === 401012 || res.data.code === 401011) {
+            console.log("토큰 갱신이 필요합니다.");
+            await reissueAccessToken();
+            const newAccessToken = userInfoStore.access_token;
+            return getBookmarkList(newAccessToken, times - 1); // 재귀 호출
+        }
+
+        // 요청 성공 시 처리
+        if (res.status === 200) {
+            bookmarkHouseList.value = res.data;
+            return;
+        }
+    } catch (error) {
+        console.error("요청 중 오류 발생:", error);
+
+        // 토큰 갱신 및 재시도 처리
         await reissueAccessToken();
         const newAccessToken = userInfoStore.access_token;
-        return getBookmarkList(newAccessToken, times - 1);
-    }finally{
-        isLoading.value = false;
+        return getBookmarkList(newAccessToken, times - 1); // 재귀 호출
+    } finally {
+        isLoading.value = false; // 요청 상태 해제
     }
 };
 
+
 const getUserCustomSpotList = async (access_token, times) => {
-    if(times === 0){
-        return;
-    }
-    try{
+    // if (times === 0) {
+    //     console.error("재시도 한도를 초과했습니다.");
+    //     return;
+    // }
+    try {
         isLoading.value = true;
-        await axios.get(`${SERVER_URL}/api/bookmark/custom`, 
-        {
+
+        const res = await axios.get(`${SERVER_URL}/api/bookmark/custom`, {
             headers: {
                 "Authorization": `${access_token}`,
-            }
-        }).then(async (res) => {
-            if (res.data.code === 401012 || res.data.code === 401011) {
-                console.log("토큰 갱신이 필요합니다.");
-                await reissueAccessToken();
-                const newAccessToken = userInfoStore.access_token;
-                return getBookmarkList(newAccessToken, times - 1);
-            }
-
-            if(res.status === 200){
-                userCustomSpotList.value = res.data;
-            }
-        }).catch(err => {
-            console.log(err);
+            },
         });
 
-    }catch(error){
+        // 토큰 갱신이 필요한 경우 처리
+        if (res.data.code === 401012 || res.data.code === 401011) {
+            console.log("토큰 갱신이 필요합니다.");
+            await reissueAccessToken();
+            const newAccessToken = userInfoStore.access_token;
+            return getUserCustomSpotList(newAccessToken, times - 1); // 재귀 호출
+        }
+
+        // 요청 성공 시 처리
+        if (res.status === 200) {
+            userCustomSpotList.value = res.data;
+        }
+    } catch (error) {
+        console.error("요청 중 오류 발생:", error);
+
+        // 토큰 갱신 및 재시도 처리
         await reissueAccessToken();
         const newAccessToken = userInfoStore.access_token;
-        return getBookmarkList(newAccessToken, times - 1);
-    }finally{
-        isLoading.value = false;
+        return getUserCustomSpotList(newAccessToken, times - 1); // 재귀 호출
+    } finally {
+        isLoading.value = false; // 로딩 상태 해제
     }
-}
+};
 
 const showCustomSearchModal = () => {
     isSearch.value = true;

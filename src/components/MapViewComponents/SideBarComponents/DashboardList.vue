@@ -38,14 +38,6 @@
         }
     });
 
-    const loadUserLocation = () => {
-
-    }
-
-    const loadLocationData = () => {
-
-    }
-
 </script>
 
 <template>

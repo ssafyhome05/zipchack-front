@@ -213,7 +213,7 @@ const removeAllMarkers = () => {
     position: absolute;
     top: 140%;
     right: 1%;
-    z-index: 999;
+    z-index: 4;
     display: flex;
     flex-direction: column;
     justify-content: center;

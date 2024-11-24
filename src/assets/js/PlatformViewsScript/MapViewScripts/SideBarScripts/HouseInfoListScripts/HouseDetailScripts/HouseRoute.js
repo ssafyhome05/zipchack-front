@@ -7,11 +7,15 @@ import { ref, onMounted, watch, nextTick, onUnmounted } from "vue";
 import { SERVER_URL } from "@/assets/resources/configs/config";
 import { reissueAccessToken } from "@/assets/js/PlatformViewsScript/CommonScripts/reissueAccessToken";
 import { Modal } from 'bootstrap';
-import start_marker from '@/assets/imgs/mark/test-mark.png';
-import end_marker from '@/assets/imgs/mark/red-mark.png';
+import start_marker from '@/assets/imgs/mark/start-mark.png';
+import end_marker from '@/assets/imgs/mark/end-mark.png';
+import { VueSpinner } from 'vue3-spinners';
 
 export default {
     name: 'HouseRoute',
+    components: {
+        VueSpinner
+    },
     setup() {
         const serverUrl = SERVER_URL;
         const userInfoStore = useUserInfoStore();
@@ -35,30 +39,59 @@ export default {
             kakaoMap.value = kakaoMapStore.mapInstance;
             if(userInfoStore.user){
                 isLogin.value = true;
-                houseDetail.value = houseDetailStore.getHouseDetail
-                const userSeq = userInfoStore.user.userSeq;
-                const access_token = userInfoStore.access_token;
-    
+                houseDetail.value = houseDetailStore.getHouseDetail;
+                getNearstSpost(houseDetail.value.aptSeq, userInfoStore.access_token);
             }else{
                 isLogin.value = false;
             }
         });
 
         watch(() => houseDetailStore.houseDetail, (newVal) => {
-            console.log("hey")
             spotRouteStore.routeList = [];
             routeList.value = spotRouteStore.routeList;
+            
             clearMapObjects();
             if(userInfoStore.user){
+                getNearstSpost(newVal.aptSeq, userInfoStore.access_token);
                 isLogin.value = true;
                 houseDetail.value = newVal;
-                const userSeq = userInfoStore.user.data.userSeq;
-                const access_token = userInfoStore.access_token;
             }else{
                 isLogin.value = false;
                 // userHouse.value = null;
             }
         }, { deep: true });
+
+        const getNearstSpost = async (houseSeq, access_token) => {
+            isLoading.value = true;
+            await axios.get(`${SERVER_URL}/api/navigate/spot`,{
+                headers: {
+                    'Authorization': access_token,
+                },
+                params: {
+                    "houseSeq": houseSeq,
+                },
+            })
+            .then(response => {
+
+                if(response.status === 200){
+                    console.log(response.data.code);
+                    console.log(response.data.data);
+                    const data = response.data.data;
+                    data.forEach((route) => {
+                        const newRoute = { ...route.routes };
+                        newRoute.customName = route.requestParameter.endPointName;
+                        spotRouteStore.addRoute(newRoute);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("에러 발생:", error);
+                showWarningToast("요청에 실패했습니다.");
+            })
+            .finally(() => {
+                isLoading.value = false;
+            });
+        };
 
         const openSearchModal = () => {
             nextTick(() => {
@@ -158,6 +191,7 @@ export default {
 
         return {
             isLogin,
+            isLoading,
             serverUrl,
             houseDetail,
             routeList,

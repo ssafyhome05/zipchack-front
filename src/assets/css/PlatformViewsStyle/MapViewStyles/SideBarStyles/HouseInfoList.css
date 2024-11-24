@@ -180,7 +180,7 @@
 }
 
 .house-deal-list::-webkit-scrollbar{
-    width: 0.5vw;
+    width: 0.3vw;
 }
  
 .house-deal-list::-webkit-scrollbar-thumb{
@@ -386,4 +386,24 @@
     font-size: 22px;
     color: #007bff;
     cursor: pointer;
+}
+
+.loading-screen{
+    background-color: rgba(0, 0, 0, 0.267);
+    position: absolute;
+    z-index: 3;
+    width: 101vw;
+    height: 100vh;
+    top: 0%;
+    left: -18%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search-spinner{
+    position: absolute;
+    /* display: block; */
+    left: 50%;
+    top: 45%;
+    width: fit-content;
 }
