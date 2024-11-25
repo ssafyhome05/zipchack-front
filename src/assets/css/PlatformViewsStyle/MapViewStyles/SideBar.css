@@ -116,4 +116,5 @@
 .side-list-dashboard{
     width:100%;
     z-index: 5;
+    overflow: auto;
 }

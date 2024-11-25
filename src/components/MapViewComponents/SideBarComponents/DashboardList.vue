@@ -31,11 +31,14 @@
     const locationInfoStore = useLocationInfoStore();
     const isLoading = ref(false);
 
-    onMounted(() => {
+    onMounted(async () => {
         if(userInfoStore.user){
             isLoading.value = true;
-            locationInfoStore.getUserBookmarkLocation();
+            await locationInfoStore.getUserBookmarkLocation();
+            await locationInfoStore.getCustomSpot();
+            // await locationInfoStore.getNearestAptFromCustomSpot();
             isLoading.value = false;
+
         }else{
             return;
         }
@@ -47,7 +50,7 @@
     
     <DashboardListItem v-for="board,idx in boardList" :board="board" :key="idx"/>
     <div>
-        
+
     </div>
 </template>
     
