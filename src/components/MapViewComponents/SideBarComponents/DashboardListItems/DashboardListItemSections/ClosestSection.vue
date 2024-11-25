@@ -12,19 +12,9 @@
           :key="index"
           :class="['custom-spot-select-item', { 'selected': selectedSpot === index }]"
           @click="selectSpot(index)"
-        >
-          {{ spot.spotName }}
-        </div>
-          
-          <!-- <div class="custom-spot-select-item">
-            멀캠
+          >
+            {{ spot }}
           </div>
-          <div class="custom-spot-select-item">
-            병원
-          </div>
-          <div class="custom-spot-select-item">
-            학교
-          </div> -->
         </div>
 
         <div class="custom-spot-list-box">
@@ -35,83 +25,34 @@
             <div class="custom-spot-list-box-header-transport">대중교통</div>
           </div>
           <div class="custom-spot-list-box-content">
-            <div class="custom-spot-list-box-content-item">
+
+            <div v-for="(spot, index) in currentCustomSpotRank" :key="spot.houseSeq" class="custom-spot-list-box-content-item">
               <div class="custon-spot-list-num">
-                1
+                {{ index + 1 }}
               </div>
               <div class="custon-spot-list-name">
-                <p class="custon-spot-name">준형마을로 가요</p>
-                <p class="custon-spot-addr">서울특별시 집갈래 집갈래</p>
+                <p class="custon-spot-name">
+                  {{ spot.houseName }}
+                </p>
+                <p class="custon-spot-addr">
+                  {{ spot.houseName }} {{ spot.address }}
+                </p>
               </div>
-              <div class="custon-spot-list-walk">1시간 3분</div>
-              <div class="custon-spot-list-car">32분</div>
-              <div class="custon-spot-list-transport">32분</div>
+              <div class="custon-spot-list-walk">
+                <!-- {{ Math.floor(spot.walkTime / 3600) + "시간 " + Math.ceil((spot.walkTime % 3600) / 60) + "분" }} -->
+                {{ formatTime(spot.walkTime) }}
+              </div>
+              <div class="custon-spot-list-car">
+                <!-- {{ Math.floor(spot.carTime / 3600) + "시간 " + Math.ceil((spot.carTime % 3600) / 60) + "분" }} -->
+                {{ formatTime(spot.carTime) }}
+              </div>
+              <div class="custon-spot-list-transport">
+                <!-- {{ Math.floor(spot.transportTime / 3600) + "시간 " + Math.ceil((spot.transportTime % 3600) / 60) + "분" }} -->
+                {{ formatTime(spot.transportTime) }}
+              </div>
             </div>
 
-            <div class="custom-spot-list-box-content-item">
-              <div class="custon-spot-list-num">
-                1
-              </div>
-              <div class="custon-spot-list-name">
-                <p class="custon-spot-name">성민마을</p>
-                <p class="custon-spot-addr">서울특별시 집갈래 집갈래</p>
-              </div>
-              <div class="custon-spot-list-walk">1시간 3분</div>
-              <div class="custon-spot-list-car">32분</div>
-              <div class="custon-spot-list-transport">32분</div>
-            </div>
-
-            <div class="custom-spot-list-box-content-item">
-              <div class="custon-spot-list-num">
-                1
-              </div>
-              <div class="custon-spot-list-name">
-                <p class="custon-spot-name">해구마을</p>
-                <p class="custon-spot-addr">서울특별시 집갈래 집갈래</p>
-              </div>
-              <div class="custon-spot-list-walk">1시간 3분</div>
-              <div class="custon-spot-list-car">32분</div>
-              <div class="custon-spot-list-transport">32분</div>
-            </div>
-
-            <div class="custom-spot-list-box-content-item">
-              <div class="custon-spot-list-num">
-                1
-              </div>
-              <div class="custon-spot-list-name">
-                <p class="custon-spot-name">준형마을</p>
-                <p class="custon-spot-addr">서울특별시 집갈래 집갈래</p>
-              </div>
-              <div class="custon-spot-list-walk">1시간 3분</div>
-              <div class="custon-spot-list-car">32분</div>
-              <div class="custon-spot-list-transport">32분</div>
-            </div>
-
-            <div class="custom-spot-list-box-content-item">
-              <div class="custon-spot-list-num">
-                1
-              </div>
-              <div class="custon-spot-list-name">
-                <p class="custon-spot-name">준형마을</p>
-                <p class="custon-spot-addr">서울특별시 집갈래 집갈래</p>
-              </div>
-              <div class="custon-spot-list-walk">1시간 3분</div>
-              <div class="custon-spot-list-car">32분</div>
-              <div class="custon-spot-list-transport">32분</div>
-            </div>
-
-            <div class="custom-spot-list-box-content-item">
-              <div class="custon-spot-list-num">
-                1
-              </div>
-              <div class="custon-spot-list-name">
-                <p class="custon-spot-name">준형마을</p>
-                <p class="custon-spot-addr">서울특별시 집갈래 집갈래</p>
-              </div>
-              <div class="custon-spot-list-walk">1시간 3분</div>
-              <div class="custon-spot-list-car">32분</div>
-              <div class="custon-spot-list-transport">32분</div>
-            </div>
+            
           </div>
         </div>
       </slot>
@@ -120,40 +61,50 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch} from 'vue';
+import { ref, watch } from 'vue';
 import { useLocationInfoStore } from '@/stores/LocationInfo';
 
 const locationInfoStore = useLocationInfoStore();
 const customSpot = ref([]);
+const currentCustomSpotRank = ref([]);
 const selectedSpot = ref(null);
 const selectedName = ref(null);
 
-onMounted(() => {
-  // customSpotList가 비어있지 않은지 체크
-  if (locationInfoStore.customSpotList && locationInfoStore.customSpotList.length > 0) {
-    customSpot.value = locationInfoStore.customSpotList;
-    console.log(customSpot.value);
-    selectedSpot.value = 0;
-    selectedName.value = customSpot.value[0].spotName;  // 첫 번째 스팟 이름 초기화
-  }
-});
+watch(() => locationInfoStore.nearestApartmentList, (newList) => {
 
-// locationInfoStore.customSpotList가 변경될 때마다 실행되는 watch
-watch(() => locationInfoStore.customSpotList, (newList) => {
   if (newList && newList.length > 0) {
-    customSpot.value = newList;
-    selectedSpot.value = 0;  // 첫 번째 항목 선택
-    selectedName.value = customSpot.value[0].spotName;
-    console.log('Updated customSpot:', customSpot.value);
+    customSpot.value = [];
+    newList.forEach((data) => {
+      customSpot.value.push(data.categoryName);
+    });
+
+    selectedSpot.value = 0;
+    selectedName.value = customSpot.value[0];
+
+    currentCustomSpotRank.value = newList[selectedSpot.value].houses;
+    console.log(currentCustomSpotRank.value)
   }
-}, { immediate: true });  // 컴포넌트가 마운트되자마자 즉시 실행
+
+},{ immediate: true, deep: true });  // 컴포넌트가 마운트되자마자 즉시 실행
 
 const selectSpot = (index) => {
   if (index >= 0 && index < customSpot.value.length) {
     selectedSpot.value = index;
-    selectedName.value = customSpot.value[index].spotName;
+    selectedName.value = customSpot.value[index];
+    currentCustomSpotRank.value = locationInfoStore.nearestApartmentList[index].houses;
   }
 };
+
+function formatTime(seconds) {
+  if (seconds >= 3600) {
+    return Math.floor(seconds / 3600) + "시간 " + Math.ceil((seconds % 3600) / 60) + "분";
+  } else if (seconds >= 60) {
+    return Math.ceil(seconds / 60) + "분";
+  } else {
+    return seconds + "초";
+  }
+};
+
 </script>
 
 <style scoped>
@@ -304,7 +255,7 @@ const selectSpot = (index) => {
 }
 
 .custon-spot-name{
-  font-size: 19px;
+  font-size: 18px;
   font-weight: bold;
 }
 

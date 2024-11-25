@@ -9,6 +9,7 @@
     import BusinessBuildingSection from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/BusinessBuildingSection.vue';
     import ClosestSection from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/ClosestSection.vue';
     import AnalysisSection from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/AnalysisSection.vue';
+    import LoadingScreen from './DashboardListItems/DashboardListItemSections/LoadingScreen.vue';
 
     const boardList = ref([
         {
@@ -34,11 +35,8 @@
     onMounted(async () => {
         if(userInfoStore.user){
             isLoading.value = true;
-            await locationInfoStore.getUserBookmarkLocation();
-            await locationInfoStore.getCustomSpot();
-            // await locationInfoStore.getNearestAptFromCustomSpot();
+            await locationInfoStore.getNearestAptFromCustomSpot();
             isLoading.value = false;
-
         }else{
             return;
         }
@@ -47,14 +45,28 @@
 </script>
 
 <template>
-    
-    <DashboardListItem v-for="board,idx in boardList" :board="board" :key="idx"/>
-    <div>
-
+    <div class="dashboard-container">
+        <DashboardListItem v-for="board,idx in boardList" :board="board" :key="idx"/>
+    <LoadingScreen v-show="isLoading"/>
     </div>
+    
 </template>
     
     
-<style>
-    
+<style scoped>
+.dashboard-container{
+    position: absolute;
+    height: 108%;
+    width: 113.5%;
+    overflow: auto
+}
+
+.dashboard-container::-webkit-scrollbar {
+    width: 0.5vw;
+} 
+
+.dashboard-container::-webkit-scrollbar-thumb {
+    background-color: #cacaca;
+    border-radius: 10px;
+}
 </style>
