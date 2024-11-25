@@ -81,12 +81,13 @@ watch(() => houseListStore.dongCode, (newDongCode, oldDongCode) => {
     }
 });
 
-const resetState = () => {
+const resetState = async () => {
     buttons.value.forEach((button) => {
         button.isActive = false;
     });
-
-    removeAllMarkers();
+    await kakaoMapStore.resetMap();
+    // await loadMap();
+    // removeAllMarkers();
 };
 
 const toggleButton = (index) => {
@@ -203,7 +204,18 @@ const removeAllMarkers = () => {
     });
 };
 
-
+const loadMap = async () => {
+            const container = document.getElementById("map"); 
+            const options = {
+                center: new window.kakao.maps.LatLng(37.5012767241426, 127.039600248343), 
+                level: 3
+            };
+            const map =  new window.kakao.maps.Map(container, options);
+            // kakaoMap.value = new window.kakao.maps.Map(container, options);
+            kakaoMapStore.setMapInstance(map);
+            kakaoMap.value = kakaoMapStore.mapInstance;
+            // loadMaker();
+        };
 
 </script>
 <style scoped>

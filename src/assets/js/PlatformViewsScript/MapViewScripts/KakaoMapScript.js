@@ -27,9 +27,19 @@ export default{
             }
         });
 
-        watch(() => houseListStore.houseList, (newVal) => {
-            houseInfoList.value = loadHouseInfo(newVal);
+        watch(() => houseListStore.houseList, async (newVal) => {
+            kakaoMapStore.resetMap();
+            await nextTick( async() => {
+                loadMap();
+                kakaoMap.value = kakaoMapStore.mapInstance;
+
+                houseInfoList.value = await loadHouseInfo(newVal);
+            });
         }, { deep: true });
+
+        // watch(() => kakaoMapStore.mapInstance, () => {
+        //     loadMap();
+        // }, { deep: true });
 
         const loadScript = () => {
             const script = document.createElement("script");
@@ -45,8 +55,10 @@ export default{
                 center: new window.kakao.maps.LatLng(37.5012767241426, 127.039600248343), 
                 level: 3
             };
-            kakaoMap.value = new window.kakao.maps.Map(container, options);
-            kakaoMapStore.setMapInstance(kakaoMap.value);
+            const map =  new window.kakao.maps.Map(container, options);
+            // kakaoMap.value = new window.kakao.maps.Map(container, options);
+            kakaoMapStore.setMapInstance(map);
+            kakaoMap.value = kakaoMapStore.mapInstance;
             // loadMaker();
         };
 
@@ -64,22 +76,28 @@ export default{
         };
 
         // 매물 정보 불러오기 
-        const loadHouseInfo = (houseList) => {
+        const loadHouseInfo = async (houseList) => {
             clearMarkers();
-
+            
             var geocoder = new window.kakao.maps.services.Geocoder();
             const sidoName = houseListStore.getSidoName;
             const gugunName = houseListStore.getGugunName;
             const dongName = houseListStore.getDongName;
             var addrCodeStr = sidoName + " " + gugunName + " " + dongName;
-            geocoder.addressSearch(addrCodeStr, (result, status) => {
-                if(status === window.kakao.maps.services.Status.OK){
-                    var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-                    kakaoMap.value.setCenter(coords);
-                }
-            });
 
-            addNeighborhoodPolygon(houseListStore.getDongCode);
+            await nextTick(() => {
+                geocoder.addressSearch(addrCodeStr, (result, status) => {
+                    if(status === window.kakao.maps.services.Status.OK){
+                        var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+                        kakaoMapStore.mapInstance.setCenter(coords);
+                    }
+                });
+    
+            });
+            
+            await nextTick(() => {
+                addNeighborhoodPolygon(houseListStore.getDongCode);
+            });
             // houseListStore에서 houseList를 가져와서 사용
             for (let i = 0; i < houseList.length; i++) {
                 const position = new window.kakao.maps.LatLng(houseList[i].latitude, houseList[i].longitude);
@@ -166,7 +184,7 @@ export default{
                 fillOpacity: 0.5  // 채우기 불투명도 입니다  
             });
 
-            polygon.value.setMap(kakaoMap.value);
+            polygon.value.setMap(kakaoMapStore.mapInstance);
         };
 
         // 이전 마커 초기화
