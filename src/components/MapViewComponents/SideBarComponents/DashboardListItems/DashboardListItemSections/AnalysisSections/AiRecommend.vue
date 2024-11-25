@@ -9,8 +9,6 @@
         />
         <p class="ai-text">{{ aiResponse }}</p>
       </div>
-
-
       <!-- 옵션 선택 -->
       <div class="options">
         <div class="option-group">
@@ -57,7 +55,6 @@
       </div>
   
 
-  
       <!-- 텍스트 입력 필드 -->
       <div class="user-input">
         <textarea
@@ -72,6 +69,9 @@
   
   <script>
   import { ref } from "vue";
+
+  import axios from "axios";
+  
   export default {
     name: "ChatComponent",
     setup() {
@@ -97,12 +97,54 @@
       };
   
       // AI 답변 및 텍스트 입력
-      const aiResponse = ref("안녕하세요! 😊 맘에 드는 집을 착 찾을수 있게 도와드릴까요? _");
+      const aiResponse = ref(
+        "안녕하세요! 😊 맘에 드는 집을 착 찾을수 있게 도와드릴까요? _"
+      );
       const userInput = ref("내게 착 맞는 집 추천해줘");
   
-      const sendMessage = () => {
-        console.log("전송된 메시지:", userInput.value);
-        userInput.value = ""; // 전송 후 입력 필드 초기화
+      // 메시지 전송 메서드
+      const sendMessage = async () => {
+        const requestData = {
+          nativePrompt: userInput.value || "내게 착 맞는 집 추천해줘",
+          promptVariables: [
+            {
+              key: "예산",
+              values: selectedBudget.value ? [selectedBudget.value] : [],
+              priority: 0,
+            },
+            {
+              key: "우선순위",
+              values: selectedPriority.value ? [selectedPriority.value] : [],
+              priority: 0,
+            },
+            {
+              key: "라이프스타일",
+              values: selectedLifestyle.value ? [selectedLifestyle.value] : [],
+              priority: 0,
+            },
+          ],
+        };
+  
+        try {
+          // API 요청 전송
+          const response = await axios.post(
+            "http://127.0.0.1:8080/api/ai/house",
+            requestData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log("응답 결과:", response.data);
+          aiResponse.value = "추천 결과를 받았습니다! 🎉";
+        } catch (error) {
+          console.error("API 요청 실패:", error);
+          aiResponse.value = "요청 중 문제가 발생했습니다. 다시 시도해주세요.";
+        }
+  
+        // 입력 필드 초기화
+        userInput.value = "";
       };
   
       return {
