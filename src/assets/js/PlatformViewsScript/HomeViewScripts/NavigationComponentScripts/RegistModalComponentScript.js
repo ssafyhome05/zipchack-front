@@ -184,6 +184,7 @@ export default {
                         }
                     }
                 );
+                verifyEmailIsSuccess.value = true;
 
                 console.log(response.data);
 
