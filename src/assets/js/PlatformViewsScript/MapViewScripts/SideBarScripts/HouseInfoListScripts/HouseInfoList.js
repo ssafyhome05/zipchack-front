@@ -5,6 +5,7 @@ import { SERVER_URL, KAKAO_API_KEY } from '@/assets/resources/configs/config.js'
 import { useHouseListStore } from '@/stores/houseListStore.js';
 import { useHouseDetailStore } from '@/stores/houseDetailStore.js';
 import { useUserInfoStore } from '@/stores/userInfoStore';
+import { useKakaoMapStore } from '@/stores/kakaoMapStore';
 import { showInfoToast } from '../../../CommonScripts/showToast';
 import { addLocationBookmark, deleteLocationBookmark } from './bookmark';
 import { VueSpinner } from 'vue3-spinners';
@@ -19,6 +20,7 @@ export default {
     const houseListStore = useHouseListStore();
     const houseDetailStore = useHouseDetailStore();
     const userInfoStore = useUserInfoStore();
+    const kakaoMapStore = useKakaoMapStore();
     
     const userSeq = ref(null);
 

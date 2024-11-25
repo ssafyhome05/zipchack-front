@@ -9,7 +9,6 @@
         />
         <p class="ai-text">{{ aiResponse }}</p>
       </div>
-  
       <!-- 옵션 선택 -->
       <div class="options">
         <div class="option-group">
@@ -55,6 +54,7 @@
         </div>
       </div>
   
+
       <!-- 텍스트 입력 필드 -->
       <div class="user-input">
         <textarea
@@ -69,6 +69,7 @@
   
   <script>
   import { ref } from "vue";
+
   import axios from "axios";
   
   export default {
