@@ -47,7 +47,9 @@
 <template>
     <div class="dashboard-container">
         <DashboardListItem v-for="board,idx in boardList" :board="board" :key="idx"/>
-    <LoadingScreen v-show="isLoading"/>
+    <transition name="fade">
+      <LoadingScreen v-if="isLoading" />
+    </transition>
     </div>
     
 </template>
@@ -68,5 +70,17 @@
 .dashboard-container::-webkit-scrollbar-thumb {
     background-color: #cacaca;
     border-radius: 10px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease; /* 0.3초 동안 부드러운 전환 */
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0; /* 시작 또는 종료 시 투명도 */
+}
+
+.fade-enter-to, .fade-leave-from {
+  opacity: 1; /* 끝 또는 시작 시 완전 불투명 */
 }
 </style>

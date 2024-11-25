@@ -19,7 +19,7 @@
 
         <div class="custom-spot-list-box">
           <div class="custom-spot-list-box-header">
-            <div class="custom-spot-list-box-header-name">단지명</div>
+            <div class="custom-spot-list-box-header-name">아파트명</div>
             <div class="custom-spot-list-box-header-walk">도보</div>
             <div class="custom-spot-list-box-header-car">자동차</div>
             <div class="custom-spot-list-box-header-transport">대중교통</div>
@@ -82,7 +82,6 @@ watch(() => locationInfoStore.nearestApartmentList, (newList) => {
     selectedName.value = customSpot.value[0];
 
     currentCustomSpotRank.value = newList[selectedSpot.value].houses;
-    console.log(currentCustomSpotRank.value)
   }
 
 },{ immediate: true, deep: true });  // 컴포넌트가 마운트되자마자 즉시 실행
