@@ -22,8 +22,9 @@
   <style scoped>
 .section-container {
     padding: 20px;
-    width: 112.5%;
+    width: 100%;
     /* display: flex; */
+    /* overflow: auto; */
     flex-direction: column;
 }
 
