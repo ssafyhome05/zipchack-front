@@ -24,11 +24,16 @@ const kakaoMapStore = useKakaoMapStore();
 const dongCode = ref(houseListStore.dongCode);
 const dongNearBy = ref(houseListStore.dongNearBy);
 const kakaoMap = ref(kakaoMapStore.mapInstance);
-const stationMarkers = ref([]);
-const cafeMarkers = ref([]);
-const martMarkers = ref([]);
-const schoolMarker = ref([]);
-const hospitalMarker = ref([]);
+// const stationMarkers = ref(new Set());
+// const cafeMarkers = ref(new Set());
+// const martMarkers = ref(new Set());
+// const schoolMarkers = ref(new Set());
+// const hospitalMarkers = ref(new Set());
+const stationMarkers = new Set();
+const cafeMarkers = new Set();
+const martMarkers = new Set();
+const schoolMarkers = new Set();
+const hospitalMarkers = new Set();
 
 const buttons = ref([
   {
@@ -153,48 +158,73 @@ const createCustomMarker = (size, image, lat, lng, tag) => {
         image: markerImage,
     });
 
-    if (tag === "역") {
-        stationMarkers.value.push(marker);
-    } else if (tag === "카페") {
-        cafeMarkers.value.push(marker);
-    } else if (tag === "편의점") {
-        martMarkers.value.push(marker);
-    } else if (tag === "학교") {
-        schoolMarker.value.push(marker);
-    } else if (tag === "병원") {
-        hospitalMarker.value.push(marker);
+    switch (tag) {
+        case "역":
+            stationMarkers.add(marker);
+            break;
+        case "카페":
+            cafeMarkers.add(marker);
+            break;
+        case "편의점":
+            martMarkers.add(marker);
+            break;
+        case "학교":
+            schoolMarkers.add(marker);
+            break;
+        case "병원":
+            hospitalMarkers.add(marker);
+            break;
     }
 
     return marker;
 };
 
-const removeMarkers = (tag) => {
+const removeMarkers = async (tag) => {
     let markersToRemove;
 
     switch (tag) {
         case "역":
-            markersToRemove = stationMarkers.value;
+            markersToRemove = stationMarkers;
             break;
         case "카페":
-            markersToRemove = cafeMarkers.value;
+            markersToRemove = cafeMarkers;
             break;
         case "편의점":
-            markersToRemove = martMarkers.value;
+            markersToRemove = martMarkers;
             break;
         case "학교":
-            markersToRemove = schoolMarker.value;
+            markersToRemove = schoolMarkers;
             break;
         case "병원":
-            markersToRemove = hospitalMarker.value;
+            markersToRemove = hospitalMarkers;
             break;
         default:
             return;
     }
 
     if (markersToRemove) {
-        markersToRemove.forEach((marker) => marker.setMap(null));
-        markersToRemove.length = 0;
+        markersToRemove.forEach((marker) => {
+            marker.setMap(null);
+        });
+        markersToRemove.clear(); // Set을 비움
     }
+    // if (markersToRemove) {
+    //     // for (let i = 0; i < markersToRemove.length; i++) {
+    //     //     markersToRemove[i].setMap(null);
+    //     // }
+    //     const promises = markersToRemove.forEach(marker => 
+    //         new Promise(resolve => {
+    //             marker.setMap(null);
+    //             resolve();
+    //         })
+    //     );
+            
+    //         // 모든 Promise를 동시에 실행
+    //     await Promise.all(promises);
+    //     markersToRemove.clear();
+    //     // markersToRemove = [];
+    //     // markersToRemove.length = 0;
+    // }
 };
 
 const removeAllMarkers = () => {
