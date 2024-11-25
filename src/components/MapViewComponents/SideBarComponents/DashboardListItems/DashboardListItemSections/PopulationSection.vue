@@ -139,7 +139,7 @@ const processData = (locations) => {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
-  margin: 16px 0;
+  margin: 5px 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .card h3 {
@@ -161,7 +161,7 @@ const processData = (locations) => {
 
 .population-graph{
   width: 100%; 
-  height: 300px;
+  height: 350px;
   display: flex;
   justify-content: center;
   align-items: center;

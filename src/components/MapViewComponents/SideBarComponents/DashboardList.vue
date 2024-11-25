@@ -4,11 +4,11 @@
     import { useLocationInfoStore } from '@/stores/LocationInfo';
     import { useUserInfoStore }from '@/stores/userInfoStore';
 
-    import DashboardListItem from '@/components/MapviewComponents/SideBarComponents/DashboardListItems/DashboardListItem.vue';
-    import PopulationSection from '@/components/MapviewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/PopulationSection.vue';
-    import BusinessBuildingSection from '@/components/MapviewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/BusinessBuildingSection.vue';
-    import ClosestSection from '@/components/MapviewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/ClosestSection.vue';
-    import AnalysisSection from '@/components/MapviewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/AnalysisSection.vue';
+    import DashboardListItem from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItem.vue';
+    import PopulationSection from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/PopulationSection.vue';
+    import BusinessBuildingSection from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/BusinessBuildingSection.vue';
+    import ClosestSection from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/ClosestSection.vue';
+    import AnalysisSection from '@/components/MapViewComponents/SideBarComponents/DashboardListItems/DashboardListItemSections/AnalysisSection.vue';
 
     const boardList = ref([
         {
@@ -29,10 +29,13 @@
 
     const userInfoStore = useUserInfoStore();
     const locationInfoStore = useLocationInfoStore();
+    const isLoading = ref(false);
 
     onMounted(() => {
         if(userInfoStore.user){
+            isLoading.value = true;
             locationInfoStore.getUserBookmarkLocation();
+            isLoading.value = false;
         }else{
             return;
         }
@@ -43,7 +46,9 @@
 <template>
     
     <DashboardListItem v-for="board,idx in boardList" :board="board" :key="idx"/>
-
+    <div>
+        
+    </div>
 </template>
     
     

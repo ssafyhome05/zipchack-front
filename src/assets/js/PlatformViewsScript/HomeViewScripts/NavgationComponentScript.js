@@ -13,6 +13,7 @@ export default {
 
         onMounted(() => {
             getUser();
+            console.log(user.value)
         });
 
         watch(
@@ -30,7 +31,9 @@ export default {
         // 유저 로그인 여부 확인
         function getUser() {
             // userInfoStore.setUser();
-            user.value = userInfoStore.getUser;
+            if(userInfoStore.user){
+                user.value = userInfoStore.getUser;
+            }
         };
 
         function openLoginModal() {

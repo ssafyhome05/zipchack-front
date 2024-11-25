@@ -28,10 +28,10 @@
 }
 
 .section-title {
-    font-size: 1.2rem;
+    padding-top: 10px;
+    font-size: 1.3rem;
     font-weight: bold;
-    margin-bottom: 10px;
-    
+    margin-bottom: 10px;   
 }
 
 .section-item {
@@ -39,7 +39,7 @@
   grid-template-columns: repeat(auto-fill, minmax(48%, 1fr)); /* 최소 300px, 최대 1열 */
   gap: 20px; /* 카드 간격 */
   margin-top: 10px;
-  padding: 10px;
+  /* padding: 10px; */
   overflow-y: auto;
   position: relative;
 }

@@ -6,11 +6,13 @@
                 <img :src="zLogo" class="side-list-menu-item-logo-img" />
             </div>
             <div class="side-list-menu-item1" @click="changeTab('main')" :class="{'active': selectedTab === 'main'}">   
-                 <img :src="selectedTab === 'main' ? activeZipchak : zipchak"  class="side-list-menu-item-tabimg zipchak-img" />
+                 <!-- <img :src="selectedTab === 'main' ? activeZipchak : zipchak"  class="side-list-menu-item-tabimg zipchak-img" /> -->
+                 <i class="bi bi-house-fill side-list-menu-item-tabimg"></i>
                 <span class="side-list-menu-item-tabtext">지도홈</span>
             </div>
                 <div class="side-list-menu-item2" @click="changeTab('house')" :class="{'active': selectedTab === 'house'}">   
-                <i class="bi bi-house-fill side-list-menu-item-tabimg"></i>
+                <!-- <i class="bi bi-house-fill side-list-menu-item-tabimg"></i> -->
+                <i class="bi bi-map-fill side-list-menu-item-tabimg"></i>
                 <span class="side-list-menu-item-tabtext">매물보기</span>
             </div>
             <div class="side-list-menu-item3" @click="changeTab('bookmark')" :class="{'active': selectedTab === 'bookmark'}">
@@ -18,7 +20,8 @@
                 <span class="side-list-menu-item-tabtext">즐겨찾기</span>
             </div>
             <div class="side-list-menu-item4" @click="changeTab('dashboard')" :class="{'active': selectedTab === 'dashboard'}">
-                <img :src="selectedTab === 'dashboard' ? activeDashboard : dashboard"  class="side-list-menu-item-tabimg zipchak-img" />
+                <!-- <img :src="selectedTab === 'dashboard' ? activeDashboard : dashboard"  class="side-list-menu-item-tabimg zipchak-img" /> -->
+                <i class="bi bi-bar-chart-line-fill side-list-menu-item-tabimg"></i>
                 <span class="side-list-menu-item-tabtext">대시보드</span>
             </div>
         </div>

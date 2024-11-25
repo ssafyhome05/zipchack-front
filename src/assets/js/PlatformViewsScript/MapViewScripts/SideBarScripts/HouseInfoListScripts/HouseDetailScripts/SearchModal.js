@@ -27186,27 +27186,27 @@ export default {
                 };
 
                 // 테스트용
-                test.routes.customName = customName.value;
-                spotRouteStore.addRoute(test.routes);
-                console.log(test.routes);
+                // test.routes.customName = customName.value;
+                // spotRouteStore.addRoute(test.routes);
+                // console.log(test.routes);
 
-                // axios.post(`${SERVER_URL}/api/navigate/search`,spotSearchDto)
-                //     .then(response => {
-                //         if(response.status === 200){
-                //             const data = response.data;
-                //             data.routes.customName = customName.value;
-                //             spotRouteStore.addRoute(data.routes);
-                //             customName.value = null;
-                //             roadAddress.value = null;
-                //             jibunAddress.value = null;
-                //             customSpotLat.value = null;
-                //             customSpotLng.value = null;
-                //         }
-                //     })
-                //     .catch(error => {
-                //         console.error("에러 발생:", error);
-                //         showWarningToast("요청에 실패했습니다.");
-                //     });
+                axios.post(`${SERVER_URL}/api/navigate/search`,spotSearchDto)
+                    .then(response => {
+                        if(response.status === 200){
+                            const data = response.data;
+                            data.routes.customName = customName.value;
+                            spotRouteStore.addRoute(data.routes);
+                            customName.value = null;
+                            roadAddress.value = null;
+                            jibunAddress.value = null;
+                            customSpotLat.value = null;
+                            customSpotLng.value = null;
+                        }
+                    })
+                    .catch(error => {
+                        console.error("에러 발생:", error);
+                        showWarningToast("요청에 실패했습니다.");
+                    });
             });
         };
         

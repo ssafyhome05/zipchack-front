@@ -13,7 +13,7 @@
         </nav>
 
         <div class="auth-box">
-            <div v-if="!user || user.role === 'ADMIN'">
+            <div v-if="!user">
                 <button
                 type="button"
                 class="btn btn-primary"
