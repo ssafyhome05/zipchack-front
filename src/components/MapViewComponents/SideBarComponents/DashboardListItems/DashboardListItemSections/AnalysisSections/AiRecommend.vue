@@ -1,6 +1,7 @@
 <template>
   <div class="chat-component">
     <!-- 채팅 로그 -->
+    <!-- <VueTyper text='Hello World! I was registered locally!'></VueTyper>  -->
     <div class="chat-logs">
       <div
         v-for="(log, index) in chatLogs"
@@ -17,7 +18,10 @@
             src="/src/assets/resources/images/zipchack-prompt.png"
             alt="AI Profile"
           />
-          <p class="message-text" style="white-space: pre-line;" >{{ log.message }}</p>
+
+          <p class="message-text">
+            <VueTyper :text=log.message :repeat='0' :type-delay='30' style="white-space: pre-line;"></VueTyper>
+          </p>
         </div>
 
         <!-- 사용자 메시지 -->
@@ -87,102 +91,78 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
 import { useAiStore } from "@/stores/aiStore";
+import VueTyper from 'vue3-typer'
+import "vue3-typer/dist/vue-typer.css"
 
-export default {
-  setup() {
-    const aiStore = useAiStore();
+const aiStore = useAiStore();
 
-    // 함께 보낼 데이터
-    const budgets = ["5억 이내", "10억 이내"];
-    const priorities = ["역세권", "학군", "무관"];
-    const lifestyles = ["활기찬", "조용한"];
-    const selectedBudget = ref(null);
-      const selectedPriority = ref(null);
-      const selectedLifestyle = ref(null);
+// 함께 보낼 데이터
+const budgets = ["5억 이내", "10억 이내"];
+const priorities = ["역세권", "학군", "무관"];
+const lifestyles = ["활기찬", "조용한"];
+const selectedBudget = ref(null);
+  const selectedPriority = ref(null);
+  const selectedLifestyle = ref(null);
 
-      // 선택 메서드
-      const selectBudget = (budget) => {
-        selectedBudget.value = budget;
-      };
-      const selectPriority = (priority) => {
-        selectedPriority.value = priority;
-      };
-      const selectLifestyle = (lifestyle) => {
-        selectedLifestyle.value = lifestyle;
-      };
+  // 선택 메서드
+  const selectBudget = (budget) => {
+    selectedBudget.value = budget;
+  };
+  const selectPriority = (priority) => {
+    selectedPriority.value = priority;
+  };
+  const selectLifestyle = (lifestyle) => {
+    selectedLifestyle.value = lifestyle;
+  };
 
 
-    // 대화 로그
-    const chatLogs = ref([]);
+// 대화 로그
+const chatLogs = ref([]);
 
-    // 텍스트 입력 필드
-    const userInput = ref("내게 착 맞는 집 추천해줘");
+// 텍스트 입력 필드
+const userInput = ref("내게 착 맞는 집 추천해줘");
 
-    // 초기 대화 추가
-    onMounted(() => {
-      chatLogs.value.push({
-        sender: "ai",
-        message: "안녕하세요! 맘에 드는 집을 착 찾을수 있게 도와드릴까요? 😊 ",
-      });
-      //chatLogs.value.push({ sender: "user", message: userInput.value });
+
+// 초기 대화 추가
+onMounted(() => {
+  chatLogs.value.push({
+    sender: "ai",
+    message: "안녕하세요! 😊 맘에 드는 집을 착 찾을수 있게 도와드릴까요? _",
+  });
+  //chatLogs.value.push({ sender: "user", message: userInput.value });
+});
+
+// 메시지 전송 메서드
+const sendMessage = async () => {
+  if (userInput.value.trim()) {
+    chatLogs.value.push({ sender: "user", message: userInput.value });
+  }
+
+  const promptResourceDto = {
+    nativePrompt: userInput.value || "내게 착 맞는 집 추천해줘",
+    promptVariables: [],
+  };
+
+  try {
+    // AI 응답 요청
+    await aiStore.setAiResponse(promptResourceDto);
+    const aiMessage = aiStore.response || "죄송해요, 다시 한번만 물어봐주실래요? 헤헤 😋";
+
+    // AI의 응답 추가
+    chatLogs.value.push({ sender: "ai", message: aiMessage });
+  } catch (error) {
+    console.error("요청 에러:", error);
+    chatLogs.value.push({
+      sender: "ai",
+      message: "요청 중 문제가 발생했습니다. 다시 시도해주세요.",
     });
+  }
 
-    // 메시지 전송 메서드
-    const sendMessage = async () => {
-      if (userInput.value.trim()) {
-        chatLogs.value.push({ sender: "user", message: userInput.value });
-      }
-
-      const promptResourceDto = {
-        nativePrompt: userInput.value || "내게 착 맞는 집 추천해줘",
-        promptVariables: [],
-      };
-
-
-
-
-
-      try {
-        // AI 응답 요청
-        await aiStore.setAiResponse(promptResourceDto);
-        const aiMessage = aiStore.response || "죄송해요, 다시 한번만 물어봐주실래요? 헤헤 😋";
-
-        // AI의 응답 추가
-        chatLogs.value.push({ sender: "ai", message: aiMessage });
-      } catch (error) {
-        console.error("요청 에러:", error);
-        chatLogs.value.push({
-          sender: "ai",
-          message: "요청 중 문제가 발생했습니다. 다시 시도해주세요.",
-        });
-      }
-
-      // 입력 필드 초기화
-      userInput.value = "";
-    };
-
-    return {
-      chatLogs,
-      userInput,
-      sendMessage,
-
-      budgets,
-      priorities,
-      lifestyles,
-
-      selectedBudget,
-      selectedPriority,
-      selectedLifestyle,
-
-      selectBudget,
-      selectPriority,
-      selectLifestyle,
-
-    };
-  },
+  // 입력 필드 초기화
+  userInput.value = "";
 };
 </script>
 
