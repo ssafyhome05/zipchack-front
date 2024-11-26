@@ -16,9 +16,11 @@
       style: { 
         display: 'flex', 
         alignItems: 'center', 
-        justifyContent: 'center' 
+        justifyContent: 'center', 
       },
     }" 
+
+    style="left: 48%;"
   />
 </template>
 
