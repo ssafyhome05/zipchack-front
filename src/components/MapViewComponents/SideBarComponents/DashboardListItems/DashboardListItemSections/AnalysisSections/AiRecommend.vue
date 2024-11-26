@@ -17,7 +17,7 @@
             src="/src/assets/resources/images/zipchack-prompt.png"
             alt="AI Profile"
           />
-          <p class="message-text">{{ log.message }}</p>
+          <p class="message-text" style="white-space: pre-line;" >{{ log.message }}</p>
         </div>
 
         <!-- 사용자 메시지 -->
@@ -125,7 +125,7 @@ export default {
     onMounted(() => {
       chatLogs.value.push({
         sender: "ai",
-        message: "안녕하세요! 😊 맘에 드는 집을 착 찾을수 있게 도와드릴까요? _",
+        message: "안녕하세요! 맘에 드는 집을 착 찾을수 있게 도와드릴까요? 😊 ",
       });
       //chatLogs.value.push({ sender: "user", message: userInput.value });
     });
@@ -192,7 +192,7 @@ export default {
   width: 100%;
   margin: 10px;
   font-family: Arial, sans-serif;
-  height: 100vh;
+  
 }
 
 .chat-logs {

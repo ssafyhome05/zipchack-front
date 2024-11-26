@@ -26,7 +26,7 @@
           </div>
           <div class="custom-spot-list-box-content">
 
-            <div v-for="(spot, index) in currentCustomSpotRank" :key="spot.houseSeq" class="custom-spot-list-box-content-item">
+            <div v-for="(spot, index) in currentCustomSpotRank" :key="spot.houseSeq" class="custom-spot-list-box-content-item" @click="handleSetHouse(spot.houseName)">
               <div class="custon-spot-list-num">
                 {{ index + 1 }}
               </div>
@@ -63,6 +63,9 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useLocationInfoStore } from '@/stores/LocationInfo';
+import { useAiStore } from "@/stores/aiStore";
+
+const aiStore = useAiStore();
 
 const locationInfoStore = useLocationInfoStore();
 const customSpot = ref([]);
@@ -93,6 +96,11 @@ const selectSpot = (index) => {
     currentCustomSpotRank.value = locationInfoStore.nearestApartmentList[index].houses;
   }
 };
+
+function handleSetHouse(houseName) {
+      aiStore.setHouse(houseName); // 호출
+      console.log(aiStore.house)
+    };
 
 function formatTime(seconds) {
   if (seconds >= 3600) {
