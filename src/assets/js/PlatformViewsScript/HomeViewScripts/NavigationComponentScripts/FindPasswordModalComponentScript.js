@@ -87,6 +87,7 @@ export default {
         return true;
       }catch(error){
         console.log(error);
+        toast.dismiss(loadingToastId);
         return false;
       }
     }

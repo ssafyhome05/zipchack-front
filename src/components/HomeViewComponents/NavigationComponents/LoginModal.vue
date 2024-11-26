@@ -22,13 +22,13 @@
           <form id="login-form" @submit.prevent="login">
             <!-- id -->
             <div class="id-box login-input-box">
-              <input type="text" name="username" class="id login-input" />
+              <input type="text" name="username" class="id login-input" required/>
               <label>Id</label>
               <span></span>
             </div>
             <!-- password -->
             <div class="pw-box login-input-box">
-              <input type="password" name="password" class="pw login-input" />
+              <input type="password" name="password" class="pw login-input" required/>
               <label>Password</label>
               <span></span>
             </div>

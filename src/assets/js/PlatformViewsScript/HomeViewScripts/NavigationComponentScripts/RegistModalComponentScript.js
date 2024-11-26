@@ -184,8 +184,14 @@ export default {
                         }
                     }
                 );
-                verifyEmailIsSuccess.value = true;
-
+                
+                if(response.data.code === 200023){
+                    showSuccessToast("이메일 인증이 완료되었습니다.");
+                    verifyEmailIsSuccess.value = true;
+                }else{
+                    showWarningToast("인증 코드를 확인해주세요.");
+                    verifyEmailIsSuccess.value = false;
+                }
                 console.log(response.data);
 
             }catch(error) {
