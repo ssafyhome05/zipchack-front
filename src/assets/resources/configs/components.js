@@ -26,6 +26,10 @@ import ToggleBox from '@/components/MapViewComponents/ToggleBox.vue';
 import NoticeModal from '@/components/HomeViewComponents/NavigationComponents/NoticeModal.vue';
 import NoticeItem from '@/components/HomeViewComponents/NavigationComponents/NoticeItem.vue';
 import UserInfoModal from '@/components/HomeViewComponents/NavigationComponents/UserInfoModal.vue';
+import FindPasswordModal from '@/components/HomeViewComponents/NavigationComponents/FindPasswordModal.vue';
+import CheckEmailSecretModal from '@/components/HomeViewComponents/NavigationComponents/CheckEmailSecretModal.vue';
+import ChangePasswordModal from '@/components/HomeViewComponents/NavigationComponents/ChangePasswordModal.vue';
+
 // common
 
 
@@ -58,4 +62,7 @@ export function addComponents(app) {
   app.component('NoticeModal', NoticeModal);
   app.component('NoticeItem', NoticeItem);
   app.component('UserInfoModal', UserInfoModal);
+  app.component('FindPasswordModal', FindPasswordModal);
+  app.component('CheckEmailSecretModal', CheckEmailSecretModal);
+  app.component('ChangePasswordModal', ChangePasswordModal);
 }

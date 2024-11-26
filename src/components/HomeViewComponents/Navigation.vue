@@ -58,6 +58,9 @@
   <RegistModalComponent />
   <NoticeModal />
   <UserInfoModal />
+  <FindPasswordModal />
+  <CheckEmailSecretModal />
+  <ChangePasswordModal />
 </template>
 
 <script>

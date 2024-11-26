@@ -30,6 +30,24 @@ export default {
             });
         };
 
+        function openFindIdModal() {
+            closeLoginModal();
+            nextTick(() => {
+                
+            });
+        }
+
+        function openFindPwModal() {
+            closeLoginModal();
+            nextTick(() => {
+                const modalElement = document.querySelector('#find-pw-modal');
+                if (modalElement) {
+                    const modalInstance = new Modal(modalElement);
+                    modalInstance.show();
+                }
+            });
+        }
+
         async function login() {
             const inputId = document.querySelector('.id').value;
             const inputPassword = document.querySelector('.pw').value;
@@ -78,6 +96,8 @@ export default {
             // methods
             closeLoginModal,
             openRegistModal,
+            openFindIdModal,
+            openFindPwModal,
 
             login
         };
