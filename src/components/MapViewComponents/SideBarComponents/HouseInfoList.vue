@@ -59,8 +59,9 @@
 
     <DoughnutChart v-if="showDoughnutGraph"/>
 
-    <div v-if="isLoading" class="loading-screen">
-        <VueSpinner size="50" color="#007bff" class="search-spinner"/>
+    <div v-if="!isLoading" class="loading-screen">
+        <div class="loader"></div>
+        <!-- <VueSpinner size="50" color="#007bff" class="search-spinner"/> -->
     </div>
     
 </template>
