@@ -45,12 +45,14 @@ const startSseConnection = async () => {
   try {
     const response = await axios.post(`http://localhost:8080/api/house/admin/house?startCd=11110&endCd=60000&dealYmd=${year.value}${month.value}`,
       null,
-      {
-        headers: {
-          'Authorization': adminUserStore.access_token
-        }
-      }
+      // {
+      //   headers: {
+      //     'Authorization': adminUserStore.access_token
+      //   }
+      // }
     );
+
+    console.log(response);
     console.log('서버 응답:', response.data.data);
     
     sseConnection.value = new EventSource(response.data.data, { withCredentials: true }, {
@@ -99,7 +101,7 @@ onUnmounted(() => {
       <div class="circle" :style="getGradientStyle">
         <div class="inner-circle"></div>
       </div>
-      <div class="progress-text">{{ progress_percent }}%</div>
+      <div class="progress-text">{{ Math.round(progress_percent, 2) }}%</div>
     </div>
     <div class="button-container">
       <div class="select-text">

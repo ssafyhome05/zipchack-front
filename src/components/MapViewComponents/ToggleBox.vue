@@ -23,7 +23,7 @@ const houseListStore = useHouseListStore();
 const kakaoMapStore = useKakaoMapStore();
 const dongCode = ref(houseListStore.dongCode);
 const dongNearBy = ref(houseListStore.dongNearBy);
-const kakaoMap = ref(kakaoMapStore.mapInstance);
+const kakaoMap = ref(null);
 // const stationMarkers = ref(new Set());
 // const cafeMarkers = ref(new Set());
 // const martMarkers = ref(new Set());
@@ -90,9 +90,9 @@ const resetState = async () => {
     buttons.value.forEach((button) => {
         button.isActive = false;
     });
-    await kakaoMapStore.resetMap();
+    // await kakaoMapStore.resetMap();
     // await loadMap();
-    // removeAllMarkers();
+    removeAllMarkers();
 };
 
 const toggleButton = (index) => {

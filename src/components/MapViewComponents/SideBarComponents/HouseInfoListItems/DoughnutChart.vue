@@ -1,5 +1,6 @@
 <template>
   <div class="doughnut-div">
+    <div class="age">{{ gugunName }} 연령 비율 그래프</div>
     <Doughnut v-if="dataLoaded"
       :options="chartOptions"
       :data="chartData"

@@ -58,7 +58,7 @@
 <style scoped>
 .dashboard-container{
     position: absolute;
-    height: 108%;
+    height: 85%;
     width: 113.5%;
     overflow: auto
 }

@@ -11,7 +11,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-6" id="exampleModalLabel">Login</h1>
+          <h1 class="modal-title fs-6" id="exampleModalLabel">로그인</h1>
           <button
             type="button"
             class="btn-close"
@@ -74,7 +74,7 @@
           </form>
           <!-- </form> -->
           <button class="go-regist mt-1" @click="openRegistModal">
-            <svg
+            <!-- <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
               height="30"
@@ -86,11 +86,11 @@
                 fill-rule="evenodd"
                 d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
               />
-            </svg>
-            Regist
+            </svg> -->
+            회원가입
           </button>
-          <div class="find-box">
-            <svg
+          <div class="find-box mt-3">
+            <!-- <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -102,7 +102,7 @@
                 fill-rule="evenodd"
                 d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
               />
-            </svg>
+            </svg> -->
             <button class="go-find" @click="openFindIdModal">
               아이디 찾기
             </button>

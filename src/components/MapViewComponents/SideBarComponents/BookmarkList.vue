@@ -127,7 +127,6 @@ const getBookmarkList = async (access_token, times) => {
     }
 };
 
-
 const getUserCustomSpotList = async (access_token, times) => {
     // if (times === 0) {
     //     console.error("재시도 한도를 초과했습니다.");
