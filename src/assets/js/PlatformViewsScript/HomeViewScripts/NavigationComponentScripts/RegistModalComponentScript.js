@@ -202,7 +202,7 @@ export default {
             }
         
             TimeCounter.value = 60;
-            TimeStr.value = "01:00";
+            TimeStr.value = "05:00";
 
             const interval = setInterval(() => {
                 TimeCounter.value--;

@@ -94,7 +94,7 @@ const deleteUser = async (userSeq) => {
     console.log(response);
     if (response.data.code == 204020) {
         alert('삭제에 성공했습니다.');
-        emit('deleteUser', userSeq);
+        emit('deleteUser');
     }
 };
 

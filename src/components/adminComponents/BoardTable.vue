@@ -17,6 +17,7 @@
                         :key="item.id"
                         :item="item"
                         :columns="columns"
+                        @deleteUser="deleteUser"
                     />
                 </tbody>
             </table>
@@ -120,8 +121,8 @@ const rowHeight = computed(() => {
     return `calc((${tableHeight.value} - ${headerHeight}px) / ${rowCount.value})`;
 });
 
-const deleteUser = (userSeq) => {
-    userManageStore.getUserData = userManageStore.getUserData.filter(item => item.userSeq !== userSeq);
+const deleteUser = () => {
+    userManageStore.axiosGetUserData(props.currentPage, props.pageSize);
 };
 </script>
 
