@@ -15,13 +15,13 @@ export const useLocationInfoStore = defineStore('locationInfo', {
         async getNearestAptFromCustomSpot() {
             const userInfoStore = useUserInfoStore();
             try {
-                const response = await axios.get(`${SERVER_URL}/api/bookmark/status`, {
-                    headers: {
-                        'Authorization': userInfoStore.access_token,
-                    },
-                });
+                // const response = await axios.get(`${SERVER_URL}/api/bookmark/status`, {
+                //     headers: {
+                //         'Authorization': userInfoStore.access_token,
+                //     },
+                // });
 
-                if(response.data.code === 200050){
+                // if(response.data.code === 200050){
                     // const responseData = response.data.data;
                     // dummy data
                     const responseData = data;
@@ -38,13 +38,13 @@ export const useLocationInfoStore = defineStore('locationInfo', {
                     }));
                     this.nearestApartmentList = customSpotRankData;
                     console.log(this.nearestApartmentList);
-                }
+                // }
 
-                if (response.data.code === 401012) {
-                    console.log("토큰 갱신이 필요합니다.");
-                    await reissueAccessToken();
-                    return this.getNearestAptFromCustomSpot();
-                }
+                // if (response.data.code === 401012) {
+                //     console.log("토큰 갱신이 필요합니다.");
+                //     await reissueAccessToken();
+                //     return this.getNearestAptFromCustomSpot();
+                // }
                 
                 // // dummy data
                 // // 인구, 사업체 현황

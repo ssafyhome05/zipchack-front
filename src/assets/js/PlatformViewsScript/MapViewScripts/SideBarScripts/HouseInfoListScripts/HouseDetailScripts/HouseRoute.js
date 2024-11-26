@@ -10,6 +10,7 @@ import { Modal } from 'bootstrap';
 import start_marker from '@/assets/imgs/mark/start-mark.png';
 import end_marker from '@/assets/imgs/mark/end-mark.png';
 import { VueSpinner } from 'vue3-spinners';
+import { showWarningToast } from "@/assets/js/PlatformViewsScript/CommonScripts/showToast";
 
 export default {
     name: 'HouseRoute',
@@ -192,6 +193,16 @@ export default {
             clearMapObjects();
             isClicked.value = !isClicked.value;
         }
+
+        function formatTime(seconds) {
+            if (seconds >= 3600) {
+              return Math.floor(seconds / 3600) + "시간 " + Math.ceil((seconds % 3600) / 60) + "분";
+            } else if (seconds >= 60) {
+              return Math.ceil(seconds / 60) + "분";
+            } else {
+              return seconds + "초";
+            }
+        };
         
 
         return {
@@ -204,7 +215,8 @@ export default {
 
             openSearchModal,
             drawPolyline,
-            showTransportRoutesModal
+            showTransportRoutesModal,
+            formatTime
         }
     },
 }

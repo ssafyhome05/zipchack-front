@@ -24,14 +24,16 @@
                 <td class="house-detail-distance-info-location">{{ route.customName  }}</td>
                 <td class="house-detail-distance-info-time">
                     <a class="exist-time" v-if="route.car.length != 0" @click.stop="drawPolyline('car', route.car[0].routeInfos)">
-                        {{ Math.floor(route.car[0].totalTime / 3600) + "시간 " + Math.ceil((route.car[0].totalTime % 3600) / 60) + "분" }}
+                        {{ formatTime(route.car[0].totalTime) }}
+                        <!-- {{ Math.floor(route.car[0].totalTime / 3600) + "시간 " + Math.ceil((route.car[0].totalTime % 3600) / 60) + "분" }} -->
                     </a>
                     <a class="none-exist-time" v-else>없음</a>
                 </td>
                 <td class="table-line"></td>
                 <td class="house-detail-distance-info-time">
                     <a class="exist-time" v-if="route.walk.length != 0" @click.stop="drawPolyline('walk', route.walk[0].routeInfos)">
-                        {{ Math.floor(route.walk[0].totalTime / 3600) + "시간 " + Math.ceil((route.walk[0].totalTime % 3600) / 60) + "분" }}
+                        {{ formatTime(route.walk[0].totalTime) }}
+                        <!-- {{ Math.floor(route.walk[0].totalTime / 3600) + "시간 " + Math.ceil((route.walk[0].totalTime % 3600) / 60) + "분" }} -->
 
                     </a>
                     <a class="none-exist-time" v-else>없음</a>
@@ -39,7 +41,8 @@
                 <td class="table-line"></td>
                 <td class="house-detail-distance-info-time">
                     <a class="exist-time" v-if="route.transport.length !== 0" @click="showTransportRoutesModal">
-                        {{ Math.floor(Math.min(...route.transport.map(t => t.totalTime)) / 3600) + "시간 " +  Math.ceil((Math.min(...route.transport.map(t => t.totalTime)) / 3600) / 60) + "분"}}
+                        {{ formatTime(Math.min(...route.transport.map(t => t.totalTime))) }}
+                        <!-- {{ Math.floor(Math.min(...route.transport.map(t => t.totalTime)) / 3600) + "시간 " +  Math.ceil((Math.min(...route.transport.map(t => t.totalTime)) / 3600) / 60) + "분"}} -->
                     </a>
                     <a class="none-exist-time" v-else>없음</a>
                 </td>
