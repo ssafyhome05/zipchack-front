@@ -227,7 +227,6 @@ function formatTime(seconds) {
 }
 
 .custom-spot-list-box-content-item{
-  /* border: 1px solid black; */
   position: relative;
   width: 99%;
   height: 75px;
@@ -236,7 +235,7 @@ function formatTime(seconds) {
   flex-direction: row;
   justify-content: center;
   margin-bottom: 10px;
-  background-color: black;
+  background-color: #046fe217;
   box-shadow: 2px 1px 5px #62626260;
   cursor: pointer;
 }
