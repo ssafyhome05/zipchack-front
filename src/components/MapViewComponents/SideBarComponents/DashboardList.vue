@@ -44,14 +44,16 @@
 </script>
 
 <template>
+    <div class="wrap">
+
+        <DashboardListItem v-for="board,idx in boardList" :board="board" :key="idx"/>
     
-    <DashboardListItem v-for="board,idx in boardList" :board="board" :key="idx"/>
-    <div>
         
     </div>
 </template>
     
     
-<style>
+<style scoped>
+ 
     
 </style>
