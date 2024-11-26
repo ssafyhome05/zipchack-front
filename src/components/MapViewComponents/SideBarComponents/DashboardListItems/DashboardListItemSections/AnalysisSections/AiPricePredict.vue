@@ -31,6 +31,10 @@
           <p class="message-text">{{ log.message }}</p>
         </div>
       </div>
+      <div v-if="isLoading" class="chat-loading">
+        <div class="loader"></div>
+      </div>
+      
     </div>
     <p> 선택매물 : <span style="font-weight: bold; color: blue;">{{ nowHouse }}</span>
       </p>
@@ -83,6 +87,8 @@ import "vue3-typer/dist/vue-typer.css"
   // 대화 로그
   const chatLogs = ref([]);
 
+  const isLoading = ref(false);
+
     // 텍스트 입력 필드
     //const userInput = ref(aiStore.house+ " : 이 집 내년 전망이 어때 ?");
     
@@ -108,12 +114,15 @@ import "vue3-typer/dist/vue-typer.css"
     };
 
     try {
+      isLoading.value = true;
       // AI 응답 요청
       await aiStore.setAiDealResponse(promptResourceDto);
       const aiMessage = aiStore.response || "죄송해요, 다시 물어봐주실래요? 헤헤 😋";
 
       // AI의 응답 추가
       chatLogs.value.push({ sender: "ai", message: aiMessage });
+
+      isLoading.value = false;
     } catch (error) {
       console.error("요청 에러:", error);
       chatLogs.value.push({
@@ -153,7 +162,7 @@ import "vue3-typer/dist/vue-typer.css"
 
 .chat-message {
   display: flex;
-  align-items: center;
+  align-items: start;
 }
 
 .ai-message {
@@ -219,6 +228,25 @@ textarea {
   background-color: #0056b3;
 }
 
+.loader {
+  margin-left: 8%;
+  margin-bottom: 20px;
+  width: 52px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side,#007bff 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
+}
 
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
 
 </style>

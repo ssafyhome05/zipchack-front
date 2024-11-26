@@ -228,13 +228,16 @@ function formatTime(seconds) {
 
 .custom-spot-list-box-content-item{
   /* border: 1px solid black; */
+  position: relative;
+  width: 99%;
   height: 75px;
   border-radius: 5px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   margin-bottom: 10px;
-  background-color: #cccccc2e;
-  box-shadow: 3px 3px 3px #62626260;
+  background-color: black;
+  box-shadow: 2px 1px 5px #62626260;
   cursor: pointer;
 }
 

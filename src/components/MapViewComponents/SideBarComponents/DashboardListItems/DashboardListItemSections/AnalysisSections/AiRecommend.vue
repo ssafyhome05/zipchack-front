@@ -32,6 +32,9 @@
           <p class="message-text">{{ log.message }}</p>
         </div>
       </div>
+      <div v-if="isLoading" class="chat-loading">
+          <div class="loader"></div>
+        </div>
     </div>
 
     <!-- 옵션 선택 -->
@@ -125,12 +128,13 @@ const chatLogs = ref([]);
 // 텍스트 입력 필드
 const userInput = ref("내게 착 맞는 집 추천해줘");
 
+const isLoading = ref(false);
 
 // 초기 대화 추가
 onMounted(() => {
   chatLogs.value.push({
     sender: "ai",
-    message: "안녕하세요! 😊 맘에 드는 집을 착 찾을수 있게 도와드릴까요? _",
+    message: "안녕하세요! 😊 맘에 드는 집을 착 찾을수 있게 도와드릴까요? ",
   });
   //chatLogs.value.push({ sender: "user", message: userInput.value });
 });
@@ -147,12 +151,16 @@ const sendMessage = async () => {
   };
 
   try {
+    isLoading.value = true;
+
     // AI 응답 요청
     await aiStore.setAiResponse(promptResourceDto);
     const aiMessage = aiStore.response || "죄송해요, 다시 한번만 물어봐주실래요? 헤헤 😋";
 
     // AI의 응답 추가
     chatLogs.value.push({ sender: "ai", message: aiMessage });
+
+    isLoading.value = false;
   } catch (error) {
     console.error("요청 에러:", error);
     chatLogs.value.push({
@@ -192,7 +200,7 @@ const sendMessage = async () => {
 
 .chat-message {
   display: flex;
-  align-items: center;
+  align-items: start;
 }
 
 .ai-message {
@@ -205,7 +213,6 @@ const sendMessage = async () => {
 
 .ai-profile {
   width: 40px;
-  
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -300,6 +307,25 @@ textarea {
   border-color: #007bff;
 }
 
+.loader {
+  margin-left: 8%;
+  margin-bottom: 20px;
+  width: 52px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side,#007bff 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
+}
 
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
 
 </style>
