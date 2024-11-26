@@ -89,7 +89,7 @@ li a:hover{
     text-align: center;
 }
 
-#login-button{
+#login-button, #user-info-button{
     border: none;
     background-color: transparent;
     line-height: 70px;
@@ -100,12 +100,12 @@ li a:hover{
     
 }
 
-#login-button:hover{
+#login-button:hover, #user-info-button:hover{
     color: #007bff;
     transition: all 0.3s ease;
 }
 
-#login-button svg{
+#login-button svg, #user-info-button svg{
     position: relative;
     margin-right: 5px;
     top: 0px;

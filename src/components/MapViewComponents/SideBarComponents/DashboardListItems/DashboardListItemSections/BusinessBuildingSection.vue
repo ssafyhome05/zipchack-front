@@ -6,7 +6,7 @@
         <div v-if="!bookmarkLocationList.length" class="empty-location">
           <p>즐겨찾기된 지역이 없습니다.</p>
         </div>
-        <div class="corp-graph">
+        <div v-else class="corp-graph">
           <Bar :data="chartData" :options="chartOptions" />
         </div>
       </slot>
@@ -26,21 +26,11 @@ const locationInfoStore = useLocationInfoStore();
 
 const locationInfo = ref([]);
 const bookmarkLocationList = ref([]);
-// const selectedLocation = ref(null);
-
-watch(
-  () => locationInfoStore.locationInfo,
-  (newVal) => {
-    locationInfo.value = newVal;
-    console.log(locationInfo.value)
-  },
-  { deep: true, immediate: true }
-);
 
 watch(
   () => locationInfoStore.bookmarkLocationList,
   (newVal) => {
-    bookmarkLocationList.value = newVal.length ? newVal : locationInfo.value;
+    bookmarkLocationList.value = newVal;
   },
   { deep: true, immediate: true }
 );
@@ -82,14 +72,8 @@ const processData = (locations) => {
   const corpData = [];
 
   locations.forEach((location) => {
-    const matchedLocation = locationInfo.value.find(item => item.dongCode.slice(0, 5) === location.dongCode.slice(0, 5));
-
-    if (matchedLocation) {
-
-      labels.push(location.gugunName);
-
-      corpData.push(matchedLocation.corpCnt || 0);
-    }
+      labels.push(location.location.gugunName);
+      corpData.push(location.population.corpCnt || 0);
   });
 
   const datasets = [

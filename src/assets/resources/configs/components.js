@@ -25,6 +25,7 @@ import CustomLocationItem from '@/components/MapViewComponents/SideBarComponents
 import ToggleBox from '@/components/MapViewComponents/ToggleBox.vue';
 import NoticeModal from '@/components/HomeViewComponents/NavigationComponents/NoticeModal.vue';
 import NoticeItem from '@/components/HomeViewComponents/NavigationComponents/NoticeItem.vue';
+import UserInfoModal from '@/components/HomeViewComponents/NavigationComponents/UserInfoModal.vue';
 // common
 
 
@@ -56,4 +57,5 @@ export function addComponents(app) {
   app.component('ToggleBox', ToggleBox);
   app.component('NoticeModal', NoticeModal);
   app.component('NoticeItem', NoticeItem);
+  app.component('UserInfoModal', UserInfoModal);
 }

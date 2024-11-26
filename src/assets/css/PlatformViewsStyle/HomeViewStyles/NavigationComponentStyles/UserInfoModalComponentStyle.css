@@ -1,0 +1,317 @@
+.modal-title{
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 17px;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 17px;
+}
+
+.regist-modal-body::-webkit-scrollbar {
+  width: 0.5vw;
+}
+
+.regist-modal-body::-webkit-scrollbar-thumb {
+  background-color: #cacaca;
+  border-radius: 10px;
+}
+
+#regist-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%; */
+  margin-top: 30px;
+  /* padding-bottom: 50px; */
+  gap: 10px;
+}
+
+label:hover {
+  cursor: text;
+}
+
+.code-input-box, .post-code-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  right: 18%;
+  width: 60%;
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+
+.code-input-box span, .post-code-box span {
+  /* display: block; */
+  position: relative;
+  left: 40%;
+  bottom: 4%;
+  background-color: #666;
+  width: 0;
+  height: 01px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+.email-code-input, .post-code-input {
+  font-size: 15px;
+  color: #222222;
+  width: 80%;  /* 100%로 width 설정 */
+  border: none;
+  border-bottom: solid #aaaaaa 1px;
+  padding: 12px 10px;
+  text-align: left;
+  padding-left: 4%;
+  background: none;
+}
+
+.email-code-input::placeholder, .post-code-input::placeholder {
+  color: #aaaaaa;
+  font-weight: bold;
+}
+
+.email-code-input:focus, .post-code-input:focus {
+  outline: none;
+}
+.email-code-input:focus ~ label,
+.email-code-input:valid ~ label,
+.post-code-input:focus ~ label,
+.post-code-input:valid ~ label {
+  font-size: 16px;
+  bottom: 60px;
+  color: #666;
+  font-weight: bold;
+}
+
+.email-code-input:focus ~ span,
+.post-code-input:focus ~ span {
+  width: 80%;
+}
+
+.timer {
+  position: absolute;
+  right: 25%;
+  top: 20%;
+  width: fit-content;
+  color: #aaaaaa;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  font-size: 15px;
+  color: #222222;
+  width: 85%;
+  border: none;
+  border-bottom: solid #aaaaaa 1px;
+  padding: 12px 10px;
+  text-align: left;
+  padding-left: 3%;
+  background: none;
+}
+
+.input::placeholder {
+  color: #aaaaaa;
+  font-weight: bold;
+  padding-left: -10px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input-box span {
+  /* display: block; */
+  position: relative;
+  bottom: 23px;
+  left: 43%;
+  background-color: #666;
+  width: 0;
+  height: 1px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+.input-box label {
+  position: relative;
+  color: #aaa;
+  bottom: 60px;
+  left: 10%;
+  width: 50%;
+  /* text-align: left; */
+  transform: translateX(-50%);
+  font-size: 16px;
+}
+
+.input:valid ~ label {
+  font-size: 16px;
+  bottom: 60px;
+  color: #666;
+  font-weight: bold;
+}
+
+.input:focus ~ span {
+  width: 86%;
+}
+
+.id-error,
+.pw-error,
+.pwcomfirm-error,
+.name-error,
+.email-error,
+.tel-error,
+.road-address-error,
+.detail-address-error {
+  position: relative;
+  color: red;
+  font-size: 14px;
+  /* margin-left: 10px; */
+  font-weight: bold;
+  line-height: 0.0;
+  /* right: 25%; */
+  /* left: 0%; */
+  text-align: left;
+  width: 80%;
+}
+
+.email-code-error,
+.post-code-error{
+  position: relative;
+  color: red;
+  font-size: 14px;
+  /* margin-left: 10px; */
+  font-weight: bold;
+  line-height: 0.0;
+  top: 18px;
+  left: 4%;
+  text-align: left;
+  width: 80%;
+}
+
+.email-verify-btn,
+.id-verify-btn,
+.email-code-check-btn,
+.post-code-btn {
+  position: absolute;
+  left: 80%;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+  color: #aaa;
+}
+
+.email-verify-btn:hover,
+.id-verify-btn:hover,
+.email-code-check-btn:hover,
+.post-code-btn:hover {
+  cursor: pointer;
+  color: #000;
+  background-color: rgb(231, 231, 231, 0.54);
+}
+
+.form-footer{
+  padding-top: 20px;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+}
+
+.regist-footer-line{
+  color: #ccc;
+  margin-left: 18px;
+  margin-right: 12px;
+  cursor:default;
+}
+
+.go-login-button{
+  font-size: 18px;
+  line-height: 1.2;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.go-login-button:hover{
+  font-weight: bold;
+}
+
+.regist-button{
+  border: none;
+  background-color: transparent;
+  color: #007bff;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.regist-button:hover{
+  font-weight: bold;
+}
+
+.go-regist{
+  width: fit-content;
+  font-size: 20px;
+  margin: 0 auto;
+  border: none;
+  background-color: transparent;
+  line-height: 40px;
+  font-weight: bold;
+  display: block;
+}
+
+.go-regist:hover{
+  color: #007bff;
+}
+
+.delete-button{
+  color: lightgray;
+  font-size: 80%;
+  font-weight: bold;
+}
+
+.delete-button:hover{
+  color: red;
+}
+
+/* 부드러운 슬라이드 애니메이션 */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  max-height: 200px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-slide-enter-from {
+  max-height: 0;
+  opacity: 0;
+  transform: translateX(-30px);
+  overflow: hidden;
+}
+
+.fade-slide-leave-to {
+  max-height: 0;
+  opacity: 0;
+  transform: translateX(30px);
+  overflow: hidden;
+}
+
+/* 비밀번호 필드 최적화 */
+.pw-box,
+.pwcomfirm-box {
+  position: relative;
+  width: 100%;
+}

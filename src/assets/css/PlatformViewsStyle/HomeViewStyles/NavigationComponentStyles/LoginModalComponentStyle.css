@@ -112,6 +112,26 @@
     transition: 0.3s;
 }
 
+.find-box{
+    display: flex;
+    justify-content: center;
+}
+
+.go-find{
+    width: fit-content;
+    font-size: 15px;
+    border: none;
+    background-color: transparent;
+    line-height: 15px;
+    font-weight: bold;
+    color: #444444;
+}
+
+.go-find:hover{
+    color: #007bff;
+    transition: 0.3s;
+}
+
 .login-input-box {
     position: relative;
     width: 90%;
