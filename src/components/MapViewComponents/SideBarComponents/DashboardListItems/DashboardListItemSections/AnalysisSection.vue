@@ -9,7 +9,7 @@
                     
                     <div class="side-list-menu-item" @click="changeTab('aiPricePredict')" :class="{'active': selectedAiTab === 'aiPricePredict'}">   
                         <img :src="selectedAiTab === 'aiPricePredict' ? aiPricePredictActiveIcon : aiPricePredictIcon"  class="side-list-menu-item-tabimg zipchak-img" />
-                        <span class="side-list-menu-item-tabtext">시세추이</span>
+                        <span class="side-list-menu-item-tabtext">전망분석</span>
                     </div>
 
                     <div class="side-list-menu-item" @click="changeTab('aiRecommend')" :class="{'active': selectedAiTab === 'aiRecommend'}">   

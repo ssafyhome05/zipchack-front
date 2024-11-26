@@ -51,7 +51,8 @@ export const useAiStore = defineStore('aiStore', {
                                         "\n\n3. 인프라분석 🏪\n"+ response.data.data.infra +
                                         "\n\n4. 인구분석 💁\n"+ response.data.data.population +
                                         "\n\n5. 지하철분포 🚅\n"+ response.data.data.metro +
-                                        "\n\n6. 최종의견 ⭐ "+ response.data.data.description
+                                        "\n\n6. 최종의견 ⭐ "+ response.data.data.description +
+                                        "\n\n" + "더 궁금하신 사항이 있으시면 편하게 물어봐주세요! 😋"
                         }
                     }); 
             } catch (error) {
@@ -80,7 +81,8 @@ export const useAiStore = defineStore('aiStore', {
                         if(response.data.code === 200050){
                             this.response = "집착이 추천하는 집은 " + response.data.data.aptName +
                                         "입니다. 🫡 \n\n1. 가장 큰 이유 : "+ response.data.data.reason +
-                                        "\n\n 2. 상세 요인 ❓\n " + response.data.data.description;
+                                        "\n\n 2. 상세 요인 ❓\n " + response.data.data.description +
+                                        "\n\n" + "더 궁금하신 사항이 있으시면 편하게 물어봐주세요! 😋";
                             console.log("결과 도출")
                             console.log(this.response)
                         }
