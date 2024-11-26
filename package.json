@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@duskmoon/vue3-typed-js": "^0.0.4",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-vue-3": "^0.3.12",
@@ -26,6 +27,7 @@
     "vue-spinner": "^1.0.4",
     "vue3-infinite-loading": "^1.0.0",
     "vue3-spinners": "^1.2.2",
+    "vue3-typer": "^1.0.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
